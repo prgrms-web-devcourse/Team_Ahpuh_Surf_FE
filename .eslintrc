@@ -1,0 +1,19 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": ["airbnb", "prettier", "next/core-web-vitals"],
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/function-component-definition": [
+      1,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "arrow-body-style": ["error", "always"]
+  }
+}
