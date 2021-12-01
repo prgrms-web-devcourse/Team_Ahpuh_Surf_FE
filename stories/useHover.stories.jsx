@@ -15,9 +15,9 @@ export const Default = () => {
   const [ref, isHover] = useHover()
 
   return (
-    <>
+    <div>
       <Box ref={ref} />
       {isHover ? 'True' : 'False'}
-    </>
+    </div>
   )
 }
