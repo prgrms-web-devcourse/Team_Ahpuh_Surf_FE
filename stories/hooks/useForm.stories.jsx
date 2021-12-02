@@ -6,7 +6,9 @@ export default {
 
 const sleep = () => {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(), 1000)
+    setTimeout(() => {
+      return resolve()
+    }, 1000)
   })
 }
 
