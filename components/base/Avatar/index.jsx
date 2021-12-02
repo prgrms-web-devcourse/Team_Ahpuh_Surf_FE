@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 
 const AvatarWrapper = styled.div`
   width: ${({ size }) => `${size}px`};
@@ -36,4 +37,14 @@ const Avatar = ({ src, size, alt, ...props }) => {
   )
 }
 
+Avatar.propTypes = {
+  src: PropTypes.string,
+  size: PropTypes.string,
+  alt: PropTypes.string,
+}
+Avatar.defaultProps = {
+  src: 'https://picsum.photos/200',
+  size: '100',
+  alt: 'avatar',
+}
 export default Avatar
