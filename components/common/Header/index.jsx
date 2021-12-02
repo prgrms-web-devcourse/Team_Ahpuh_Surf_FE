@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { Avatar, Logo } from 'components/base'
 import sample from 'public/sample.jpeg'
 
+
 const HeaderWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
