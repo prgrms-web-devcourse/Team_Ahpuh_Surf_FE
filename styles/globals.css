@@ -125,6 +125,8 @@ video {
   border: 0;
   font-size: 100%;
   font: inherit;
+  font-family: 'AppleSDGothicNeo', 'Frutiger';
+  box-sizing: border-box;
   vertical-align: baseline;
 }
 
