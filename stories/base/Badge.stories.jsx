@@ -2,7 +2,7 @@ import { Badge } from 'components/base'
 import Image from 'next/image'
 
 export default {
-  title: 'Component/Badge',
+  title: 'Base/Badge',
   component: Badge,
   argTypes: {
     backgroundColor: { control: 'color' },

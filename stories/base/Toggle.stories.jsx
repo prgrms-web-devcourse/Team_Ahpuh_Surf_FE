@@ -1,7 +1,7 @@
 import { Toggle } from 'components/base'
 
 export default {
-  title: 'base/Toggle',
+  title: 'Base/Toggle',
 }
 
 export const Default = () => <Toggle />

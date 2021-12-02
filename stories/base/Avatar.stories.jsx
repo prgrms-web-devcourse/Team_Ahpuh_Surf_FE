@@ -1,7 +1,7 @@
 import Avatar from 'components/base/Avatar'
 
 export default {
-  title: 'Component/Avatar',
+  title: 'Base/Avatar',
   component: Avatar,
   argTypes: {
     src: { defaultValue: 'https://picsum.photos/200' },
