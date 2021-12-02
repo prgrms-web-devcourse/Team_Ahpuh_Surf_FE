@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import Avatar from 'components/base/Avatar'
 import Logo from '../../base/Logo'
-import sample from '../../../public/sample.jpeg'
+import sample from '../../../public/images/sample.jpeg'
 
 const HeaderWrapper = styled.div`
   width: 100%;
