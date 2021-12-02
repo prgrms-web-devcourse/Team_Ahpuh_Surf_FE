@@ -1,4 +1,4 @@
-import Logo from '../../components/base/Logo'
+import { Logo } from 'components/base'
 
 export default {
   title: 'base/Logo',
@@ -14,3 +14,4 @@ export default {
 }
 
 export const Default = (args) => <Logo {...args} />
+export const Italic = (args) => <Logo italic {...args} />
