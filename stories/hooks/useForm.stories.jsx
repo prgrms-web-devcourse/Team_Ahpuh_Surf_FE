@@ -1,16 +1,13 @@
-import useForm from '../../hooks/useForm'
+import { useForm } from 'hooks'
 
 export default {
   title: 'Hook/useForm',
 }
 
-const sleep = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      return resolve()
-    }, 1000)
+const sleep = () =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000)
   })
-}
 
 export const Default = () => {
   const { isLoading, errors, handleSubmit, handleChange } = useForm({

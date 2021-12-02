@@ -2,8 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
-import logoNormalFill from 'assets/logo/logo_normal_fill.svg'
-import logoItalicFill from 'assets/logo/logo_italic_fill.svg'
+import { logoNormalFill, logoItalicFill } from 'assets/logo'
 
 const LogoWrapper = styled.div`
   width: ${({ width }) => `${width}px`};
