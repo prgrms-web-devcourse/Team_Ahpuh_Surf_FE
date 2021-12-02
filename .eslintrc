@@ -14,7 +14,7 @@
         "unnamedComponents": "arrow-function"
       }
     ],
-    "arrow-body-style": ["error", "always"],
+    "arrow-body-style": ["error", "as-needed"],
     "import/no-anonymous-default-export": [2, { "allowObject": true }],
     "import/prefer-default-export": "off"
   },
