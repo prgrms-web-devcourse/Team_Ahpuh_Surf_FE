@@ -1,7 +1,7 @@
 import Text from 'components/base/Text'
 
 export default {
-  title: 'Component/Text',
+  title: 'Base/Text',
   component: Text,
   argTypes: {
     block: { control: 'boolean' },

@@ -1,7 +1,7 @@
 import Upload from '../../components/base/Upload'
 
 export default {
-  title: 'Component/Upload',
+  title: 'Base/Upload',
   component: Upload,
   argTypes: {
     size: {

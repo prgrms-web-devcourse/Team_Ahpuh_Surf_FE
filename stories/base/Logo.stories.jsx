@@ -1,7 +1,7 @@
 import { Logo } from 'components/base'
 
 export default {
-  title: 'base/Logo',
+  title: 'Base/Logo',
   component: Logo,
   argTypes: {
     width: {
