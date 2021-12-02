@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 
 const AvatarWrapper = styled.div`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   position: relative;
   display: inline-block;
   border: 1px solid #dadada;
@@ -21,7 +23,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
   }
 
   return (
-    <AvatarWrapper>
+    <AvatarWrapper size={size}>
       <Image
         width={size}
         height={size}
