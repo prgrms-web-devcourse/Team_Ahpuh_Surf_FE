@@ -3,6 +3,8 @@ import Image from 'next/image'
 import PropTypes from 'prop-types'
 
 const AvatarWrapper = styled.div`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   position: relative;
   display: inline-block;
   border: 1px solid #dadada;
