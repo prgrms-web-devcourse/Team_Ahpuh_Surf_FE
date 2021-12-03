@@ -16,7 +16,15 @@
     ],
     "arrow-body-style": ["error", "as-needed"],
     "import/no-anonymous-default-export": [2, { "allowObject": true }],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
