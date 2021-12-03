@@ -18,6 +18,14 @@
     "import/no-anonymous-default-export": [2, { "allowObject": true }],
     "import/prefer-default-export": "off",
     "react/forbid-prop-types": 0
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {
