@@ -3,7 +3,10 @@ import { Navbar } from 'components/common'
 export default {
   title: 'common/Navbar',
   component: Navbar,
+  argTypes: {
+    control: { type: 'color' },
+  },
 }
 
 export const Default = () => <Navbar />
-export const Color = () => <Navbar color="#373530" />
+export const Color = (args) => <Navbar {...args} />
