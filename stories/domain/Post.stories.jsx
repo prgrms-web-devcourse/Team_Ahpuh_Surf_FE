@@ -5,7 +5,7 @@ export default {
   component: Post,
   argTypes: {
     isMine: {
-      defaultValue: false,
+      defaultValue: true,
       control: { type: 'boolean' },
     },
     width: {
@@ -69,9 +69,6 @@ export default {
     },
     profileImage: {
       defaultValue: 'https://picsum.photos/200',
-      // control:{
-      //   type:'image'
-      // }
     },
     username: {
       defaultValue: 'Kevin McKellister',

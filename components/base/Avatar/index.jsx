@@ -39,7 +39,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
 
 Avatar.propTypes = {
   src: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   alt: PropTypes.string,
 }
 Avatar.defaultProps = {
