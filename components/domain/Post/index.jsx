@@ -1,141 +1,127 @@
-// import styled from '@emotion/styled'
-
-// const Card = styled.div`
-//   width: 330px;
-//   height: 100px;
-// `
-
 import PropTypes from 'prop-types'
 import { Avatar } from 'components/base'
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+
+import {
+  AiFillHeart,
+  AiFillStar,
+  AiOutlineHeart,
+  AiOutlineStar,
+} from 'react-icons/ai'
 import { useState } from 'react'
+import * as Style from './style'
 
 const Post = ({
   isMine,
-  // width,
-  // height,
   backgroundColor,
   date,
   categoryName,
   score,
   title,
   content,
-  like, // bool
-  favorite, // bool
+  like,
+  favorite,
   profileImage,
   username,
-  follow, // bool
+  follow,
   createdAt,
 }) => {
   const [fav, setFav] = useState(favorite)
-  const defaultStyle = {
-    position: 'relative',
-    backgroundColor,
-    borderRadius: 14,
-    padding: 20,
-    width: '90%',
-    height: 160,
-    overflow: 'hidden',
-  }
-  const headerStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    fontWeight: 'bold',
-  }
-  const mainStyle = {
-    display: 'flex',
-  }
-  const scoreStyle = {
-    fontSize: 80,
-    fontWeight: 'bold',
-    padding: 15,
-    marginRight: 10,
-  }
-  const profileStyle = {
-    display: 'flex',
-  }
-  const contentStyle = {
-    overflow: 'hidden',
-    height: '72px',
-  }
+  const [_like, setLike] = useState(like)
+  const [_follow, setFollow] = useState(follow)
 
+  const avatarArgs = {
+    alt: 'avatar',
+    size: 40,
+    src: profileImage,
+  }
   const handleFavorite = () => {
     setFav(!fav)
   }
+  const handleLike = () => {
+    setLike(!_like)
+  }
+  const handleFollow = () => {
+    setFollow(!_follow)
+  }
   return (
-    <div style={defaultStyle}>
+    <Style.CardContainer backgroundColor={backgroundColor}>
       {isMine ? (
-        <div style={profileStyle}>
-          <Avatar
-            alt="avatar"
-            size="30px"
-            src={profileImage}
-            style={{ marginRight: 10 }}
-          />
-          <div>
-            <div style={{ fontWeight: 'bold', fontSize: 18 }}>{username}</div>
-            <div>follow: {follow}</div>
-            <div>{date}</div>
-          </div>
-        </div>
-      ) : (
         <div />
+      ) : (
+        <div>
+          <Style.Profile>
+            <Avatar {...avatarArgs} style={{ marginRight: 10 }} />
+            <div>
+              <div style={{ fontWeight: 'bold', fontSize: 20 }}>{username}</div>
+              <div style={{ fontWeight: 'bold', fontSize: 13, marginTop: 5 }}>
+                {date}
+              </div>
+            </div>
+            <Style.Follow onClick={handleFollow}>
+              {_follow ? <span>팔로우 취소</span> : <span>팔로우</span>}
+            </Style.Follow>
+            <Style.Like onClick={handleLike}>
+              {_like ? (
+                <AiFillHeart size={25} color="red" />
+              ) : (
+                <AiOutlineHeart size={25} />
+              )}
+            </Style.Like>
+          </Style.Profile>
+        </div>
       )}
       <div
         style={{
           display: 'flex',
           flexDirection: 'column',
         }}>
-        <div style={{ alignSelf: 'flex-end' }} onClick={handleFavorite}>
-          {fav ? <AiFillStar size="25" /> : <AiOutlineStar size="25" />}
-        </div>
-        <div style={headerStyle}>
-          <div>{createdAt}</div>
-          <div>{categoryName}</div>
-        </div>
+        {isMine ? (
+          <Style.Favorite onClick={handleFavorite}>
+            {fav ? (
+              <AiFillStar size="25" color="yellow" />
+            ) : (
+              <AiOutlineStar size="25" />
+            )}
+          </Style.Favorite>
+        ) : (
+          <span />
+        )}
 
-        <div style={mainStyle}>
-          <div style={scoreStyle}>{score}</div>
+        <Style.Header>
+          {isMine ? <div style={{ marginLeft: 5 }}>{createdAt}</div> : <span />}
+          <div>{categoryName}</div>
+        </Style.Header>
+
+        <Style.Main>
+          <Style.Score>{score}</Style.Score>
           <div>
             <div style={{ fontSize: 20, fontWeight: 'bold' }}>{title}</div>
-            <div style={contentStyle}>{content}</div>
+            <Style.Content>{content}</Style.Content>
           </div>
-        </div>
+        </Style.Main>
       </div>
-    </div>
+    </Style.CardContainer>
   )
 }
 
 Post.propTypes = {
-  // width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  // height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isMine: PropTypes.bool,
   backgroundColor: PropTypes.string,
-  date: PropTypes.func,
+  date: PropTypes.string.isRequired,
   categoryName: PropTypes.string.isRequired,
   score: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   like: PropTypes.bool,
   favorite: PropTypes.bool,
-  // profileImage: PropTypes.string.isRequired,
-  // username: PropTypes.string.isRequired,
-  // follow: PropTypes.bool,
-  // createdAt: PropTypes.func,
+  profileImage: PropTypes.string.isRequired,
+  follow: PropTypes.bool,
 }
 Post.defaultProps = {
-  // width: 320,
-  // height: 160,
   backgroundColor: 'skyblue',
-  date: new Date(),
-  // categoryName:'react',
-  // score
-  // content
+  isMine: true,
   like: false,
   favorite: false,
-  // profileImage
-  // username
-  // follow: false,
-  // createdAt: new Date(),
+  follow: false,
 }
 export default Post
