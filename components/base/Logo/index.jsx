@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
-import { logoNormalFill, logoItalicFill } from 'assets/logo'
+import { logoNormalFill, logoItalicFill } from 'public/images/logo'
 
 const LogoWrapper = styled.div`
   width: ${({ width }) => `${width}px`};
@@ -20,7 +20,8 @@ const Logo = ({ width, italic }) => {
     <Link href="/" passHref>
       <LogoWrapper width={width} svgWidth={svgWidth} svgHeight={svgHeight}>
         <Image
-          src={italic ? logoItalicFill.src : logoNormalFill.src}
+          src={italic ? logoItalicFill : logoNormalFill}
+          width={width}
           layout="fill"
           alt="Surf"
         />
