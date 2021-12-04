@@ -25,16 +25,13 @@ export const Follow = styled.div`
   font-size: 13px;
   color: #8d8d8d;
 `
-export const Like = styled.div`
+export const ProfileRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
   position: absolute;
-  right: 10%;
+  right: 12%;
   cursor: pointer;
-`
-export const Category = styled.div`
-  position: absolute;
-  right: 10%;
-  top: 105px;
-  font-size: 14px;
 `
 export const Main = styled.div`
   display: block;
