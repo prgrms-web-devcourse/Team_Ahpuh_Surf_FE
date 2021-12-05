@@ -2,18 +2,18 @@ import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 
 const TextareaInput = styled.textarea`
-  font-family: 'AppleSDGothicNeo', 'Frutiger';
-  font-size: ${({ fontSize }) => `${fontSize}px`};
-  resize: none;
+  flex-shrink: 0;
   width: 100%;
   max-width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  flex-shrink: 0;
+  padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  padding: 10px;
-  box-sizing: border-box;
   outline-color: ${({ theme: { surfColor } }) => surfColor.$blue__3};
+  box-sizing: border-box;
+  font-family: 'AppleSDGothicNeo', 'Frutiger';
+  font-size: ${({ fontSize }) => `${fontSize}px`};
+  resize: none;
 `
 
 const Textarea = ({ width, height, fontSize, placeholder }) => {
