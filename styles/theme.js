@@ -1,14 +1,17 @@
-const color = {
+const fontColor = {
   $font: '#373530',
-  // $main: '#918ae2',
-  // $main__light: '#CBC8F1',
-  // $main__dark: '#5D55B4',
-  // $heart: '#EA4A4A',
-  // $pink: '#FFDCE0',
 }
 
+const surfColor = {
+  $blue__1: '#d0ebff',
+  $blue__2: '#74c0fc',
+  $blue__3: '#339af0',
+  $blue__4: '#1c73d6',
+  $blue__5: '#1864ab',
+}
 const theme = {
-  color,
+  fontColor,
+  surfColor
 }
 
 export default theme
