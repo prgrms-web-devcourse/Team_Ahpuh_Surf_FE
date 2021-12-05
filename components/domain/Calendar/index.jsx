@@ -3,7 +3,7 @@ import { useState } from 'react'
 import range from 'lodash-es/range'
 import { Text } from 'components/base'
 import PropTypes from 'prop-types'
-import { CalendarWrapper, Header, NavButton, Cell, WeekWrapper } from './style'
+import * as Style from './style'
 
 const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 // const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
@@ -59,41 +59,43 @@ const Calendar = ({ onClick, changedDate }) => {
   }
 
   return (
-    <CalendarWrapper>
-      <Header>
-        <NavButton onClick={handlePrev}>&lt;</NavButton>
+    <Style.CalendarWrapper>
+      <Style.Header>
+        <Style.NavButton onClick={handlePrev}>&lt;</Style.NavButton>
         <Text strong>{dayObj.format('MMM YYYY')}</Text>
         {/* FIXME: Text는 예임 드롭다운으로 바꿔야 함 */}
-        <NavButton onClick={handleNext}>&gt;</NavButton>
-      </Header>
+        <Style.NavButton onClick={handleNext}>&gt;</Style.NavButton>
+      </Style.Header>
 
-      <WeekWrapper>
+      <Style.WeekWrapper>
         {weekDays.map((day) => (
-          <Cell className="week-cell" key={day}>
+          <Style.Cell className="week-cell" key={day}>
             <Text strong>{day}</Text>
-          </Cell>
+          </Style.Cell>
         ))}
-      </WeekWrapper>
+      </Style.WeekWrapper>
 
-      <WeekWrapper>
+      <Style.WeekWrapper>
         {range(firstDay).map((index) => (
-          <Cell key={index} onClick={() => handleClick(index, 'prevMonth')}>
+          <Style.Cell
+            key={index}
+            onClick={() => handleClick(index, 'prevMonth')}>
             <Text color="#ddd">
               {firstDayInfoOfMonth.subtract(firstDay - index, 'day').date()}
             </Text>
-          </Cell>
+          </Style.Cell>
         ))}
 
         {range(lastDayOfthisMonth).map((index) => (
-          <Cell
+          <Style.Cell
             onClick={() => handleClick(index)}
             className={handleClassName(index)}
             key={index}>
             {index + 1}
-          </Cell>
+          </Style.Cell>
         ))}
-      </WeekWrapper>
-    </CalendarWrapper>
+      </Style.WeekWrapper>
+    </Style.CalendarWrapper>
   )
 }
 

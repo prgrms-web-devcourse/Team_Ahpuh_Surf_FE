@@ -2,22 +2,11 @@ import dayjs from 'dayjs'
 import { useState, useCallback } from 'react'
 import { Text } from 'components/base'
 import { Calendar } from 'components/domain'
-import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 import { BsFillCalendarCheckFill } from 'react-icons/bs'
 import { useToggle } from 'hooks'
+import * as Style from './style'
 
-const DatePickerWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: ${({ width }) => (typeof width === 'string' ? width : `${width}px`)};
-  height: ${({ height }) =>
-    typeof height === 'string' ? height : `${height}px`};
-  padding: 0 10px;
-  border: 1px solid #eee;
-  cursor: pointer;
-`
 const DatePicker = ({ width, height, fontSize, delimeter }) => {
   const dayObj = dayjs()
 
@@ -37,8 +26,8 @@ const DatePicker = ({ width, height, fontSize, delimeter }) => {
   )
 
   return (
-    <div>
-      <DatePickerWrapper
+    <Style.Container>
+      <Style.DatePickerWrapper
         width={width}
         height={height}
         onClick={setToggleCalendar}>
@@ -47,14 +36,14 @@ const DatePicker = ({ width, height, fontSize, delimeter }) => {
             fontSize
           }>{`${date}${delimeter}${month}${delimeter}${year}`}</Text>
         <BsFillCalendarCheckFill />
-      </DatePickerWrapper>
+      </Style.DatePickerWrapper>
       {toggleCalendar && (
         <Calendar
           onClick={handleClickedDate}
           changedDate={`${year}-${month}-${date}`}
         />
       )}
-    </div>
+    </Style.Container>
   )
 }
 

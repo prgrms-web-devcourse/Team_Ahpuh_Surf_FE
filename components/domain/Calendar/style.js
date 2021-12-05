@@ -2,10 +2,10 @@ const { default: styled } = require('@emotion/styled')
 
 export const CalendarWrapper = styled.div`
   position: absolute;
-  top: 10px;
   right: 0;
+  top: 45px;
   width: 350px;
-  box-shadow: 0px 3px 3px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 3px 4px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
 `
 
