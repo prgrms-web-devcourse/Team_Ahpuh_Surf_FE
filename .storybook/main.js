@@ -10,6 +10,7 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
+  plugins: [['lodash-es']],
   webpackFinal: async (config) => {
     config.resolve.modules = [path.resolve(__dirname, '..'), 'node_modules']
     config.resolve.alias['next/router'] = require.resolve(
