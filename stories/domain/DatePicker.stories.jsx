@@ -20,3 +20,6 @@ export default {
 }
 
 export const Default = (args) => <DatePicker {...args} />
+Default.parameters = {
+  layout: 'centered',
+}
