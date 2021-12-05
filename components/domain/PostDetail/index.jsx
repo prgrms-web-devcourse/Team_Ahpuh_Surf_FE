@@ -84,14 +84,16 @@ const PostDetail = ({
         <Style.Follow onClick={handleFollow}>
           {_follow ? <span>팔로우 취소</span> : <span>팔로우</span>}
         </Style.Follow>
-        <Style.Like onClick={handleLike}>
-          {_like ? (
-            <AiFillHeart size={30} color="red" />
-          ) : (
-            <AiOutlineHeart size={30} />
-          )}
-        </Style.Like>
-        <Style.Category>{categoryName}</Style.Category>
+        <Style.ProfileRight>
+          <div onClick={handleLike}>
+            {_like ? (
+              <AiFillHeart size={30} color="red" />
+            ) : (
+              <AiOutlineHeart size={30} />
+            )}
+          </div>
+          <div style={{ fontSize: '14px' }}>{categoryName}</div>
+        </Style.ProfileRight>
       </Style.Profile>
       <Image src={imageUrl} alt="post image" style={Style.imageStyle} />
       <Style.Main>
