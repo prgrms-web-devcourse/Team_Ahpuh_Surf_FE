@@ -24,7 +24,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
   }
 
   return (
-    <AvatarWrapper size={size}>
+    <AvatarWrapper size={size} style={props.style}>
       <Image
         width={size}
         height={size}
@@ -39,7 +39,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
 
 Avatar.propTypes = {
   src: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   alt: PropTypes.string,
 }
 Avatar.defaultProps = {
