@@ -1,3 +1,4 @@
+export { default as Tabs } from './Tabs'
 export { default as Calendar } from './Calendar'
 export { default as DatePicker } from './DatePicker'
 export { default as Post } from './Post'
