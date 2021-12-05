@@ -8,7 +8,6 @@ const TextareaInput = styled.textarea`
   width: 100%;
   max-width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  max-height: 90px;
   flex-shrink: 0;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px;
