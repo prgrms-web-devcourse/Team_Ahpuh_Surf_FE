@@ -54,7 +54,7 @@ const AreaChartComponent = ({ width, height, data }) => {
     tooltip: {
       x: {
         formatter(val) {
-          return dayjs(val).format('MMM/d')
+          return `${dayjs(val).format('MMM DD')}`
         },
       },
     },
@@ -70,13 +70,11 @@ const AreaChartComponent = ({ width, height, data }) => {
         stops: [0, 100],
       },
     },
-    // series: [data],
     selection: 'one_year',
   })
 
-  // TODO: 외부에서 데이터 받을 때 type 달라질 테니 대응할 수 있게 개선 필요 -> props로 받을 때 아예 정제되서 받도록 처리
+  // TODO: 외부에서 데이터 받을 때 props로 받고, 받을 때 아예 정제되서 받도록 처리
   const [series, setSeries] = useState(data)
-  // console.log(series)
   const dayObj = new dayjs()
   const thisYear = dayObj.year()
   const thisMonth = dayObj.month() // 1월 = 0, 2월 = 1
