@@ -1,6 +1,7 @@
 import { ThemeProvider } from 'emotion-theming'
 import theme from '../styles/theme'
 import { addDecorator } from '@storybook/react'
+import '../styles/globals.css'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
