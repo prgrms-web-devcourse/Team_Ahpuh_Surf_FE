@@ -3,7 +3,8 @@
   font-style: medium;
   font-weight: 400;
   src: local('AppleSDGothicNeoM00'),
-    url('/fonts/AppleSDGothicNeo/AppleSDGothicNeoM.ttf') format('truetype');
+    url('../public/fonts/AppleSDGothicNeo/AppleSDGothicNeoM.ttf')
+      format('truetype');
   unicode-range: U+AC00- U+D7A3, U+0030-0039;
 }
 @font-face {
@@ -11,7 +12,8 @@
   font-style: bold;
   font-weight: 700;
   src: local('AppleSDGothicNeoB00'),
-    url('/fonts/AppleSDGothicNeo/AppleSDGothicNeoB.ttf') format('truetype');
+    url('../public/fonts/AppleSDGothicNeo/AppleSDGothicNeoB.ttf')
+      format('truetype');
   unicode-range: U+AC00- U+D7A3, U+0030-0039;
 }
 @font-face {
@@ -19,7 +21,8 @@
   font-style: bolder;
   font-weight: 900;
   src: local('AppleSDGothicNeoEB00'),
-    url('/fonts/AppleSDGothicNeo/AppleSDGothicNeoEB.ttf') format('truetype');
+    url('../public/fonts/AppleSDGothicNeo/AppleSDGothicNeoEB.ttf')
+      format('truetype');
   unicode-range: U+AC00- U+D7A3, U+0030-0039;
 }
 
@@ -27,7 +30,8 @@
   font-family: 'Frutiger';
   font-style: medium;
   font-weight: 400;
-  src: local('Frutiger'), url('/fonts/Frutiger/Frutiger.woff') format('woff');
+  src: local('Frutiger'),
+    url('../public/fonts/Frutiger/Frutiger.woff') format('woff');
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
@@ -35,7 +39,8 @@
   font-family: 'Frutiger';
   font-style: bold;
   font-weight: 700;
-  src: url('/fonts/Frutiger/Frutiger_bold.woff') format('woff');
+  src: local('Frutiger'),
+    url('../public/fonts/Frutiger/Frutiger_bold.woff') format('woff');
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
