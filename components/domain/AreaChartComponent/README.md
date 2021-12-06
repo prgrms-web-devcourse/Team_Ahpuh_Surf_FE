@@ -3,6 +3,8 @@
 
 ```jsx
 import dynamic from 'next/dynamic'
+import { sampleData } from '../components/domain/AreaChartComponent/sampleXNY1'
+import { sampleData2 } from '../components/domain/AreaChartComponent/sampleXNY2'
 
 const ApexChart = dynamic(() => import('components/domain/AreaChartComponent'), {
   ssr: false,
