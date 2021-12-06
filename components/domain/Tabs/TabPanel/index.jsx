@@ -1,21 +1,19 @@
 import styled from '@emotion/styled'
-// TabPanel은 activedLabelSet의 queryKey통해 useSWR을 요청해 뿌려준다.
 
-const TabPanelWrapper = styled.div`
+const TabPanelWrapper = styled.ul`
   width: 100%;
-  height: 300px;
-  background-color: yellow;
   font-size: ${({ fontSize }) => `${fontSize}px`};
 `
 
 const TabPanel = ({ activeLabelSet, fontSize }) => {
   const { label, query: queryKey } = activeLabelSet
-  // const queryValue = useSWR로 받아와야 함
-  // const {data: followList} = useSWR(`/follow/${queryKey}=${queryValue}`, fetcher)
+
+  // cookie에서 userId 가져오기
+  // const {data: followList} = useSWR(`/follow?${queryKey}=${userId}`, fetcher)
 
   return (
     <TabPanelWrapper fontSize={fontSize}>
-      {/* followList 돌려돌려 돌림판 */}
+      {/* followList.map(list => <li></li>) */}
       {label} {queryKey}
     </TabPanelWrapper>
   )

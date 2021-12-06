@@ -12,32 +12,34 @@ const NavbarWrapper = styled.ul`
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: ${({ height }) => `${height}px`};
   padding: 10px 20px;
   border-top: 1px solid #eee;
   box-sizing: border-box;
   list-style: none;
+  background-color: white;
 `
 
-const Navbar = ({ color }) => (
-  <NavbarWrapper>
+const Navbar = ({ height, color, iconSize }) => (
+  <NavbarWrapper height={height}>
     <li>
       <Link href="/" passHref>
         <a>
-          <AiFillCompass size={37} color={color} />
+          <AiFillCompass size={iconSize} color={color} />
         </a>
       </Link>
     </li>
     <li>
       <Link href="/" passHref>
         <a>
-          <AiFillPlusCircle size={62} color={color} />
+          <AiFillPlusCircle size={iconSize * 1.6} color={color} />
         </a>
       </Link>
     </li>
     <li>
       <Link href="/" passHref>
         <a>
-          <IoDocumentText size={37} color={color} />
+          <IoDocumentText size={iconSize} color={color} />
         </a>
       </Link>
     </li>
@@ -46,10 +48,14 @@ const Navbar = ({ color }) => (
 
 Navbar.propTypes = {
   color: PropTypes.string,
+  height: PropTypes.number,
+  iconSize: PropTypes.number,
 }
 
 Navbar.defaultProps = {
   color: '#373530',
+  height: 50,
+  iconSize: 30,
 }
 
 export default Navbar
