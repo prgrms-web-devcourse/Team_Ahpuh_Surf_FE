@@ -1,26 +1,13 @@
 import { useCallback, useRef, useState } from 'react'
 import AreaChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
 import dayjs from 'dayjs'
+import { AiTwotoneSetting } from 'react-icons/all'
+import * as Style from './style'
 
 const AreaChartComponent = ({ width, height, data }) => {
   const chartRef = useRef(null)
-  const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: end;
-    width: ${(props) => (props.width === undefined ? '500px' : `${width}px`)};
-  `
-  const Button = styled.button`
-    color: #222;
-    background-color: #fff;
-    border: 1px solid #e7e7e7;
-    border-bottom: 2px solid #ddd;
-    border-radius: 2px;
-    padding: 4px 17px;
-    margin-left: 3px;
-    margin-right: 3px;
-  `
+
   const [options, setOptions] = useState({
     // TODO: 적정 블루계열 컬러 회의해서 정하기
     colors: ['#80d6ff', '#0d47a1', '#0077c2', '#0077c2', '#002171'],
@@ -34,7 +21,7 @@ const AreaChartComponent = ({ width, height, data }) => {
       },
     },
     dataLabels: {
-      enabled: false, // 지점별 점수 확인 가능, true로 변환시 에러 발생..
+      enabled: false,
     },
     markers: {
       size: 1,
@@ -74,13 +61,22 @@ const AreaChartComponent = ({ width, height, data }) => {
   })
 
   // TODO: 외부에서 데이터 받을 때 props로 받고, 받을 때 아예 정제되서 받도록 처리
-  const [series, setSeries] = useState(data)
+  // eslint-disable-next-line new-cap
   const dayObj = new dayjs()
   const thisYear = dayObj.year()
-  const thisMonth = dayObj.month() // 1월 = 0, 2월 = 1
+  const thisMonth = dayObj.month()
 
   const firstDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-01`)
   const lastDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-30`)
+
+  const areaChartArgs = {
+    ref: chartRef,
+    options,
+    series: data,
+    type: 'area',
+    width,
+    height,
+  }
 
   const handleData = useCallback((timeline) => {
     setOptions({
@@ -120,21 +116,22 @@ const AreaChartComponent = ({ width, height, data }) => {
       default:
     }
   }, [])
-
+  const handleSettingButton = () => {
+    console.log('has to move to Category Manage Page ')
+  }
   return (
-    <div>
-      <AreaChart
-        ref={chartRef}
-        options={options}
-        series={series}
-        type="area"
-        width={width}
-        height={height}
+    <div style={{ ...Style.containerStyle, width: width || 500 }}>
+      <AiTwotoneSetting
+        style={Style.settingButtonStyle}
+        onClick={handleSettingButton}
       />
-      <ButtonContainer>
-        <Button onClick={() => handleData('one_year')}>year</Button>
-        <Button onClick={() => handleData('one_month')}>month</Button>
-      </ButtonContainer>
+      <AreaChart {...areaChartArgs} />
+      <Style.ButtonContainer>
+        <Style.Button onClick={() => handleData('one_year')}>year</Style.Button>
+        <Style.Button onClick={() => handleData('one_month')}>
+          month
+        </Style.Button>
+      </Style.ButtonContainer>
     </div>
   )
 }
