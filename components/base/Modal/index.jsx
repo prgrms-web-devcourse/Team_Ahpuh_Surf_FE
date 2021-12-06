@@ -13,7 +13,10 @@ const Modal = ({ toggle, on, closeBtn, width, height, children }) => {
   const handleCloseModal = (e) => {
     const btn = e.target.closest('button')
     const closeModalElement = [modalDim.current, modalClose.current]
-    if (closeModalElement.includes(e.target) || btn === modalClose.current) {
+    if (
+      closeModalElement.includes(e.target) ||
+      (btn === modalClose.current && btn !== null)
+    ) {
       toggle(false)
     }
   }
@@ -40,7 +43,7 @@ const Modal = ({ toggle, on, closeBtn, width, height, children }) => {
 
   return ReactDom.createPortal(
     <Style.ModalDim ref={modalDim} onClick={handleCloseModal}>
-      <Style.ModalContainer width={width} height={height}>
+      <Style.ModalContainer width={width} height={height} closeBtn={closeBtn}>
         {closeBtn ? (
           <Style.ModalClose ref={modalClose} onClick={handleCloseModal}>
             <IoIosClose size={32} />
