@@ -92,7 +92,7 @@ const AreaChartComponent = ({ width, height, data }) => {
             max: new Date(lastDayOfMonth).getTime(),
             labels: {
               formatter(val) {
-                return dayjs(val).format('MMM d')
+                return dayjs(val).format('MMM DD')
               },
             },
           },
