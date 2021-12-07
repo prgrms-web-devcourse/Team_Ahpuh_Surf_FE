@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { Avatar } from 'components/base'
 
 import {
@@ -24,6 +23,7 @@ const Post = ({
   username,
   follow,
   createdAt,
+  height,
 }) => {
   const [fav, setFav] = useState(favorite)
   const [_like, setLike] = useState(like)
@@ -44,10 +44,8 @@ const Post = ({
     setFollow(!_follow)
   }
   return (
-    <Style.CardContainer backgroundColor={backgroundColor}>
-      {isMine ? (
-        <div />
-      ) : (
+    <Style.CardContainer backgroundColor={backgroundColor} height={height}>
+      {isMine ? null : (
         <div>
           <Style.Profile>
             <Avatar {...avatarArgs} style={{ marginRight: 10 }} />
@@ -62,9 +60,9 @@ const Post = ({
             </Style.Follow>
             <Style.Like onClick={handleLike}>
               {_like ? (
-                <AiFillHeart size={25} color="red" />
+                <AiFillHeart size={20} color="red" />
               ) : (
-                <AiOutlineHeart size={25} />
+                <AiOutlineHeart size={20} />
               )}
             </Style.Like>
           </Style.Profile>
@@ -75,23 +73,33 @@ const Post = ({
           display: 'flex',
           flexDirection: 'column',
         }}>
-        {isMine ? (
-          <Style.Favorite onClick={handleFavorite}>
-            {fav ? (
-              <AiFillStar size="25" color="yellow" />
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            gap: '5px',
+          }}>
+          <Style.Header>
+            {isMine ? (
+              <div style={{ marginLeft: 5 }}>{createdAt}</div>
             ) : (
-              <AiOutlineStar size="25" />
+              <span />
             )}
-          </Style.Favorite>
-        ) : (
-          <span />
-        )}
-
-        <Style.Header>
-          {isMine ? <div style={{ marginLeft: 5 }}>{createdAt}</div> : <span />}
-          <div>{categoryName}</div>
-        </Style.Header>
-
+            <div>{categoryName}</div>
+          </Style.Header>
+          {isMine ? (
+            <Style.Favorite onClick={handleFavorite}>
+              {fav ? (
+                <AiFillStar size="20" color="yellow" />
+              ) : (
+                <AiOutlineStar size="20" />
+              )}
+            </Style.Favorite>
+          ) : (
+            <span />
+          )}
+        </div>
         <Style.Main>
           <Style.Score>{score}</Style.Score>
           <div>
@@ -104,19 +112,6 @@ const Post = ({
   )
 }
 
-Post.propTypes = {
-  isMine: PropTypes.bool,
-  backgroundColor: PropTypes.string,
-  date: PropTypes.string.isRequired,
-  categoryName: PropTypes.string.isRequired,
-  score: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  like: PropTypes.bool,
-  favorite: PropTypes.bool,
-  profileImage: PropTypes.string.isRequired,
-  follow: PropTypes.bool,
-}
 Post.defaultProps = {
   backgroundColor: 'skyblue',
   isMine: true,
