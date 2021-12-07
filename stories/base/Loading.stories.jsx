@@ -5,6 +5,10 @@ export default {
   title: 'base/Loading',
   component: Loading,
   argTypes: {
+    loading: {
+      defaultValue: false,
+      type: 'boolean',
+    },
     size: {
       defaultValue: 150,
       control: { type: 'range', min: 50, max: 300 },

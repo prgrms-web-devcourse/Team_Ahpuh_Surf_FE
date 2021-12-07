@@ -2,6 +2,7 @@ import Lottie from 'react-lottie'
 import animationData from 'public/images/loadingAnimation.json'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
+import { useEffect } from 'react'
 
 const defaultOptions = {
   loop: true,
@@ -23,29 +24,36 @@ const LoadingWrapper = styled.div`
   height: 100vh;
   backdrop-filter: ${({ blur }) =>
     typeof blur === 'number' ? `blur(${blur}px)` : `blur(${blur}})`};
-  background-color: rgba(0, 0, 0, 0.1);
   z-index: 1000;
 `
 
-const Loading = ({ size, blur }) => (
-  <LoadingWrapper blur={blur}>
-    <Lottie
-      options={defaultOptions}
-      width={size}
-      height={size}
-      isClickToPauseDisabled
-    />
-  </LoadingWrapper>
-)
+const Loading = ({ loading, size, blur }) => {
+  useEffect(() => {
+    document.body.style.overflow = loading ? 'hidden' : 'unset'
+  }, [loading])
+
+  return (
+    <LoadingWrapper blur={blur}>
+      <Lottie
+        options={defaultOptions}
+        width={size}
+        height={size}
+        isClickToPauseDisabled
+      />
+    </LoadingWrapper>
+  )
+}
 
 Loading.propTypes = {
+  loading: PropTypes.bool,
   size: PropTypes.number,
   blur: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 Loading.defaultProps = {
-  size: 150,
-  blur: 12,
+  loading: false,
+  size: 220,
+  blur: 10,
 }
 
 export default Loading
