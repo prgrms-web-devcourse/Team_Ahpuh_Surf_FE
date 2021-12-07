@@ -2,7 +2,7 @@ import ReactApexChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
 import { getMonth } from './getMonth'
 
-const HeatmapChartComponent = ({ data, height }) => {
+const HeatmapChartComponent = ({ data, height, width }) => {
   const months = [
     'Jan',
     'Feb',
@@ -49,7 +49,26 @@ const HeatmapChartComponent = ({ data, height }) => {
     },
     legend: {
       position: 'bottom',
+      show: false,
     },
+    responsive: [
+      {
+        breakpoint: 330,
+        options: {
+          chart: {
+            width: 320,
+            height: 200,
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '10px',
+              },
+            },
+          },
+        },
+      },
+    ],
     plotOptions: {
       heatmap: {
         colorScale: {
@@ -98,6 +117,7 @@ const HeatmapChartComponent = ({ data, height }) => {
         series={dataset}
         type="heatmap"
         height={height}
+        width={width}
       />
     </div>
   )
@@ -105,8 +125,10 @@ const HeatmapChartComponent = ({ data, height }) => {
 HeatmapChartComponent.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.number,
+  width: PropTypes.string,
 }
 HeatmapChartComponent.defaultProps = {
   height: 350,
+  width: '100%',
 }
 export default HeatmapChartComponent
