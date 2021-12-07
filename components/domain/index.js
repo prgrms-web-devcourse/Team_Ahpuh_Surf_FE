@@ -6,4 +6,4 @@ export { default as CategoryCard } from './CategoryCard'
 export { default as PostDetail } from './PostDetail'
 export { default as NoticeCard } from './NoticeCard'
 export { default as DashboardCard } from './DashboardCard'
-
+export { default as ScoreSlider } from './ScoreSlider'
