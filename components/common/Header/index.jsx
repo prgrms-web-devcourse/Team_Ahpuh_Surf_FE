@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { Avatar, Logo } from 'components/base'
-import sample from 'public/images/sample.jpeg'
 
 const HeaderWrapper = styled.div`
   width: 100%;
+  height: 80px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
