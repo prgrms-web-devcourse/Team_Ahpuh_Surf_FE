@@ -41,6 +41,9 @@ const HeatmapChartComponent = ({ data, height, width }) => {
     chart: {
       type: 'heatmap',
     },
+    yaxis: {
+      show: false,
+    },
     dataLabels: {
       enabled: false,
     },
