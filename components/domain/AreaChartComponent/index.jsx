@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { AiTwotoneSetting } from 'react-icons/all'
 import * as Style from './style'
 
+// TODO: width: 100% 설정은 되었으나, width가 설정되어 있는 부분중 일부를 제거하면 100%가 깨진다. width 값에 어떠한 값도 넣지 말것
 const AreaChartComponent = ({ width, height, data }) => {
   const chartRef = useRef(null)
 
@@ -15,7 +16,8 @@ const AreaChartComponent = ({ width, height, data }) => {
     chart: {
       id: 'area-datetime',
       type: 'area',
-      height: 350,
+      // width,
+      height,
       zoom: {
         autoScaleYaxis: true,
       },
@@ -74,8 +76,6 @@ const AreaChartComponent = ({ width, height, data }) => {
     options,
     series: data,
     type: 'area',
-    width,
-    height,
   }
 
   const handleData = useCallback((timeline) => {
@@ -120,12 +120,12 @@ const AreaChartComponent = ({ width, height, data }) => {
     console.log('has to move to Category Manage Page ')
   }
   return (
-    <div style={{ ...Style.containerStyle, width: width || 500 }}>
+    <div style={{ ...Style.containerStyle, width }}>
       <AiTwotoneSetting
         style={Style.settingButtonStyle}
         onClick={handleSettingButton}
       />
-      <AreaChart {...areaChartArgs} />
+      <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
       <Style.ButtonContainer>
         <Style.Button onClick={() => handleData('one_year')}>year</Style.Button>
         <Style.Button onClick={() => handleData('one_month')}>
@@ -136,12 +136,12 @@ const AreaChartComponent = ({ width, height, data }) => {
   )
 }
 AreaChart.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   data: PropTypes.array.isRequired,
 }
 AreaChart.defaultProps = {
-  width: 500,
+  width: '100%',
   height: 250,
 }
 export default AreaChartComponent
