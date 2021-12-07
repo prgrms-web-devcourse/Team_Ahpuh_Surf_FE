@@ -4,7 +4,15 @@ export default {
   title: 'common/Navbar',
   component: Navbar,
   argTypes: {
-    control: { type: 'color' },
+    color: {
+      control: { type: 'color' },
+    },
+    height: {
+      control: { type: 'number' },
+    },
+    iconSize: {
+      control: { type: 'number' },
+    },
   },
 }
 

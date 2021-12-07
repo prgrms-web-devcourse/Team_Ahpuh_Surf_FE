@@ -19,6 +19,16 @@ const Calendar = ({ onClick, changedDate }) => {
   const firstDayInfoOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-1`) // 2021-12-1
   const firstDay = firstDayInfoOfMonth.day() // 일요일 = 0, 월요일 = 1
 
+  const isSameToday = (index) =>
+    index + 1 === todayObj.date() &&
+    thisMonth === todayObj.month() &&
+    thisYear === todayObj.year()
+
+  const isSameChangedDate = (index) =>
+    dayObj.date() === index + 1 &&
+    dayObj.month() === dayjs(changedDate).month() &&
+    dayObj.year() === dayjs(changedDate).year()
+
   const handlePrev = () => {
     setDayObj(dayObj.subtract(1, 'month')) // 복제된 한달 전 dayjs 객체가 리턴됨
   }
@@ -28,7 +38,7 @@ const Calendar = ({ onClick, changedDate }) => {
   }
 
   const handleClick = (index, prevMonth) => {
-    const clickedDate = index + 1
+    const clickedDate = prevMonth ? index : index + 1
     const clickedDateInfo = dayjs(
       `${thisYear}-${prevMonth ? thisMonth : thisMonth + 1}-${clickedDate}`,
     )
@@ -36,22 +46,13 @@ const Calendar = ({ onClick, changedDate }) => {
   }
 
   const handleClassName = (index) => {
-    if (
-      index + 1 === todayObj.date() &&
-      thisMonth === todayObj.month() &&
-      thisYear === todayObj.year() &&
-      dayObj.date() === index + 1
-    ) {
+    if (isSameToday(index) && isSameChangedDate(index)) {
       return 'today active'
     }
-    if (
-      index + 1 === todayObj.date() &&
-      thisMonth === todayObj.month() &&
-      thisYear === todayObj.year()
-    ) {
+    if (isSameToday(index)) {
       return 'today'
     }
-    if (dayObj.date() === index + 1) {
+    if (isSameChangedDate(index)) {
       return 'active'
     }
 
@@ -63,7 +64,6 @@ const Calendar = ({ onClick, changedDate }) => {
       <Style.Header>
         <Style.NavButton onClick={handlePrev}>&lt;</Style.NavButton>
         <Text strong>{dayObj.format('MMM YYYY')}</Text>
-        {/* FIXME: Text는 예임 드롭다운으로 바꿔야 함 */}
         <Style.NavButton onClick={handleNext}>&gt;</Style.NavButton>
       </Style.Header>
 
@@ -79,7 +79,12 @@ const Calendar = ({ onClick, changedDate }) => {
         {range(firstDay).map((index) => (
           <Style.Cell
             key={index}
-            onClick={() => handleClick(index, 'prevMonth')}>
+            onClick={() =>
+              handleClick(
+                firstDayInfoOfMonth.subtract(firstDay - index, 'day').date(),
+                true,
+              )
+            }>
             <Text color="#ddd">
               {firstDayInfoOfMonth.subtract(firstDay - index, 'day').date()}
             </Text>
