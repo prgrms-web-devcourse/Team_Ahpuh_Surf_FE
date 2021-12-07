@@ -7,10 +7,9 @@ import Link from 'next/link'
 const NavbarWrapper = styled.ul`
   display: flex;
   flex-shrink: 0;
+  flex-grow: 0;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   height: ${({ height }) => `${height}px`};
   padding: 10px 20px;

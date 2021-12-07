@@ -35,6 +35,7 @@ const Dropdown = ({ data, width, fontSize, border, isObj }) => {
             name: `${item}`,
           },
     )
+    toggleList(false)
   }, [])
 
   return (
