@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "11.7.0",
     "@emotion/styled": "11.6.0",
+    "@material-ui/core": "^4.12.3",
     "apexcharts": "^3.31.0",
     "commitizen": "4.2.4",
     "cz-conventional-changelog": "3.3.0",
