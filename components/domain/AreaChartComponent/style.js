@@ -16,9 +16,10 @@ export const containerStyle = {
   alignItems: 'end',
   justifyContent: 'center',
   position: 'relative',
-  border: '1px solid black',
+  border: '1px solid darkgray',
   borderRadius: 10,
   padding: 10,
+  marginTop: 10,
 }
 export const ButtonContainer = styled.div`
   display: flex;
