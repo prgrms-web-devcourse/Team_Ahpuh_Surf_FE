@@ -1,21 +1,21 @@
 import styled from '@emotion/styled'
 
 export const Button = styled.button`
-  color: #222;
-  background-color: #fff;
-  border: 1px solid #e7e7e7;
-  border-bottom: 2px solid #ddd;
-  border-radius: 2px;
   padding: 4px 17px;
   margin-left: 3px;
   margin-right: 3px;
+  border: 1px solid #e7e7e7;
+  border-bottom: 2px solid #ddd;
+  border-radius: 2px;
+  background-color: #fff;
+  color: #222;
 `
 export const containerStyle = {
   display: 'flex',
+  position: 'relative',
   flexDirection: 'column',
   alignItems: 'end',
   justifyContent: 'center',
-  position: 'relative',
   border: '1px solid darkgray',
   borderRadius: 10,
   padding: 10,
@@ -28,5 +28,6 @@ export const ButtonContainer = styled.div`
 `
 export const settingButtonStyle = {
   margin: '10px',
+  backgroundColor: 'white',
   cursor: 'pointer',
 }
