@@ -25,7 +25,6 @@ const Mypage = () => {
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
-
   return (
     <Style.Container>
       <Style.Profile>
@@ -61,11 +60,11 @@ const Mypage = () => {
       </Style.Introduction>
       <Style.Graph>
         <Style.Title>Main ></Style.Title>
-        <AreaChartComponent data={dataset} width="100%" height={300} />
+        <AreaChartComponent data={dataset} width="100%" height={300} isMyPage />
       </Style.Graph>
       <Style.Graph>
         <Style.Title>Dashboard ></Style.Title>
-        <HeatmapComponent data={heatmapSampleData} width="100%" />
+        <HeatmapComponent data={heatmapSampleData} width="100%" height="140%" />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
