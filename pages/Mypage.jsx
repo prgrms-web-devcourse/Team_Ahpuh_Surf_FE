@@ -1,6 +1,9 @@
 import dynamic from 'next/dynamic'
 import { sampleXNY1 } from 'components/domain/AreaChartComponent/sampleXNY1'
 import { sampleXNY2 } from 'components/domain/AreaChartComponent/sampleXNY2'
+import { AiTwotoneSetting } from 'react-icons/ai'
+import { BsFillBellFill } from 'react-icons/bs'
+import Link from 'next/link'
 import { sampleData } from '../SampleData/Mypage'
 import { Avatar, Text } from '../components/base'
 import { heatmapSampleData } from '../SampleData/heatmapChart'
@@ -25,8 +28,21 @@ const Mypage = () => {
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
+  const handleNotice = () => {
+    console.log('click notice')
+  }
   return (
     <Style.Container>
+      <div style={{ display: 'flex', justifyContent: 'end' }}>
+        <Link href="/Mypage/setting">
+          <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
+        </Link>
+        <BsFillBellFill
+          size={30}
+          style={{ marginLeft: 5 }}
+          onClick={() => handleNotice()}
+        />
+      </div>
       <Style.Profile>
         <Avatar {...avatarArgs} style={Style.avatarStyle} />
         <Text size={25} strong>
