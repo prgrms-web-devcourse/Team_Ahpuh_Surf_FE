@@ -1,15 +1,14 @@
 import dayjs from 'dayjs'
 import PropTypes from 'prop-types'
+import { getCurrentQuarter } from './getCurrentQuarter'
 
-export const getDefaultOptions = (data, height, isMyPage) => {
-  // TODO: 적정 블루계열 컬러 회의해서 정하기
+export const getDefaultOptions = (height, isMyPage) => {
+  const year = new Date().getFullYear()
+  const quarter = getCurrentQuarter()
   let options = {
-    colors: ['#80d6ff', '#0d47a1', '#0077c2', '#0077c2', '#002171'],
-
     chart: {
       id: 'area-datetime',
       type: 'area',
-      // width,
       height,
       zoom: {
         autoScaleYaxis: true,
@@ -33,8 +32,8 @@ export const getDefaultOptions = (data, height, isMyPage) => {
           return dayjs(val).format('M')
         },
       },
-      min: new Date(data[0].data[0].x),
-      max: new Date(data[0].data[data[0].data.length - 1].x),
+      min: new Date(`${year}-${(quarter - 1) * 3 + 1}-01`),
+      max: new Date(`${year}-${quarter * 3}-30`),
     },
     yaxis: {
       show: false,
@@ -48,6 +47,7 @@ export const getDefaultOptions = (data, height, isMyPage) => {
     },
     stroke: {
       curve: 'smooth',
+      width: 0.5,
     },
     fill: {
       type: 'gradient',
@@ -58,16 +58,14 @@ export const getDefaultOptions = (data, height, isMyPage) => {
         stops: [0, 100],
       },
     },
-    selection: 'one_year',
+    selection: `${getCurrentQuarter()}`,
   }
   if (isMyPage) {
     options = { ...options, legend: { show: false } }
-    console.log(options)
   }
   return options
 }
 getDefaultOptions.propTypes = {
-  data: PropTypes.array.isRequired,
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isMyPage: PropTypes.bool,
 }
