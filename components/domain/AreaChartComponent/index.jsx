@@ -1,28 +1,18 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import AreaChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import dayjs from 'dayjs'
 import { AiTwotoneSetting } from 'react-icons/all'
+import Carot from 'components/domain/Carot'
 import * as Style from './style'
 import { getDefaultOptions } from './getDefaultOptions'
+import { getCurrentQuarter } from './getCurrentQuarter'
+import { updateXAxis } from './updateXAxis'
 
 const AreaChartComponent = ({ width, height, data, isMyPage }) => {
-  const chartRef = useRef(null)
-  const [options, setOptions] = useState(
-    getDefaultOptions(data, height, isMyPage),
-  )
-
-  // TODO: 외부에서 데이터 받을 때 props로 받고, 받을 때 아예 정제되서 받도록 처리
-  // eslint-disable-next-line new-cap
-  const dayObj = new dayjs()
-  const thisYear = dayObj.year()
-  const thisMonth = dayObj.month()
-
-  const firstDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-01`)
-  const lastDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-30`)
+  const [options, setOptions] = useState(getDefaultOptions(height, isMyPage))
+  const [curQuarter, setCurQuarter] = useState(getCurrentQuarter())
 
   const areaChartArgs = {
-    ref: chartRef,
     options,
     series: data,
     type: 'area',
@@ -32,71 +22,72 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
     setOptions({
       selection: timeline,
     })
-
     switch (timeline) {
-      case 'one_month':
+      case 1:
         // eslint-disable-next-line no-undef
         ApexCharts.exec('area-datetime', 'updateOptions', {
-          xaxis: {
-            min: new Date(firstDayOfMonth).getTime(),
-            max: new Date(lastDayOfMonth).getTime(),
-            labels: {
-              formatter(val) {
-                return dayjs(val).format('M/DD')
-              },
-            },
-          },
+          xaxis: updateXAxis('01', '03'),
         })
         break
-      case 'one_year':
+      case 2:
         // eslint-disable-next-line no-undef
         ApexCharts.exec('area-datetime', 'updateOptions', {
-          xaxis: {
-            min: new Date(data[0].data[0].x).getTime(),
-            max: new Date(data[0].data[data[0].data.length - 1].x).getTime(),
-            labels: {
-              formatter(val) {
-                return dayjs(val).format('M')
-              },
-            },
-          },
+          xaxis: updateXAxis('04', '06'),
         })
         break
-
+      case 3:
+        // eslint-disable-next-line no-undef
+        ApexCharts.exec('area-datetime', 'updateOptions', {
+          xaxis: updateXAxis('07', '09'),
+        })
+        break
+      case 4:
+        // eslint-disable-next-line no-undef
+        ApexCharts.exec('area-datetime', 'updateOptions', {
+          xaxis: updateXAxis('10', '12'),
+        })
+        break
       default:
     }
   }, [])
+  const handleRightCarot = () => {
+    if (curQuarter === 4) {
+      setCurQuarter(1)
+    } else {
+      setCurQuarter(() => curQuarter + 1)
+    }
+  }
+  const handleLeftCarot = () => {
+    if (curQuarter === 1) {
+      setCurQuarter(4)
+    } else {
+      setCurQuarter(() => curQuarter - 1)
+    }
+  }
+  const carotArgs = {
+    width: '100%',
+    height: '30px',
+    fontSize: 20,
+    curQuarter,
+    handleLeftCarot,
+    handleRightCarot,
+  }
   const handleSettingButton = () => {
     console.log('has to move to Category Manage Page ')
   }
+
+  useEffect(() => {
+    handleData(curQuarter)
+  }, [curQuarter])
   return (
     <div style={{ ...Style.containerStyle, width }}>
-      <div style={{ display: 'inlineBlock', backgroundColor: 'white' }}>
-        <AiTwotoneSetting
-          style={{
-            ...Style.settingButtonStyle,
-            position: 'absolute',
-            top: 0,
-            right: 0,
-            zIndex: 1,
-          }}
-          onClick={handleSettingButton}
-          size={20}
-        />
-      </div>
+      <AiTwotoneSetting
+        style={Style.settingButtonStyle}
+        onClick={handleSettingButton}
+        size={20}
+      />
       <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
-      {isMyPage ? (
-        <div />
-      ) : (
-        <Style.ButtonContainer>
-          <Style.Button onClick={() => handleData('one_year')}>
-            year
-          </Style.Button>
-          <Style.Button onClick={() => handleData('one_month')}>
-            month
-          </Style.Button>
-        </Style.ButtonContainer>
-      )}
+      <Carot {...carotArgs} />
     </div>
   )
 }

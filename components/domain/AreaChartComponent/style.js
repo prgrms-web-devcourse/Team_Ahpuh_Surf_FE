@@ -14,7 +14,7 @@ export const containerStyle = {
   display: 'flex',
   position: 'relative',
   flexDirection: 'column',
-  alignItems: 'end',
+  alignItems: 'center',
   justifyContent: 'center',
   border: '1px solid darkgray',
   borderRadius: 10,
@@ -30,4 +30,8 @@ export const settingButtonStyle = {
   margin: '10px',
   backgroundColor: 'white',
   cursor: 'pointer',
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  zIndex: 1,
 }
