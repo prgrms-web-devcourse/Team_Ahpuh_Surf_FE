@@ -10,6 +10,9 @@ export default {
     height: {
       control: { type: 'range', min: 45, max: 100 },
     },
+    borderRadious: {
+      control: { type: 'range', min: 0, max: 50 },
+    },
     fontSize: {
       control: { type: 'range', min: 10, max: 50 },
     },
