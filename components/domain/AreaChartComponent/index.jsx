@@ -81,11 +81,14 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
   }, [curQuarter])
   return (
     <div style={{ ...Style.containerStyle, width }}>
-      <AiTwotoneSetting
-        style={Style.settingButtonStyle}
-        onClick={handleSettingButton}
-        size={20}
-      />
+      {!isMyPage && (
+        <AiTwotoneSetting
+          style={Style.settingButtonStyle}
+          onClick={handleSettingButton}
+          size={20}
+        />
+      )}
+
       <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
       <Carot {...carotArgs} />
     </div>

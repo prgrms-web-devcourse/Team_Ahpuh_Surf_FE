@@ -128,11 +128,11 @@ const HeatmapChartComponent = ({ data, height, width }) => {
 }
 HeatmapChartComponent.propTypes = {
   data: PropTypes.array.isRequired,
-  height: PropTypes.number,
+  height: PropTypes.string,
   width: PropTypes.string,
 }
 HeatmapChartComponent.defaultProps = {
-  height: 350,
+  height: '350px',
   width: '100%',
 }
 export default HeatmapChartComponent
