@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 export const DropdownWrapper = styled.div`
   position: relative;
   font-size: ${({ fontSize }) => `${fontSize}px`};
-  width: ${({ width }) => `${width}px`};
+  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
 `
 
 export const SelectedWrapper = styled.div`
@@ -11,8 +11,11 @@ export const SelectedWrapper = styled.div`
   font-size: 16px;
   box-sizing: border-box;
   width: 100%;
-  padding: 6px 10px;
-  border: ${({border}) => border ? '1px solid rgba(0, 0, 0, 0.3)' : 'none'};
+  height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
+  padding: 0 10px;
+  border: ${({ theme: { grayColor }, border }) =>
+    border ? `1px solid ${grayColor.$border}` : 'none'};
   color: rgba(0, 0, 0, 0.8);
   border-radius: 8px;
   display: flex;

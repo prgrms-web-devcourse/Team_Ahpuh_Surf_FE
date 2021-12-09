@@ -5,8 +5,10 @@ export const CalendarWrapper = styled.div`
   right: 0;
   top: 45px;
   width: 350px;
-  box-shadow: 0 3px 3px 4px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+  box-shadow: 0 3px 3px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  z-index: 999;
 `
 
 export const Header = styled.header`
