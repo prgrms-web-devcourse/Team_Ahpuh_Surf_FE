@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import dynamic from 'next/dynamic'
-import { sampleData } from '../SampleData/heatmapChart'
+import { sampleData } from 'utils/SampleData/heatmapChart'
 
 const HomeWrapper = styled.div`
   background-color: orange;
