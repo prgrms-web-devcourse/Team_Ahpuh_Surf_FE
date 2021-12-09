@@ -4,18 +4,14 @@ import { sampleXNY2 } from 'components/domain/AreaChartComponent/sampleXNY2'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { BsFillBellFill } from 'react-icons/bs'
 import Link from 'next/link'
+import { Text } from 'components/base'
+import ContentBox from 'components/domain/ContentBox'
+import Profile from 'components/domain/Profile'
 import { sampleData } from '../SampleData/Mypage'
-import { Avatar, Text } from '../components/base'
 import { heatmapSampleData } from '../SampleData/heatmapChart'
-import ContentBox from '../components/domain/ContentBox'
 import * as Style from './myPageStyle'
 
 const Mypage = () => {
-  const avatarArgs = {
-    src: sampleData.profilePhotoUrl,
-    size: '150%',
-    alt: 'avatar',
-  }
   const AreaChartComponent = dynamic(
     import('components/domain/AreaChartComponent'),
     { ssr: false },
@@ -43,27 +39,23 @@ const Mypage = () => {
           onClick={() => handleNotice()}
         />
       </div>
-      <Style.Profile>
-        <Avatar {...avatarArgs} style={Style.avatarStyle} />
-        <Text size={25} strong>
-          {sampleData.userName}
-        </Text>
-        <Text size={15} color="#8D8D8D">
-          {sampleData.email}
-        </Text>
-        <Style.FollowContainer>
-          <Style.FollowItem>
-            <Text size={36}>{sampleData.followerCount}</Text>
-            <Text size={20}>팔로우</Text>
-          </Style.FollowItem>
-          <Style.FollowItem>
-            <Text size={36}>{sampleData.followingCount}</Text>
-            <Text size={20}>팔로잉</Text>
-          </Style.FollowItem>
-        </Style.FollowContainer>
-      </Style.Profile>
+      <Profile
+        profilePhotoUrl={sampleData.profilePhotoUrl}
+        userName={sampleData.userName}
+        email={sampleData.email}
+      />
+      <Style.FollowContainer>
+        <Style.FollowItem>
+          <Text size={36}>{sampleData.followerCount}</Text>
+          <Text size={20}>Follower</Text>
+        </Style.FollowItem>
+        <Style.FollowItem>
+          <Text size={36}>{sampleData.followingCount}</Text>
+          <Text size={20}>Following</Text>
+        </Style.FollowItem>
+      </Style.FollowContainer>
       <Style.Introduction>
-        <Style.Title style={{ display: 'block' }}>자기소개</Style.Title>
+        <Style.Title style={{ display: 'block' }}>About Me</Style.Title>
         <Style.Title>URL: </Style.Title>
         {sampleData.url ? (
           <Style.Title>{sampleData.url}</Style.Title>
