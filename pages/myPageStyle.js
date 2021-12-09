@@ -3,12 +3,6 @@ import styled from '@emotion/styled'
 export const Container = styled.div`
   margin: 0 20px 100px 20px;
 `
-export const Profile = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
 export const FollowContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -16,15 +10,13 @@ export const FollowContainer = styled.div`
 export const FollowItem = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 20px;
   & * {
     margin-top: 10px;
   }
 `
-export const avatarStyle = {
-  marginTop: 10,
-  marginBottom: 10,
-}
 
 export const Introduction = styled.div`
   margin-top: 20px;
