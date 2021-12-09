@@ -1,4 +1,4 @@
-export const sampleData = [
+export const sampleXNY1 = [
   {
     x: '2021.01.01',
     y: 50,

@@ -1,4 +1,4 @@
-export const sampleData = [
+export const heatmapSampleData = [
   {
     date: '2021.1.1',
     count: 9,

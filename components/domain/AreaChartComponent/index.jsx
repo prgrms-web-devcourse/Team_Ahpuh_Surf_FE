@@ -1,147 +1,106 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import AreaChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import dayjs from 'dayjs'
 import { AiTwotoneSetting } from 'react-icons/all'
+import Carot from 'components/domain/Carot'
 import * as Style from './style'
+import { getDefaultOptions } from './getDefaultOptions'
+import { getCurrentQuarter } from './getCurrentQuarter'
+import { updateXAxis } from './updateXAxis'
 
-const AreaChartComponent = ({ width, height, data }) => {
-  const chartRef = useRef(null)
-
-  const [options, setOptions] = useState({
-    // TODO: 적정 블루계열 컬러 회의해서 정하기
-    colors: ['#80d6ff', '#0d47a1', '#0077c2', '#0077c2', '#002171'],
-
-    chart: {
-      id: 'area-datetime',
-      type: 'area',
-      height: 350,
-      zoom: {
-        autoScaleYaxis: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    markers: {
-      size: 1,
-      style: 'hollow',
-    },
-
-    xaxis: {
-      type: 'datetime',
-      labels: {
-        formatter(val) {
-          return dayjs(val).format('MMM')
-        },
-      },
-      min: new Date(data[0].data[0].x),
-      max: new Date(data[0].data[data[0].data.length - 1].x),
-    },
-    tooltip: {
-      x: {
-        formatter(val) {
-          return `${dayjs(val).format('MMM DD')}`
-        },
-      },
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shadeIntensity: 1,
-        opacityFrom: 0.7,
-        opacityTo: 0.9,
-        stops: [0, 100],
-      },
-    },
-    selection: 'one_year',
-  })
-
-  // TODO: 외부에서 데이터 받을 때 props로 받고, 받을 때 아예 정제되서 받도록 처리
-  // eslint-disable-next-line new-cap
-  const dayObj = new dayjs()
-  const thisYear = dayObj.year()
-  const thisMonth = dayObj.month()
-
-  const firstDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-01`)
-  const lastDayOfMonth = dayjs(`${thisYear}-${thisMonth + 1}-30`)
+const AreaChartComponent = ({ width, height, data, isMyPage }) => {
+  const [options, setOptions] = useState(getDefaultOptions(height, isMyPage))
+  const [curQuarter, setCurQuarter] = useState(getCurrentQuarter())
 
   const areaChartArgs = {
-    ref: chartRef,
     options,
     series: data,
     type: 'area',
-    width,
-    height,
   }
 
   const handleData = useCallback((timeline) => {
     setOptions({
       selection: timeline,
     })
-
     switch (timeline) {
-      case 'one_month':
+      case 1:
         // eslint-disable-next-line no-undef
         ApexCharts.exec('area-datetime', 'updateOptions', {
-          xaxis: {
-            min: new Date(firstDayOfMonth).getTime(),
-            max: new Date(lastDayOfMonth).getTime(),
-            labels: {
-              formatter(val) {
-                return dayjs(val).format('MMM d')
-              },
-            },
-          },
+          xaxis: updateXAxis('01', '03'),
         })
         break
-      case 'one_year':
+      case 2:
         // eslint-disable-next-line no-undef
         ApexCharts.exec('area-datetime', 'updateOptions', {
-          xaxis: {
-            min: new Date(data[0].data[0].x).getTime(),
-            max: new Date(data[0].data[data[0].data.length - 1].x).getTime(),
-            labels: {
-              formatter(val) {
-                return dayjs(val).format('MMM')
-              },
-            },
-          },
+          xaxis: updateXAxis('04', '06'),
         })
         break
-
+      case 3:
+        // eslint-disable-next-line no-undef
+        ApexCharts.exec('area-datetime', 'updateOptions', {
+          xaxis: updateXAxis('07', '09'),
+        })
+        break
+      case 4:
+        // eslint-disable-next-line no-undef
+        ApexCharts.exec('area-datetime', 'updateOptions', {
+          xaxis: updateXAxis('10', '12'),
+        })
+        break
       default:
     }
   }, [])
+  const handleRightCarot = () => {
+    if (curQuarter === 4) {
+      setCurQuarter(1)
+    } else {
+      setCurQuarter(() => curQuarter + 1)
+    }
+  }
+  const handleLeftCarot = () => {
+    if (curQuarter === 1) {
+      setCurQuarter(4)
+    } else {
+      setCurQuarter(() => curQuarter - 1)
+    }
+  }
+  const carotArgs = {
+    width: '100%',
+    height: '30px',
+    fontSize: 20,
+    curQuarter,
+    handleLeftCarot,
+    handleRightCarot,
+  }
   const handleSettingButton = () => {
     console.log('has to move to Category Manage Page ')
   }
+
+  useEffect(() => {
+    handleData(curQuarter)
+  }, [curQuarter])
   return (
-    <div style={{ ...Style.containerStyle, width: width || 500 }}>
-      <AiTwotoneSetting
-        style={Style.settingButtonStyle}
-        onClick={handleSettingButton}
-      />
-      <AreaChart {...areaChartArgs} />
-      <Style.ButtonContainer>
-        <Style.Button onClick={() => handleData('one_year')}>year</Style.Button>
-        <Style.Button onClick={() => handleData('one_month')}>
-          month
-        </Style.Button>
-      </Style.ButtonContainer>
+    <div style={{ ...Style.containerStyle, width }}>
+      {!isMyPage && (
+        <AiTwotoneSetting
+          style={Style.settingButtonStyle}
+          onClick={handleSettingButton}
+          size={20}
+        />
+      )}
+
+      <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
+      <Carot {...carotArgs} />
     </div>
   )
 }
 AreaChart.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   data: PropTypes.array.isRequired,
 }
 AreaChart.defaultProps = {
-  width: 500,
+  width: '100%',
   height: 250,
 }
 export default AreaChartComponent
