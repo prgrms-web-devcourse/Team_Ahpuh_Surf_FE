@@ -2,11 +2,13 @@ import dynamic from 'next/dynamic'
 import { sampleXNY1 } from 'components/domain/AreaChartComponent/sampleXNY1'
 import { sampleXNY2 } from 'components/domain/AreaChartComponent/sampleXNY2'
 import { AiTwotoneSetting } from 'react-icons/ai'
-import { BsFillBellFill } from 'react-icons/bs'
+import { BsFillBellFill, BsFillPencilFill } from 'react-icons/bs'
 import Link from 'next/link'
 import { Text } from 'components/base'
 import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
+import { useState } from 'react'
+import EditAboutMe from 'components/domain/EditAboutMe'
 import { sampleData } from '../SampleData/Mypage'
 import { heatmapSampleData } from '../SampleData/heatmapChart'
 import * as Style from './myPageStyle'
@@ -16,19 +18,33 @@ const Mypage = () => {
     import('components/domain/AreaChartComponent'),
     { ssr: false },
   )
-  const dataset = []
-  dataset.push({ data: sampleXNY1, name: 'react' })
-  dataset.push({ data: sampleXNY2, name: 'Vue' })
-
   const HeatmapComponent = dynamic(
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
+
+  const dataset = []
+  dataset.push({ data: sampleXNY1, name: 'react' })
+  dataset.push({ data: sampleXNY2, name: 'Vue' })
+
+  // modal 보이는지 여부 관리
+  const [visible, setVisible] = useState(false)
+  const toggle = () => {
+    setVisible(!visible)
+  }
+
   const handleNotice = () => {
     console.log('click notice')
   }
+
   return (
     <Style.Container>
+      <EditAboutMe
+        url={sampleData.url}
+        aboutMe={sampleData.aboutMe}
+        visible={visible}
+        toggle={toggle}
+      />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <Link href="/Mypage/setting">
           <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
@@ -55,7 +71,14 @@ const Mypage = () => {
         </Style.FollowItem>
       </Style.FollowContainer>
       <Style.Introduction>
-        <Style.Title style={{ display: 'block' }}>About Me</Style.Title>
+        <Style.Title style={{ display: 'block' }}>
+          About Me&nbsp;
+          <BsFillPencilFill
+            size={20}
+            style={{ color: '#8d8d8d' }}
+            onClick={() => toggle()}
+          />
+        </Style.Title>
         <Style.Title>URL: </Style.Title>
         {sampleData.url ? (
           <Style.Title>{sampleData.url}</Style.Title>
