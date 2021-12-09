@@ -14,14 +14,21 @@ const grayColor = {
   $border: 'rgba(0, 0, 0, 0.3)',
 }
 
+const statusColor = {
+  $red: '#e01e5a',
+  $green: '#2eb67d',
+}
+
 const commonSize = {
   $Header: 80,
   $Navbar: 50,
 }
+
 const theme = {
   fontColor,
   surfColor,
   grayColor,
+  statusColor,
   commonSize,
 }
 
