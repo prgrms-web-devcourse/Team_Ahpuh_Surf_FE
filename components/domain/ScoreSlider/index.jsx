@@ -105,22 +105,24 @@ const ScoreSlider = () => {
           max={100}
           onChange={handleScore}
         />
-        <Style.InputScore
-          ref={inputRef}
-          type="number"
-          value={score}
-          onChange={handleScore}
-          onInput={checkLength}
-          maxLength={3}
-        />
-        <Style.ButtonWrapper>
-          <button type="button" onClick={handlePlus}>
-            +
-          </button>
-          <button type="button" onClick={handleMinus}>
-            -
-          </button>
-        </Style.ButtonWrapper>
+        <Style.InputWrapper>
+          <Style.InputScore
+            ref={inputRef}
+            type="number"
+            value={score}
+            onChange={handleScore}
+            onInput={checkLength}
+            maxLength={3}
+          />
+          <Style.ButtonWrapper>
+            <button type="button" onClick={handlePlus}>
+              +
+            </button>
+            <button type="button" onClick={handleMinus}>
+              -
+            </button>
+          </Style.ButtonWrapper>
+        </Style.InputWrapper>
       </Style.SliderWrapper>
     </>
   )
