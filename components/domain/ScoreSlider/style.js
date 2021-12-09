@@ -4,10 +4,15 @@ export const SliderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  margin: 10px 0;
+`
+
+export const InputWrapper = styled.div`
+  position: relative;
 `
 
 export const InputScore = styled.input`
-  position: relative;
   display: inline-block;
   flex-shrink: 1;
   width: 80px;
@@ -30,6 +35,8 @@ export const InputScore = styled.input`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
   display: flex;
   flex-direction: column;

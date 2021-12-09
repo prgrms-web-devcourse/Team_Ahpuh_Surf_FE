@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 const useForm = ({ initialValues, onSubmit, validate }) => {
   const [values, setValues] = useState(initialValues)
   const [errors, setErrors] = useState({})
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setValues({ ...values, [name]: value })
-  }
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target
+      setValues({ ...values, [name]: value })
+    },
+    [values],
+  )
 
   const handleSubmit = async (e) => {
     // handleSubmit의 역할
@@ -17,7 +20,6 @@ const useForm = ({ initialValues, onSubmit, validate }) => {
     setIsLoading(true)
     e.preventDefault()
     const newErrors = validate(values)
-
     if (Object.keys(newErrors).length === 0) {
       await onSubmit()
     }
