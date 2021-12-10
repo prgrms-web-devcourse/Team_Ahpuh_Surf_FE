@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Avatar, Text } from '../../base'
 
-const Profile = ({ profilePhotoUrl, userName, email }) => {
+const Profile = ({ profilePhotoUrl, userName, email, children }) => {
   const avatarArgs = {
     src: profilePhotoUrl,
     size: '150%',
@@ -26,6 +26,7 @@ const Profile = ({ profilePhotoUrl, userName, email }) => {
       <Text size={15} color="#8D8D8D">
         {email}
       </Text>
+      {children}
     </Container>
   )
 }
