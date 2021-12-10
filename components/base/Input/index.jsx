@@ -3,7 +3,10 @@ import React, { useEffect, forwardRef } from 'react'
 import theme from 'styles/theme'
 
 const Input = forwardRef(
-  ({ width, height, validate, fontSize, placeholder, type, ...props }, ref) => {
+  (
+    { width, height, validate, fontSize, placeholder, type, name, ...props },
+    ref,
+  ) => {
     const inputStyle = {
       width,
       height,
@@ -25,6 +28,7 @@ const Input = forwardRef(
         style={{ ...props.style, ...inputStyle }}
         placeholder={placeholder}
         type={type}
+        name={name}
         {...props}
       />
     )
