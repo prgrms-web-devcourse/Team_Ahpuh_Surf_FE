@@ -49,7 +49,7 @@ const ProfileModification = () => {
 
     // TODO: 입력값들 formData로 감싼 상태임...api 통해서 새로운 값 받아오면 컴포넌트들 재랜더링 하는 방식으로 처리하기
     // TODO: API 연동 되면 밑에 주석 해제하기
-    // router.push('/Mypage')
+    router.push('/mypage')
   }
   return (
     <Style.Container onSubmit={handleSubmit}>
