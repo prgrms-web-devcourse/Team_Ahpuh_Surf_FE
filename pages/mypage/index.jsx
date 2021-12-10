@@ -46,7 +46,7 @@ const Mypage = () => {
         toggle={toggle}
       />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
-        <Link href="/Mypage/edit">
+        <Link href="/mypage/edit">
           <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
         </Link>
         <BsFillBellFill
