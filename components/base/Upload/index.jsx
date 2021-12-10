@@ -12,24 +12,25 @@ const Input = styled.input`
   display: none; // input을 꾸미기 위해 display: none
 `
 const Upload = ({
-  width,
-  children,
-  droppable,
-  name,
-  accept,
-  value,
-  onChange,
-  ...props
-}) => {
+                  width,
+                  children,
+                  droppable,
+                  name,
+                  accept,
+                  value,
+                  onChange,
+                  ...props
+                }) => {
   // input 대신 다른 걸 보여주기 위해 children 받음
   const [dragging, setDragging] = useState(false)
   const [file, setFile] = useState(value)
   const inputRef = useRef(null) // display: none이므로 Ref로 직접 DOM에 접근
 
   const handleFileChange = (e) => {
-    const files = e.target.files
+    const { files } = e.target
     const changedFile = files[0] // 여러개 파일 중 제일 첫번째만 받음
     setFile(changedFile) // 파일 데이터 저장
+    // eslint-disable-next-line no-unused-expressions
     onChange && onChange(changedFile)
   }
 
@@ -73,9 +74,10 @@ const Upload = ({
     e.preventDefault()
     e.stopPropagation()
 
-    const files = e.dataTransfer.files
+    const { files } = e.dataTransfer
     const changedFile = files[0]
     setFile(changedFile)
+    // eslint-disable-next-line no-unused-expressions
     onChange && onChange(changedFile)
     setDragging(false)
   }
