@@ -3,8 +3,8 @@ import dynamic from 'next/dynamic'
 import {sampleData } from 'utils/SampleData/RadialChartComponent'
 import {heatmapSampleData} from 'utils/SampleData/heatmapChart'
 import {CategoryScore} from 'utils/SampleData/CategoryScore'
-import * as Style from './style'
 import { Text } from 'components/base'
+import * as Style from './style'
 import { DashboardCard } from '../../components/domain'
 
 const Dashboard=()=>{
@@ -35,7 +35,7 @@ const Dashboard=()=>{
           <div><span style={{padding:10,fontSize:60}}>{CategoryScore.length}</span>surfs</div>
         </Style.Box>
         <Style.Box width='30%'>
-          <Image src='https://picsum.photos/200' layout='responsive' width='100%' height='100%' alt='image'/>
+          <Image src='https://picsum.photos/300/300' layout='responsive' width='100%' height='100%' alt='image'/>
         </Style.Box>
       </Style.HorizontalBox>
       <Style.Box width='100%' style={averageBoxStyle}>
@@ -49,8 +49,18 @@ const Dashboard=()=>{
       <RadialChart data={sampleData}  style={{marginBottom:20}}/>
       <Text size={40} strong block style={{marginTop:20,alignSelf:'start'}}>Surfing STAT</Text>
       <HeatmapChart data={heatmapSampleData} width="100%" height="160%" style={{marginBottom:20}}/>
-      {CategoryScore.map(({categoryId,name,postCount,averageScore})=>(
-        <DashboardCard key={categoryId} categoryName={name} score={averageScore} recordAmount={postCount}/>))}
+      <div style={{width:'100%'}}>
+        {CategoryScore.map(({categoryId,name,postCount,averageScore},index)=>(
+          <div key={categoryId}>
+            {index===2 &&
+            <Style.Box style={{width:'99%',border:'none', marginBottom:20}}>
+              <Image src='/images/surfPapa.png' layout='responsive' width='100%' height={50} alt='image'/>
+            </Style.Box>
+            }
+            <DashboardCard categoryName={name} score={averageScore} recordAmount={postCount}/>
+          </div>
+        ))}
+      </div>
     </Style.Container>
   )
 }
