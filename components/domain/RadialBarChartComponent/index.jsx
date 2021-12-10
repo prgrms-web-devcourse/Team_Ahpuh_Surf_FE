@@ -39,7 +39,8 @@ const RadialBarChartComponent = ({ data, height }) => {
         },
       },
     },
-    colors: ['#a5d8ff', '#4dabf7', '#228be6', '#1971c2'],
+    // colors: ['#a5d8ff', '#4dabf7', '#228be6', '#1971c2'],
+    colors:['#82b0fb','#6378ca','#6d5ba7','#6378CA',],
     labels,
     legend: {
       show: true,
@@ -70,7 +71,7 @@ const RadialBarChartComponent = ({ data, height }) => {
             show: true,
             position: 'bottom',
             offsetX: 0,
-            offsetY: 5,
+            offsetY: 30,
           },
         },
       },
@@ -78,9 +79,9 @@ const RadialBarChartComponent = ({ data, height }) => {
         breakpoint: 650,
         options: {
           legend: {
-            position: 'left',
-            offsetX: 160,
-            offsetY: 15,
+            position: 'bottom',
+            offsetX: 0,
+            offsetY: 30,
           },
         },
       },
