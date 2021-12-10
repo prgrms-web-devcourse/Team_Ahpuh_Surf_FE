@@ -5,6 +5,8 @@ export const CardContainer = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(2, 1fr);
   width: 90%;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
   border: 1px solid black;
   border-radius: 10px;
 `
