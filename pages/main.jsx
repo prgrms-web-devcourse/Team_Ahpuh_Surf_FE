@@ -3,8 +3,8 @@ import { Dropdown } from 'components/base'
 import { Post } from 'components/domain'
 import dynamic from 'next/dynamic'
 import { Children } from 'react'
-import { sampleData } from '../components/domain/AreaChartComponent/sampleXNY1'
-import { sampleData2 } from '../components/domain/AreaChartComponent/sampleXNY2'
+import {areaChartComponent1} from 'utils/SampleData/AreaChartComponent1'
+import {areaChartComponent2} from 'utils/SampleData/AreaChartComponent2'
 import { DUMMY_DATA_POST, FILTERING } from '../constants/PostData'
 
 const ApexChart = dynamic(
@@ -15,8 +15,8 @@ const ApexChart = dynamic(
 )
 
 const dataset = []
-dataset.push({ data: sampleData, name: 'react' })
-dataset.push({ data: sampleData2, name: 'Vue' })
+dataset.push({ data: areaChartComponent1, name: 'react' })
+dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
 const MainWrapper = styled.div`
   width: 100%;

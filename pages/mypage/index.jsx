@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
-import { sampleXNY1 } from 'components/domain/AreaChartComponent/sampleXNY1'
-import { sampleXNY2 } from 'components/domain/AreaChartComponent/sampleXNY2'
+import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1'
+import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { BsFillBellFill, BsFillPencilFill } from 'react-icons/bs'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import Profile from 'components/domain/Profile'
 import { useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
 import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
-import { sampleData } from 'SampleData/Mypage'
+import { sampleData } from 'utils/SampleData/Mypage'
 import * as Style from './style'
 
 const Mypage = () => {
@@ -24,8 +24,8 @@ const Mypage = () => {
   )
 
   const dataset = []
-  dataset.push({ data: sampleXNY1, name: 'react' })
-  dataset.push({ data: sampleXNY2, name: 'Vue' })
+  dataset.push({ data: areaChartComponent1, name: 'react' })
+  dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
   // modal 보이는지 여부 관리
   const [visible, setVisible] = useState(false)

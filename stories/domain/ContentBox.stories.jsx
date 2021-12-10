@@ -1,4 +1,4 @@
-import ContentBox from '../../components/domain/ContentBox'
+import ContentBox from 'components/domain/ContentBox'
 
 export default {
   title: 'Domain/ContentBox',
