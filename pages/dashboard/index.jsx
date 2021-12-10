@@ -35,7 +35,7 @@ const Dashboard=()=>{
           <div><span style={{padding:10,fontSize:60}}>{CategoryScore.length}</span>surfs</div>
         </Style.Box>
         <Style.Box width='30%'>
-          <Image src='https://picsum.photos/400/400' width='100%' height='100%' alt='image'/>
+          <Image src='https://picsum.photos/200' layout='responsive' width='100%' height='100%' alt='image'/>
         </Style.Box>
       </Style.HorizontalBox>
       <Style.Box width='100%' style={averageBoxStyle}>
