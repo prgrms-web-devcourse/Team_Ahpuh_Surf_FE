@@ -9,9 +9,9 @@ import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
 import { useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
-import { sampleData } from '../SampleData/Mypage'
-import { heatmapSampleData } from '../SampleData/heatmapChart'
-import * as Style from './myPageStyle'
+import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
+import { sampleData } from 'SampleData/Mypage'
+import * as Style from './style'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -46,7 +46,7 @@ const Mypage = () => {
         toggle={toggle}
       />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
-        <Link href="/Mypage/setting">
+        <Link href="/Mypage/edit">
           <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
         </Link>
         <BsFillBellFill
