@@ -1,8 +1,8 @@
 import { AiOutlinePlus } from 'react-icons/ai'
 import styled from '@emotion/styled'
 import Link from 'next/link'
-import { data } from 'SampleData/CategoryManage'
-import { CategoryCard } from '../components/domain'
+import { data } from 'utils/SampleData/CategoryManage'
+import { CategoryCard } from 'components/domain'
 
 const CategoryManage = () => {
   const Main = styled.div`
