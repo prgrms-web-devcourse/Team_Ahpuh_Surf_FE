@@ -1,5 +1,5 @@
 import { Loading } from 'components/base'
-import CategoryManage from 'pages/CategoryManage'
+import CategoryManage from 'pages/categorymanage'
 
 export default {
   title: 'base/Loading',
