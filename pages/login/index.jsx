@@ -4,6 +4,8 @@ import { checkForm } from 'utils/validation'
 import Link from 'next/link'
 import { useRef } from 'react'
 import * as Style from 'pages/signup/style'
+import { login } from 'utils/apis/user'
+import Cookies from 'js-cookie'
 
 const Login = () => {
   const { values, isLoading, errors, handleSubmit, handleChange } = useForm({
@@ -11,8 +13,13 @@ const Login = () => {
       email: '',
       password: '',
     },
-    onSubmit: () => {
-      console.log('work')
+    onSubmit: async () => {
+      console.log('work', Cookies)
+      const { data } = await login({
+        email: values.email,
+        password: values.password,
+      })
+      Cookies.set('user', JSON.stringify(data), { expires: 28, secure: true })
     },
     validate: ({ email, password }) => {
       const newErrors = {}
