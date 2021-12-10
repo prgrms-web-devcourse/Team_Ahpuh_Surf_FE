@@ -1,5 +1,5 @@
-import HeatmapChartComponent from '../../components/domain/HeatmapChartComponent'
-import { sampleData } from '../../SampleData/heatmapChart'
+import HeatmapChartComponent from 'components/domain/HeatmapChartComponent'
+import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
 
 export default {
   title: 'Domain/HeatmapChartComponent',
@@ -12,5 +12,5 @@ export default {
   },
 }
 export const Default = (args) => (
-  <HeatmapChartComponent {...args} data={sampleData} />
+  <HeatmapChartComponent {...args} data={heatmapSampleData} />
 )
