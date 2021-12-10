@@ -25,7 +25,7 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       data: [],
     }),
   )
-  data.forEach(({ date, count }) => {
+  data?.forEach(({ date, count }) => {
     const m = getMonth(date)
     dataset
       .filter((month) => month.name === m)
@@ -40,6 +40,7 @@ const HeatmapChartComponent = ({ data, height, width }) => {
   const options = {
     chart: {
       type: 'heatmap',
+      height,
     },
     yaxis: {
       show: false,
@@ -54,24 +55,24 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       position: 'bottom',
       show: false,
     },
-    responsive: [
-      {
-        breakpoint: 330,
-        options: {
-          chart: {
-            width: 320,
-            height: 200,
-          },
-          yaxis: {
-            labels: {
-              style: {
-                fontSize: '10px',
-              },
-            },
-          },
-        },
-      },
-    ],
+    // responsive: [
+    //   {
+    //     breakpoint: 330,
+    //     options: {
+    //       chart: {
+    //         width: 320,
+    //         height: 200,
+    //       },
+    //       yaxis: {
+    //         labels: {
+    //           style: {
+    //             fontSize: '10px',
+    //           },
+    //         },
+    //       },
+    //     },
+    //   },
+    // ],
     plotOptions: {
       heatmap: {
         colorScale: {
@@ -127,11 +128,11 @@ const HeatmapChartComponent = ({ data, height, width }) => {
 }
 HeatmapChartComponent.propTypes = {
   data: PropTypes.array.isRequired,
-  height: PropTypes.number,
+  height: PropTypes.string,
   width: PropTypes.string,
 }
 HeatmapChartComponent.defaultProps = {
-  height: 350,
+  height: '350px',
   width: '100%',
 }
 export default HeatmapChartComponent
