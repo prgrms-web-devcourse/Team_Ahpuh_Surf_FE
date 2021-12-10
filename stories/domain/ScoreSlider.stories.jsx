@@ -1,4 +1,3 @@
-// import { ScoreSlider } from 'components/domain'
 import { ScoreSlider } from 'components/domain'
 
 export default {

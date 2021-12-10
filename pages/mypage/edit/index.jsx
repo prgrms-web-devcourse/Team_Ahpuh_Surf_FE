@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Input, Text, Toggle, Upload } from 'components/base'
 import InputItem from 'components/domain/InputItem'
-import { sampleData } from 'SampleData/Mypage'
+import { sampleData } from 'utils/SampleData/Mypage'
 import * as Style from './style'
 
 const ProfileModification = () => {

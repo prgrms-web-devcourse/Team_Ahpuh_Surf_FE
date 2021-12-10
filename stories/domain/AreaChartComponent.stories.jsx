@@ -1,7 +1,6 @@
-// import { data } from '../../components/domain/AreaChartComponent/sampleData'
-import AreaChartComponent from '../../components/domain/AreaChartComponent'
-import { sampleXNY1 } from '../../components/domain/AreaChartComponent/sampleXNY1'
-import { sampleXNY2 } from '../../components/domain/AreaChartComponent/sampleXNY2'
+import AreaChartComponent from 'components/domain/AreaChartComponent'
+import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1'
+import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 
 export default {
   title: 'Domain/AreaChartComponent',
@@ -9,7 +8,7 @@ export default {
 }
 export const Default = (args) => {
   const dataset = []
-  dataset.push({ data: sampleXNY1, name: 'react' })
-  dataset.push({ data: sampleXNY2, name: 'Vue' })
+  dataset.push({ data: areaChartComponent1, name: 'react' })
+  dataset.push({ data: areaChartComponent2, name: 'Vue' })
   return <AreaChartComponent {...args} data={dataset} isMyPage />
 }
