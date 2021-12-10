@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useToggle } from 'hooks'
+import { forwardRef } from 'react'
 
 const ToggleContainer = styled.label`
   display: inline-block;
@@ -52,25 +53,28 @@ const ToggleSwitch = styled.div`
   }
 `
 
-const Toggle = ({ isToggle = false, disabled, onChange, ...props }) => {
-  const [checked, onToggle] = useToggle(isToggle)
+const Toggle = forwardRef(
+  ({ isToggle = false, disabled, onChange, ...props }, ref) => {
+    const [checked, onToggle] = useToggle(isToggle)
+    const handleChange = (e) => {
+      onToggle()
+      // eslint-disable-next-line no-unused-expressions
+      onChange && onChange(e)
+    }
 
-  const handleChange = (e) => {
-    onToggle()
-    onChange && onChange(e)
-  }
-
-  return (
-    <ToggleContainer {...props}>
-      <ToggleInput
-        type="checkbox"
-        checked={checked}
-        disabled={disabled}
-        onChange={handleChange}
-      />
-      <ToggleSwitch />
-    </ToggleContainer>
-  )
-}
-
+    return (
+      <ToggleContainer {...props}>
+        <ToggleInput
+          type="checkbox"
+          checked={checked}
+          disabled={disabled}
+          onChange={handleChange}
+          ref={ref}
+        />
+        <ToggleSwitch />
+      </ToggleContainer>
+    )
+  },
+)
+Toggle.displayName = 'Toggle'
 export default Toggle
