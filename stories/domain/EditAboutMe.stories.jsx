@@ -1,5 +1,5 @@
-import EditAboutMe from '../../components/domain/EditAboutMe'
-import { sampleData } from '../../SampleData/Mypage'
+import EditAboutMe from 'components/domain/EditAboutMe'
+import { sampleData } from 'utils/SampleData/Mypage'
 
 export default {
   title: 'Domain/EditAboutMe',

@@ -1,4 +1,4 @@
-import { CategoryCard } from '../../components/domain'
+import { CategoryCard } from 'components/domain'
 
 export default {
   title: 'Domain/CategoryCard',

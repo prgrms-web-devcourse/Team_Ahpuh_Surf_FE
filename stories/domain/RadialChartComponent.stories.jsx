@@ -1,5 +1,5 @@
-import RadialBarChartComponent from '../../components/domain/RadialBarChartComponent'
-import { sampleData } from '../../SampleData/RadialChartComponent'
+import RadialBarChartComponent from 'components/domain/RadialBarChartComponent'
+import { sampleData } from 'utils/SampleData/RadialChartComponent'
 
 export default {
   title: 'Domain/RadialBarChartComponent',

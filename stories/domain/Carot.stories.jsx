@@ -1,4 +1,4 @@
-import Carot from '../../components/domain/Carot'
+import Carot from 'components/domain/Carot'
 
 export default {
   title: 'Domain/Carot',

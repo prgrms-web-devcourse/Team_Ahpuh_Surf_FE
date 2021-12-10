@@ -3,8 +3,8 @@
 
 ```jsx
 import dynamic from 'next/dynamic'
-import { sampleData } from '../components/domain/AreaChartComponent/sampleXNY1'
-import { sampleData2 } from '../components/domain/AreaChartComponent/sampleXNY2'
+import { sampleData } from '../components/domain/AreaChartComponent/areaChartComponent1'
+import { sampleData2 } from '../components/domain/AreaChartComponent/areaChartComponent2'
 
 const ApeaChart = dynamic(() => import('components/domain/AreaChartComponent'), {
   ssr: false,
