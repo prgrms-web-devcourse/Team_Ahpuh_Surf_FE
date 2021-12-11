@@ -55,24 +55,33 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       position: 'bottom',
       show: false,
     },
-    // responsive: [
-    //   {
-    //     breakpoint: 330,
-    //     options: {
-    //       chart: {
-    //         width: 320,
-    //         height: 200,
-    //       },
-    //       yaxis: {
-    //         labels: {
-    //           style: {
-    //             fontSize: '10px',
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    // ],
+    responsive: [
+      {
+        breakpoint: 375,
+        options: {
+          chart: {
+            width: 360,
+            height: 200,
+          },
+          yaxis: {
+            labels: {
+              style: {
+                fontSize: '10px',
+              },
+            },
+          },
+        },
+      },
+      {
+        breakpoint: 414,
+        options: {
+          chart:{
+            width:400,
+            height:250,
+          }
+        }
+      }
+    ],
     plotOptions: {
       heatmap: {
         colorScale: {

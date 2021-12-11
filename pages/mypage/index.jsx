@@ -95,7 +95,7 @@ const Mypage = () => {
       </Style.Graph>
       <Style.Graph>
         <Style.Title>Dashboard ></Style.Title>
-        <HeatmapComponent data={heatmapSampleData} width="100%" height="140%" />
+        <HeatmapComponent data={heatmapSampleData}  />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
