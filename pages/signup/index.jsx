@@ -40,7 +40,9 @@ const Signup = () => {
       <form onSubmit={handleSubmit}>
         <Style.Heading>Signup</Style.Heading>
         <Style.InputWrapper>
-          <Style.Label htmlFor="email">email</Style.Label>
+          <Style.Label htmlFor="email" size={18}>
+            email
+          </Style.Label>
           <Input
             ref={inputRef}
             id="email"
@@ -56,7 +58,9 @@ const Signup = () => {
         </Style.InputWrapper>
         <Style.ErrorText>{errors.email && errors.email}</Style.ErrorText>
         <Style.InputWrapper>
-          <Style.Label htmlFor="username">username</Style.Label>
+          <Style.Label htmlFor="username" size={18}>
+            username
+          </Style.Label>
           <Input
             id="username"
             name="username"
@@ -71,7 +75,9 @@ const Signup = () => {
         </Style.InputWrapper>
         <Style.ErrorText>{errors.userName && errors.userName}</Style.ErrorText>
         <Style.InputWrapper>
-          <Style.Label htmlFor="password">password</Style.Label>
+          <Style.Label htmlFor="password" size={18}>
+            password
+          </Style.Label>
           <Input
             id="password"
             name="password"
@@ -86,7 +92,9 @@ const Signup = () => {
         </Style.InputWrapper>
         <Style.ErrorText>{errors.password && errors.password}</Style.ErrorText>
         <Style.InputWrapper>
-          <Style.Label htmlFor="passwordConfirm">password confirm</Style.Label>
+          <Style.Label htmlFor="passwordConfirm" size={18}>
+            password confirm
+          </Style.Label>
           <Input
             id="passwordConfirm"
             name="passwordConfirm"
@@ -99,11 +107,9 @@ const Signup = () => {
             maxLength={20}
           />
         </Style.InputWrapper>
-
         <Style.ErrorText>
           {errors.passwordConfirm && errors.passwordConfirm}
         </Style.ErrorText>
-
         <Style.Button type="submit" disabled={isLoading}>
           {isLoading ? 'loading...' : 'Signup'}
         </Style.Button>
