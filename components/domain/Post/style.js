@@ -4,6 +4,8 @@ export const CardContainer = styled.div`
   flex-shrink: 0;
   position: relative;
   padding: 15px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 100%;
   height: ${({height}) => `${height}px`};
   overflow: hidden;
@@ -23,7 +25,7 @@ export const Score = styled.div`
   width: 20%;
   padding-right: 15px;
   margin-right: 10px;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: bold;
 `
 export const Profile = styled.div`
