@@ -46,9 +46,9 @@ const Dashboard=()=>{
         </div>
         <div style={{fontSize:70}}>{Math.floor(avgScores)}</div>
       </Style.Box>
-      <RadialChart data={sampleData}  style={{marginBottom:20}}/>
+        <RadialChart data={sampleData}  style={{marginBottom:20}}/>
       <Text size={40} strong block style={{marginTop:20,alignSelf:'start'}}>Surfing STAT</Text>
-      <HeatmapChart data={heatmapSampleData} width="100%" height="160%" style={{marginBottom:20}}/>
+      <HeatmapChart data={heatmapSampleData} width="120%" style={{marginBottom:20,marginTop:20}}/>
       <div style={{width:'100%'}}>
         {CategoryScore.map(({categoryId,name,postCount,averageScore},index)=>(
           <div key={categoryId}>
