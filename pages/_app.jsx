@@ -13,6 +13,7 @@ const MyAppWrapper = styled.div`
 const ComponentWrapper = styled.div`
   height: ${({ theme: { commonSize } }) =>
     `calc(100% - ${commonSize.$Header + commonSize.$Navbar + 2}px)`};
+  overflow-y: scroll;
 `
 
 const MyApp = ({ Component, pageProps }) => (
