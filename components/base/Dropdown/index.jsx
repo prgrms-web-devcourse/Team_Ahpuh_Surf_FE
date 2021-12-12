@@ -15,6 +15,12 @@ import * as Style from './style'
 
 */
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+const Dropdown = ({ data, width, fontSize, border, isObj }) => {
+=======
+>>>>>>> Stashed changes
 const Dropdown = ({
   data,
   width,
@@ -23,7 +29,13 @@ const Dropdown = ({
   border,
   isObj,
   onChange,
+<<<<<<< Updated upstream
 }) => {
+=======
+  ...rest
+}) => {
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   const [selectedObj, setSelectedObj] = useState({
     name: 'SELECT',
   })
@@ -46,16 +58,35 @@ const Dropdown = ({
     toggleList(false)
   }, [])
 
+<<<<<<< Updated upstream
   useEffect(() => {
     onChange && onChange(selectedObj)
   }, [selectedObj])
 
   return (
     <Style.DropdownWrapper width={width} fontSize={fontSize}>
+=======
+<<<<<<< Updated upstream
+  return (
+    <Style.DropdownWrapper width={width} fontSize={fontSize}>
+      <Style.SelectedWrapper border={border} onClick={toggleDropdown}>
+=======
+  useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
+    onChange && onChange(selectedObj)
+  }, [selectedObj])
+
+  return (
+    <Style.DropdownWrapper width={width} fontSize={fontSize} {...rest}>
+>>>>>>> Stashed changes
       <Style.SelectedWrapper
         height={height}
         border={border}
         onClick={toggleDropdown}>
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         <Style.SelectedWord>{selectedObj.name}</Style.SelectedWord>
         <div style={{ flexShrink: '0' }}>
           {listOpened ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}

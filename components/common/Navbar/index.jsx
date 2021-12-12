@@ -36,7 +36,7 @@ const Navbar = ({ height, color, iconSize }) => (
       </Link>
     </li>
     <li>
-      <Link href="/" passHref>
+      <Link href="/posts/all" passHref>
         <a>
           <IoDocumentText size={iconSize} color={color} />
         </a>
