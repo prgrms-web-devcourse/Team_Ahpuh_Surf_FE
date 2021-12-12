@@ -2,10 +2,10 @@ import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 
 const TextareaInput = styled.textarea`
-  flex-shrink: 0;
-  width: 100%;
-  max-width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
+  flex: 1;
+  width: ${({ width }) => (typeof width === 'string' ? width : `${width}px`)};
+  height: ${({ height }) =>
+    typeof height === 'string' ? height : `${height}px`};
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px;
@@ -16,12 +16,12 @@ const TextareaInput = styled.textarea`
   resize: none;
 `
 
-const Textarea = ({ width, height, fontSize, placeholder }) => {
+const Textarea = ({ width, height, fontSize, placeholder, onChange }) => {
   const handleWrite = (e) => {
-    if (e.target.value === '\n') return
+    if (e.target.value.trim() === '') return
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      alert(e.target.value) // submit event handler
+      onChange && onChange(e.target.value)
       e.target.value = ''
     }
   }
@@ -38,15 +38,16 @@ const Textarea = ({ width, height, fontSize, placeholder }) => {
 
 Textarea.propTypes = {
   placeholder: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fontSize: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
 }
 
 Textarea.defaultProps = {
   placeholder: 'Shift+Enter로 줄바꿈/ Enter로 작성',
-  width: 500,
-  height: 500,
+  width: '100%',
+  height: 'auto',
   fontSize: 14,
 }
 

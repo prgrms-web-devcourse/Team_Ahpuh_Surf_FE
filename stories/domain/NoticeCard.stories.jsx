@@ -1,4 +1,4 @@
-import { NoticeCard } from '../../components/domain'
+import { NoticeCard } from 'components/domain'
 
 export default {
   title: 'Domain/NoticeCard',

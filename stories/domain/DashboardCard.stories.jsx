@@ -1,4 +1,4 @@
-import { DashboardCard } from '../../components/domain'
+import { DashboardCard } from 'components/domain'
 
 export default {
   title: 'Domain/DashboardCard',

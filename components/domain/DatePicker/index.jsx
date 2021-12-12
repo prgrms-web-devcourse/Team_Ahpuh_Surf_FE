@@ -7,7 +7,14 @@ import { BsFillCalendarCheckFill } from 'react-icons/bs'
 import { useToggle } from 'hooks'
 import * as Style from './style'
 
-const DatePicker = ({ width, height, fontSize, delimeter }) => {
+const DatePicker = ({
+  width,
+  height,
+  borderRadious,
+  fontSize,
+  delimeter,
+  onChange,
+}) => {
   const dayObj = dayjs()
 
   const [date, setDate] = useState(dayObj.format('DD'))
@@ -21,15 +28,16 @@ const DatePicker = ({ width, height, fontSize, delimeter }) => {
       setMonth(clickedDateInfo.format('MM'))
       setDate(clickedDateInfo.format('DD'))
       setToggleCalendar(false)
+      onChange && onChange(clickedDateInfo.format('YYYY/MM/DD'))
     },
     [setToggleCalendar],
   )
 
   return (
-    <Style.Container>
+    <Style.Container width={width}>
       <Style.DatePickerWrapper
-        width={width}
         height={height}
+        borderRadious={borderRadious}
         onClick={setToggleCalendar}>
         <Text
           size={
@@ -50,13 +58,16 @@ const DatePicker = ({ width, height, fontSize, delimeter }) => {
 DatePicker.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  borderRadious: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   delimeter: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
 }
 
 DatePicker.defaultProps = {
   width: '100%',
-  height: '45px',
+  height: 45,
+  borderRadious: 8,
   fontSize: 16,
   delimeter: '-',
 }

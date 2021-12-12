@@ -1,4 +1,4 @@
-import Post from '../../components/domain/Post'
+import Post from 'components/domain/Post'
 
 export default {
   title: 'Domain/Post',

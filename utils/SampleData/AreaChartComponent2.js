@@ -1,4 +1,4 @@
-export const sampleData2 = [
+export const areaChartComponent2 = [
   {
     x: '2021-01-01',
     y: 59,
