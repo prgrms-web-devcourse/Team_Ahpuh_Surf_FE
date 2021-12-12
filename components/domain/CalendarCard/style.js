@@ -13,11 +13,7 @@ export const CardWrapper = styled.div`
   flex-shrink: 0;
   background-color: transparent;
   cursor: pointer;
-
-  /* &.front ${CardInner} {
-    transform: rotateY(180deg);
-  } */
-
+  
   &.front .cardInner {
     transform: rotateY(180deg);
   }
