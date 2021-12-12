@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Slider } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import { useState, useEffect, useRef } from 'react'
@@ -37,9 +38,9 @@ const SliderTheme = withStyles({
   },
 })(Slider)
 
-const customId = 'custom-id-yes'
+const TOAST_SLIDER_ID = 'toast-slider-id'
 
-const ScoreSlider = () => {
+const ScoreSlider = ({ onChange }) => {
   const validateScore = (inputValue, newValue) => {
     const value = inputValue || newValue
     if (+value < 0 || +value > 100) {
@@ -48,7 +49,7 @@ const ScoreSlider = () => {
         autoClose: 3000,
         closeOnClick: true,
         pauseOnHover: true,
-        toastId: customId,
+        toastId: TOAST_SLIDER_ID,
       })
       return false
     }
@@ -66,6 +67,10 @@ const ScoreSlider = () => {
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
+  useEffect(() => {
+    onChange && onChange(score)
+  }, [score])
 
   const handleScore = (e, newValue) => {
     if (!validateScore(e.target.value, newValue)) return
@@ -127,4 +132,9 @@ const ScoreSlider = () => {
     </>
   )
 }
+
+ScoreSlider.propTypes = {
+  onChange: PropTypes.func.isRequired,
+}
+
 export default ScoreSlider

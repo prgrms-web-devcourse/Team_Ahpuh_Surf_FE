@@ -1,4 +1,4 @@
-import { useCallback, useState, Children } from 'react'
+import { useCallback, useState, Children, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import * as Style from './style'
@@ -15,7 +15,15 @@ import * as Style from './style'
 
 */
 
-const Dropdown = ({ data, width, height, fontSize, border, isObj }) => {
+const Dropdown = ({
+  data,
+  width,
+  height,
+  fontSize,
+  border,
+  isObj,
+  onChange,
+}) => {
   const [selectedObj, setSelectedObj] = useState({
     name: 'SELECT',
   })
@@ -37,6 +45,10 @@ const Dropdown = ({ data, width, height, fontSize, border, isObj }) => {
     )
     toggleList(false)
   }, [])
+
+  useEffect(() => {
+    onChange && onChange(selectedObj)
+  }, [selectedObj])
 
   return (
     <Style.DropdownWrapper width={width} fontSize={fontSize}>
@@ -78,6 +90,7 @@ Dropdown.propTypes = {
   fontSize: PropTypes.number,
   border: PropTypes.bool,
   isObj: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
 }
 
 Dropdown.defaultProps = {
