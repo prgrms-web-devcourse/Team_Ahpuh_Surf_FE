@@ -30,7 +30,7 @@ export const InputWrapper = styled.div`
 export const Label = styled.label`
   display: block;
   padding: 5px 0;
-  font-size: 18px;
+  font-size: ${({ size }) => (typeof size === 'string' ? size : `${size}px`)};
   font-weight: 700;
 `
 

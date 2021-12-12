@@ -16,12 +16,12 @@ const TextareaInput = styled.textarea`
   resize: none;
 `
 
-const Textarea = ({ width, height, fontSize, placeholder }) => {
+const Textarea = ({ width, height, fontSize, placeholder, onChange }) => {
   const handleWrite = (e) => {
-    if (e.target.value === '\n') return
+    if (e.target.value.trim() === '') return
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      alert(e.target.value) // submit event handler
+      onChange && onChange(e.target.value)
       e.target.value = ''
     }
   }
@@ -41,6 +41,7 @@ Textarea.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fontSize: PropTypes.number,
+  onChange: PropTypes.func.isRequired,
 }
 
 Textarea.defaultProps = {

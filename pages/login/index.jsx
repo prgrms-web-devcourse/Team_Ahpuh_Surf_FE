@@ -38,7 +38,9 @@ const Login = () => {
       <Style.Form onSubmit={handleSubmit}>
         <Style.Heading>Login</Style.Heading>
         <Style.InputWrapper>
-          <Style.Label htmlFor="email">email</Style.Label>
+          <Style.Label htmlFor="email" size={18}>
+            email
+          </Style.Label>
           <Input
             ref={inputRef}
             id="email"
@@ -55,7 +57,9 @@ const Login = () => {
         <Style.ErrorText>{errors.email && errors.email}</Style.ErrorText>
 
         <Style.InputWrapper>
-          <Style.Label htmlFor="password">password</Style.Label>
+          <Style.Label htmlFor="password" size={18}>
+            password
+          </Style.Label>
           <Input
             id="password"
             name="password"
