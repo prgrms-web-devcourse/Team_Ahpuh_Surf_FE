@@ -5,7 +5,7 @@ import Image from 'next/image'
 import UploadImage from 'public/images/upload.svg'
 import dynamic from 'next/dynamic'
 import theme from 'styles/theme'
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import * as Style from './style'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
@@ -20,6 +20,7 @@ const AddSurfModalSSR = dynamic(
 )
 
 const PostNew = () => {
+  const isInitialMount = useRef(true)
   const [category, setCategory] = useState(DUMMY_DATA_CAT)
   const [fileObject, setFileObject] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -43,12 +44,12 @@ const PostNew = () => {
   const handleSubmit = (e) => {
     e?.preventDefault()
     const formData = new FormData()
-    // eslint-disable-next-line no-unused-expressions
-    formData.append('categoryId', 1234),
-      formData.append('selectedDate', clickedDate),
-      formData.append('content', textareaValue),
-      formData.append('score', score),
-      formData.append('fileUrl', changeToBlob(fileObject))
+
+    formData.set('categoryId', 1234)
+    formData.set('selectedDate', new Date(clickedDate).toJSON())
+    formData.set('content', textareaValue)
+    formData.set('score', score)
+    formData.set('fileUrl', changeToBlob(fileObject))
 
     for (const item of formData.entries()) {
       console.log(item)
@@ -68,8 +69,14 @@ const PostNew = () => {
     }
   }, [selectedCategory])
 
+  console.log(isInitialMount.current)
+
   useEffect(() => {
-    handleSubmit()
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+    } else {
+      handleSubmit()
+    }
   }, [textareaValue])
 
   return (
