@@ -1,4 +1,6 @@
 import { Upload, Text, Dropdown, Textarea } from 'components/base'
+
+import theme from 'styles/theme'
 import { DUMMY_DATA_CAT } from 'constants/DropdownData'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'
@@ -11,6 +13,7 @@ import * as Style from './style'
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,
 })
+
 
 const AddSurfModalSSR = dynamic(
   () => import('components/domain/AddSurfModal'),

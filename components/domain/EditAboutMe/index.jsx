@@ -33,7 +33,7 @@ const EditAboutMe = ({ url, aboutMe, visible, toggle }) => {
   }, [visible])
 
   const handleSubmit = (e) => {
-    // TODO: api에 post 기능 추후 추가 예정
+    // TODO: api에 posts 기능 추후 추가 예정
     console.log(urlRef.current.value)
     console.log(aboutMeRef.current.value)
     toggle()

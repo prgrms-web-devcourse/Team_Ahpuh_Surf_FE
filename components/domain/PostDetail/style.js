@@ -36,6 +36,7 @@ export const ProfileRight = styled.div`
 export const Main = styled.div`
   display: block;
   width: 100%;
+  margin-top: 20px;
 `
 export const Menu = styled.div`
   position: absolute;
@@ -60,6 +61,7 @@ export const imageStyle = {
   borderRadius: '10px',
 }
 export const Title = styled.div`
+  margin: 10px 0;
   font-size: 25px;
   font-weight: bold;
 `
