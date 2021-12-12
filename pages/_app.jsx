@@ -3,6 +3,7 @@ import { Header, Navbar } from 'components/common'
 import theme from 'styles/theme'
 import 'styles/globals.css'
 import styled from '@emotion/styled'
+import Head from 'next/head'
 
 const MyAppWrapper = styled.div`
   display: flex;
@@ -17,15 +18,20 @@ const ComponentWrapper = styled.div`
 `
 
 const MyApp = ({ Component, pageProps }) => (
-  <ThemeProvider theme={theme}>
-    <MyAppWrapper>
-      <Header />
-      <ComponentWrapper>
-        <Component {...pageProps} />
-      </ComponentWrapper>
-      <Navbar height={50} iconSize={30} />
-    </MyAppWrapper>
-  </ThemeProvider>
+  <>
+    <Head>
+      <title>Surf.</title>
+    </Head>
+    <ThemeProvider theme={theme}>
+      <MyAppWrapper>
+        <Header />
+        <ComponentWrapper>
+          <Component {...pageProps} />
+        </ComponentWrapper>
+        <Navbar height={50} iconSize={30} />
+      </MyAppWrapper>
+    </ThemeProvider>
+  </>
 )
 
 export default MyApp

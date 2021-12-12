@@ -23,6 +23,7 @@ const Dropdown = ({
   border,
   isObj,
   onChange,
+  ...rest
 }) => {
   const [selectedObj, setSelectedObj] = useState({
     name: 'SELECT',
@@ -47,11 +48,12 @@ const Dropdown = ({
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line no-unused-expressions
     onChange && onChange(selectedObj)
   }, [selectedObj])
 
   return (
-    <Style.DropdownWrapper width={width} fontSize={fontSize}>
+    <Style.DropdownWrapper width={width} fontSize={fontSize} {...rest}>
       <Style.SelectedWrapper
         height={height}
         border={border}
@@ -85,17 +87,14 @@ const Dropdown = ({
 
 Dropdown.propTypes = {
   data: PropTypes.array.isRequired,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  width: PropTypes.number,
   fontSize: PropTypes.number,
   border: PropTypes.bool,
   isObj: PropTypes.bool.isRequired,
-  onChange: PropTypes.func.isRequired,
 }
 
 Dropdown.defaultProps = {
-  width: '100%',
-  height: 45,
+  width: 100,
   fontSize: 16,
   border: true,
 }

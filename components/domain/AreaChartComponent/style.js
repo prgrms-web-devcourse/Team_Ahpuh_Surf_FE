@@ -21,11 +21,13 @@ export const containerStyle = {
   padding: 10,
   marginTop: 10,
 }
+
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: end;
-  width: ${(props) => (props.width === undefined ? '500px' : `${width}px`)};
+  width: ${(width) => (width === undefined ? '500px' : `${width}px`)};
 `
+
 export const settingButtonStyle = {
   margin: '10px',
   backgroundColor: 'white',
