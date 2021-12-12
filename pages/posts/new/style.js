@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 
+
 export const PostNewWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -12,7 +13,6 @@ export const OptionWrapper = styled.div`
   display: grid;
   padding: 10px 0;
   display: flex;
-
   & > div {
     width: 50%;
 

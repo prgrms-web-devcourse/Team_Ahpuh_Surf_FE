@@ -34,10 +34,10 @@ const PostDetail = ({
     console.log('click add favorite')
   }
   const handleDeletePost = () => {
-    console.log('click delete post')
+    console.log('click delete posts')
   }
   const handleUpdatePost = () => {
-    console.log('click update post')
+    console.log('click update posts')
   }
 
   const handleFollow = () => {
@@ -95,11 +95,11 @@ const PostDetail = ({
           <div style={{ fontSize: '14px' }}>{categoryName}</div>
         </Style.ProfileRight>
       </Style.Profile>
-      <Image src={imageUrl} alt="post image" style={Style.imageStyle} />
+      <Image src={imageUrl} alt="post image" width='100%' height='50%' layout='responsive' style={Style.imageStyle} />
       <Style.Main>
         <Style.Title>{title}</Style.Title>
         <Style.Title>score: {score}</Style.Title>
-        <p style={{ fontSize: 17 }}>{content}</p>
+        <p style={{ marginTop:10,fontSize: 17 }}>{content}</p>
       </Style.Main>
     </Style.CardContainer>
   )
@@ -119,7 +119,7 @@ PostDetail.propTypes = {
 PostDetail.defaultProps = {
   follow: false,
   like: false,
-  imageUrl: 'https://picsum.photos/200',
+  imageUrl: 'https://picsum.photos/400/400',
   profileImage: 'https://picsum.photos/200',
 }
 export default PostDetail
