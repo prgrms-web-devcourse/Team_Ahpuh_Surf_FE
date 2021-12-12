@@ -1,6 +1,5 @@
 import { Upload, Text, Dropdown, Textarea } from 'components/base'
 
-import theme from 'styles/theme'
 import { DUMMY_DATA_CAT } from 'constants/DropdownData'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'

@@ -10,7 +10,6 @@ export const PostNewWrapper = styled.form`
 `
 
 export const OptionWrapper = styled.div`
-  display: grid;
   padding: 10px 0;
   display: flex;
   & > div {
