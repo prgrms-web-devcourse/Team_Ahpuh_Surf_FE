@@ -62,7 +62,7 @@ Modal.propTypes = {
   closeBtn: PropTypes.bool,
   width: PropTypes.number,
   height: PropTypes.number,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 Modal.defaultProps = {

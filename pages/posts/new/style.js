@@ -1,20 +1,24 @@
 import styled from '@emotion/styled'
 
-export const PostNewWrapper = styled.div`
+export const PostNewWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   padding: 0 20px;
 `
 
 export const OptionWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
+  display: grid;
   padding: 10px 0;
+  display: flex;
 
-  & > div:first-of-type {
-    margin-right: 10px;
+  & > div {
+    width: 50%;
+
+    &:first-of-type {
+      padding-right: 10px;
+    }
   }
 `
 
@@ -45,12 +49,11 @@ export const TextCenter = styled.p`
 export const Button = styled.button`
   width: 100%;
   height: 45px;
-  margin: 10px 0;
-  border: none;
   border-radius: 8px;
+  border: none;
+  margin: 10px 0;
   text-align: center;
-  /* background-color: ${({ theme }) => theme.surfColor.$blue__2}; */
-  background-color: #c1ddeb;
+  background-color: ${({ theme }) => theme.surfColor.$blue__1};
   cursor: pointer;
 `
 
