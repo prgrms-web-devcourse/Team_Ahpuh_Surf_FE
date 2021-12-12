@@ -69,8 +69,6 @@ const PostNew = () => {
     }
   }, [selectedCategory])
 
-  console.log(isInitialMount.current)
-
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
