@@ -17,6 +17,7 @@ const RadialBarChartComponent = ({ data, height }) => {
     chart: {
       height: 390,
       type: 'radialBar',
+      background: '#ffffff',
     },
     plotOptions: {
       radialBar: {
@@ -40,7 +41,7 @@ const RadialBarChartComponent = ({ data, height }) => {
       },
     },
     // colors: ['#a5d8ff', '#4dabf7', '#228be6', '#1971c2'],
-    colors:['#82b0fb','#6378ca','#6d5ba7','#6378CA',],
+    colors: ['#82b0fb', '#6378ca', '#6d5ba7', '#6378CA'],
     labels,
     legend: {
       show: true,
@@ -89,14 +90,12 @@ const RadialBarChartComponent = ({ data, height }) => {
   }
 
   return (
-    <div>
-      <ReactApexChart
-        options={options}
-        series={series}
-        type="radialBar"
-        height={height}
-      />
-    </div>
+    <ReactApexChart
+      options={options}
+      series={series}
+      type="radialBar"
+      height={height}
+    />
   )
 }
 

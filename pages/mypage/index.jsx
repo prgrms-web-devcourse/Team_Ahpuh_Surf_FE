@@ -91,8 +91,7 @@ const Mypage = () => {
         <Style.Content>{sampleData.aboutMe}</Style.Content>
       </Style.Introduction>
       <Style.Graph style={{ width: '100%', height: 380 }}>
-        <Style.Title>Main ></Style.Title>
-        {/* TODO: props로 전달할 경우, animation이 적용이 안되서 값을 하드코딩해서 유연성 떨어짐. 원인 파악후 수정 필요 */}
+        <Style.Title>{`Main >`}</Style.Title>
         <Style.AreaChartSkeleton>
           <Text size={30} color="darkGray">
             Loading
