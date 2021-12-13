@@ -1,9 +1,5 @@
-import interceptor from 'utils/apis/interceptor'
+import request from '../api'
 
-const login = async (payload) => {
-  const { data } = await interceptor.post('/users/login', payload)
-
-  return data
-}
+const login = (payload) => request.post('/users/login', payload)
 
 export default login

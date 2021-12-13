@@ -1,9 +1,5 @@
-import interceptor from 'utils/apis/interceptor'
+import request from '../api'
 
-const uploadPost = async (payload) => {
-  const { data } = await interceptor.post(`/posts`, payload)
-
-  return data
-}
+const uploadPost = (payload) => request.post(`/posts`, payload)
 
 export default uploadPost
