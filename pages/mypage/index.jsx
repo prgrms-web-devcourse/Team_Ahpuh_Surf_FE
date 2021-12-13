@@ -12,6 +12,7 @@ import EditAboutMe from 'components/domain/EditAboutMe'
 import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
 import { sampleData } from 'utils/SampleData/Mypage'
 import * as Style from './style'
+import SkeletonBox from '../../components/domain/SkeletonBox'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -89,24 +90,27 @@ const Mypage = () => {
         )}
         <Style.Content>{sampleData.aboutMe}</Style.Content>
       </Style.Introduction>
-      <Style.Graph style={{width:'100%',height:380}}>
+      <Style.Graph style={{ width: '100%', height: 380 }}>
         <Style.Title>Main ></Style.Title>
+        {/* TODO: props로 전달할 경우, animation이 적용이 안되서 값을 하드코딩해서 유연성 떨어짐. 원인 파악후 수정 필요 */}
         <Style.AreaChartSkeleton>
-          <Text size={30} color='darkGray'>Loading</Text>
+          <Text size={30} color="darkGray">
+            Loading
+          </Text>
         </Style.AreaChartSkeleton>
         <AreaChartComponent data={dataset} isMyPage />
       </Style.Graph>
-      <Style.Graph style={{width:'100%',height:270,marginBottom:80}}>
-        <Style.Title>Dashboard ></Style.Title>
-        {/* TODO: 서버 연결시 해당 스캘래톤 로딩시간에 맞춰서 없애는 로직 추가해야 한다*/}
-        {/*<Style.HeatmapSkeleton>*/}
-        {/*  <Text size={30} color='darkGray'>Loading</Text>*/}
-        {/*</Style.HeatmapSkeleton>*/}
-        <HeatmapComponent
-          data={heatmapSampleData}
-          width="370px"
-          height="250px"
+      <Style.Title>{`Dashboard >`}</Style.Title>
+      <Style.Graph>
+        <SkeletonBox
+          position="absolute"
+          width="100%"
+          height={190}
+          borderRadius={10}
+          style={{ top: 20, left: 0, marginBottom: 10 }}
+          text="Loading"
         />
+        <HeatmapComponent data={heatmapSampleData} height="370px" />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
