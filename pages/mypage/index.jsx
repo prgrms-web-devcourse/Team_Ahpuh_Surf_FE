@@ -91,7 +91,9 @@ const Mypage = () => {
         <Style.Content>{sampleData.aboutMe}</Style.Content>
       </Style.Introduction>
       <Style.Graph style={{ width: '100%', height: 380 }}>
-        <Style.Title>{`Main >`}</Style.Title>
+        <Link href="/">
+          <Style.Title>{`Main >`}</Style.Title>
+        </Link>
         <Style.AreaChartSkeleton>
           <Text size={30} color="darkGray">
             Loading
@@ -99,7 +101,9 @@ const Mypage = () => {
         </Style.AreaChartSkeleton>
         <AreaChartComponent data={dataset} isMyPage />
       </Style.Graph>
-      <Style.Title>{`Dashboard >`}</Style.Title>
+      <Link href="/dashboard">
+        <Style.Title>{`Dashboard >`}</Style.Title>
+      </Link>
       <Style.Graph>
         <SkeletonBox
           position="absolute"
