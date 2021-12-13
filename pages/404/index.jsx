@@ -16,20 +16,27 @@ const Custom404 = () => {
   return (
     <Style.NotFoundWrapper>
       <Style.NotFoundMsg>
-        <p>You are lost...!</p>
-        <Style.LinkWrapper>
-          <Link href="/">Go back to Home</Link>
-        </Style.LinkWrapper>
+        <p>
+          <span style={{ fontWeight: '700' }}>404</span> | Not Found
+        </p>
+        <Link href="/">🏠 Home</Link>
       </Style.NotFoundMsg>
-      <Style.LottieWrapper>
-        <Lottie
-          options={defaultOptions}
-          isClickToPauseDisabled
-          height={300}
-          width={300}
-          style={{ background: 'skyBlue' }}
-        />
-      </Style.LottieWrapper>
+      <Lottie
+        options={defaultOptions}
+        isClickToPauseDisabled
+        height={300}
+        width={300}
+        style={{
+          background: 'transparent',
+          position: 'absolute',
+          top: '200px',
+          zIndex: '999',
+        }}
+      />
+      <Style.Ocean>
+        <Style.Waves className="wave" />
+        <Style.Waves className="wave" />
+      </Style.Ocean>
     </Style.NotFoundWrapper>
   )
 }
