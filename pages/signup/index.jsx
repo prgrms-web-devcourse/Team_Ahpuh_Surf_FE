@@ -9,17 +9,17 @@ const Signup = () => {
   const { values, isLoading, errors, handleSubmit, handleChange } = useForm({
     initialValues: {
       email: '',
-      userName: '',
+      username: '',
       password: '',
       passwordConfirm: '',
     },
     onSubmit: () => {
-      // console.log('work')
+      console.log(values)
     },
-    validate: ({ email, userName, password, passwordConfirm }) => {
+    validate: ({ email, username, password, passwordConfirm }) => {
       const newErrors = {}
       if (!email) newErrors.email = 'Enter the email'
-      if (!userName) newErrors.userName = 'Enter the username'
+      if (!username) newErrors.username = 'Enter the username'
       if (!passwordConfirm)
         newErrors.passwordConfirm = 'Enter the password confirm'
       if (passwordConfirm !== password)
@@ -67,13 +67,13 @@ const Signup = () => {
             type="string"
             width="100%"
             height={40}
-            validate={errors?.userName}
+            validate={errors?.username}
             placeholder="username"
             onChange={handleChange}
             maxLength={20}
           />
         </Style.InputWrapper>
-        <Style.ErrorText>{errors.userName && errors.userName}</Style.ErrorText>
+        <Style.ErrorText>{errors.username && errors.username}</Style.ErrorText>
         <Style.InputWrapper>
           <Style.Label htmlFor="password" size={18}>
             password
