@@ -14,7 +14,7 @@ const Login = () => {
       password: '',
     },
     onSubmit: async () => {
-      console.log('work', Cookies)
+      console.log('work', values)
       const { data } = await login({
         email: values.email,
         password: values.password,
