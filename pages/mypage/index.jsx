@@ -89,13 +89,24 @@ const Mypage = () => {
         )}
         <Style.Content>{sampleData.aboutMe}</Style.Content>
       </Style.Introduction>
-      <Style.Graph>
+      <Style.Graph style={{width:'100%',height:380}}>
         <Style.Title>Main ></Style.Title>
-        <AreaChartComponent data={dataset} width="100%" height={300} isMyPage />
+        <Style.AreaChartSkeleton>
+          <Text size={30} color='darkGray'>Loading</Text>
+        </Style.AreaChartSkeleton>
+        <AreaChartComponent data={dataset} isMyPage />
       </Style.Graph>
-      <Style.Graph>
+      <Style.Graph style={{width:'100%',height:270,marginBottom:80}}>
         <Style.Title>Dashboard ></Style.Title>
-        <HeatmapComponent data={heatmapSampleData}  />
+        {/* TODO: 서버 연결시 해당 스캘래톤 로딩시간에 맞춰서 없애는 로직 추가해야 한다*/}
+        {/*<Style.HeatmapSkeleton>*/}
+        {/*  <Text size={30} color='darkGray'>Loading</Text>*/}
+        {/*</Style.HeatmapSkeleton>*/}
+        <HeatmapComponent
+          data={heatmapSampleData}
+          width="370px"
+          height="250px"
+        />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
