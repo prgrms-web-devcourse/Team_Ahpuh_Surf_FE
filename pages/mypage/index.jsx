@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1'
+import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1' // 일년치 게시글 점수 조회 .. api 미완성 상태
 import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { BsFillBellFill, BsFillPencilFill } from 'react-icons/bs'
@@ -9,10 +9,11 @@ import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
 import { useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
-import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
-import { sampleData } from 'utils/SampleData/Mypage'
+import { heatmapSampleData } from 'utils/SampleData/heatmapChart' // 일년치 게시글 점수 조회
+import { sampleData } from 'utils/SampleData/Mypage' // 회원 정보 조회
 import * as Style from './style'
 import SkeletonBox from '../../components/domain/SkeletonBox'
+import useGetUser from '../../utils/apis/user/useGetUser'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -28,6 +29,9 @@ const Mypage = () => {
   dataset.push({ data: areaChartComponent1, name: 'react' })
   dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
+  // 회원 정보 조회
+  const { data, isLoading, isError } = useGetUser(7)
+  console.log(data)
   // modal 보이는지 여부 관리
   const [visible, setVisible] = useState(false)
   const toggle = () => {
