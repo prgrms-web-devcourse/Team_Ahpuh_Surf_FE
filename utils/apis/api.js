@@ -14,7 +14,7 @@ const API = () => {
       const API_TOKEN =
         Cookies.get('user') && JSON.parse(Cookies.get('user'))?.token
       config.headers['Content-Type'] = 'application/json; charset=utf-8'
-      config.headers.Authorization = `bearer ${API_TOKEN}`
+      config.headers.Authorization = API_TOKEN && `bearer ${API_TOKEN}`
       return config
     },
     (error) => {
