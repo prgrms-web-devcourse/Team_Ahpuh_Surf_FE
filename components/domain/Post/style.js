@@ -4,10 +4,10 @@ export const CardContainer = styled.div`
   flex-shrink: 0;
   position: relative;
   padding: 15px 20px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
   width: 100%;
-  height: ${({height}) => `${height}px`};
+  /* height: ${({height}) => `${height}px`}; */
   overflow: hidden;
   border-radius: 14px;
   background-color: ${(props) => props.backgroundColor || 'skyblue'};
