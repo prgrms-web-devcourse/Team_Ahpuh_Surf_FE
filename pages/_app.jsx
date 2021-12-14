@@ -1,5 +1,6 @@
 import { ThemeProvider } from '@emotion/react'
 import { Header, Navbar } from 'components/common'
+import React from 'react'
 import theme from 'styles/theme'
 import 'styles/globals.css'
 import styled from '@emotion/styled'

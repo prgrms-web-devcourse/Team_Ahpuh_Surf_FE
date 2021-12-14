@@ -53,6 +53,5 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "2.5.0",
     "webpack": "5.64.4"
-  },
-  "proxy": "http://15.165.183.105:8080/api/v1"
+  }
 }

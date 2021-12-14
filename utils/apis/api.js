@@ -6,7 +6,6 @@ const API = () => {
   const instance = axios.create({
     baseURL: API_END_POINT,
     withCredentials: true,
-    timeout: 1000,
   })
 
   instance.interceptors.request.use(
@@ -14,7 +13,7 @@ const API = () => {
       const API_TOKEN =
         Cookies.get('user') && JSON.parse(Cookies.get('user'))?.token
       config.headers['Content-Type'] = 'application/json; charset=utf-8'
-      config.headers.Authorization = `bearer ${API_TOKEN}`
+      config.headers.Authorization = API_TOKEN && `bearer ${API_TOKEN}`
       return config
     },
     (error) => {
