@@ -65,9 +65,12 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
     }
   }
   const carotArgs = {
+    display: 'flex',
+    alignItems: 'center',
     width: '100%',
-    height: '30px',
-    fontSize: 20,
+    padding: '5px',
+    marginTop: '-10px',
+    fontSize: 16,
     curQuarter,
     handleLeftCarot,
     handleRightCarot,
@@ -88,7 +91,6 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
           size={20}
         />
       )}
-
       <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
       <Carot {...carotArgs} />
     </div>
