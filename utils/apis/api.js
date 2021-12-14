@@ -6,7 +6,6 @@ const API = () => {
   const instance = axios.create({
     baseURL: API_END_POINT,
     withCredentials: true,
-    timeout: 1000,
   })
 
   instance.interceptors.request.use(
