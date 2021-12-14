@@ -3,23 +3,33 @@ import { Input } from 'components/base'
 import { checkForm } from 'utils/validation'
 import Link from 'next/link'
 import { useRef } from 'react'
+import { signup } from 'utils/apis/user'
 import * as Style from './style'
 
 const Signup = () => {
   const { values, isLoading, errors, handleSubmit, handleChange } = useForm({
     initialValues: {
       email: '',
-      username: '',
+      userName: '',
       password: '',
       passwordConfirm: '',
     },
-    onSubmit: () => {
-      console.log(values)
+    onSubmit: async () => {
+      try {
+        const data = await signup({
+          email: values.email,
+          password: values.password,
+          userName: values.userName,
+        })
+        console.log(data, 'signup res')
+      } catch (e) {
+        console.error(e)
+      }
     },
-    validate: ({ email, username, password, passwordConfirm }) => {
+    validate: ({ email, userName, password, passwordConfirm }) => {
       const newErrors = {}
       if (!email) newErrors.email = 'Enter the email'
-      if (!username) newErrors.username = 'Enter the username'
+      if (!userName) newErrors.userName = 'Enter the userName'
       if (!passwordConfirm)
         newErrors.passwordConfirm = 'Enter the password confirm'
       if (passwordConfirm !== password)
@@ -58,22 +68,22 @@ const Signup = () => {
         </Style.InputWrapper>
         <Style.ErrorText>{errors.email && errors.email}</Style.ErrorText>
         <Style.InputWrapper>
-          <Style.Label htmlFor="username" size={18}>
-            username
+          <Style.Label htmlFor="userName" size={18}>
+            userName
           </Style.Label>
           <Input
-            id="username"
-            name="username"
+            id="userName"
+            name="userName"
             type="string"
             width="100%"
             height={40}
-            validate={errors?.username}
-            placeholder="username"
+            validate={errors?.userName}
+            placeholder="userName"
             onChange={handleChange}
             maxLength={20}
           />
         </Style.InputWrapper>
-        <Style.ErrorText>{errors.username && errors.username}</Style.ErrorText>
+        <Style.ErrorText>{errors.userName && errors.userName}</Style.ErrorText>
         <Style.InputWrapper>
           <Style.Label htmlFor="password" size={18}>
             password

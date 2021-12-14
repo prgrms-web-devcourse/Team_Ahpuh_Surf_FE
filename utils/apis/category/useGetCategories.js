@@ -1,8 +1,8 @@
 import useSWR from 'swr'
 import fetcher from 'utils/apis/fetcher'
 
-const useGetTotalCategory = () => {
-  const { data, error } = useSWR(`/categories`, fetcher)
+const useGetCategories = () => {
+  const { data, error } = useSWR('/categories', fetcher)
 
   return {
     data,
@@ -11,4 +11,4 @@ const useGetTotalCategory = () => {
   }
 }
 
-export default useGetTotalCategory
+export default useGetCategories

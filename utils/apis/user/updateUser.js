@@ -1,9 +1,5 @@
-import interceptor from 'utils/apis/interceptor'
+import request from '../api'
 
-const updateUser = async (userId, payload) => {
-  const { data } = await interceptor.put(`/users/${userId}`, payload)
-
-  return data
-}
+const updateUser = (payload) => request.put(`/users`, payload)
 
 export default updateUser

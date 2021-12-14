@@ -1,10 +1,5 @@
-import interceptor from 'utils/apis/interceptor'
+import request from '../api'
 
-const updatePost = async (postId) => {
-  // 응답 값 없음
-  const { data = false } = await interceptor.delete(`/posts/${postId}`)
+const deletePost = (postId) => request.delete(`/posts/${postId}`)
 
-  return data
-}
-
-export default updatePost
+export default deletePost
