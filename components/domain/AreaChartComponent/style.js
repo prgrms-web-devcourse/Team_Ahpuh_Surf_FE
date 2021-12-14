@@ -16,6 +16,7 @@ export const containerStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+  backgroundColor: 'white',
   border: '1px solid darkgray',
   borderRadius: 10,
   padding: 10,

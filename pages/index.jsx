@@ -1,22 +1,22 @@
 import styled from '@emotion/styled'
 import { Dropdown } from 'components/base'
 import { Post } from 'components/domain'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { Children } from 'react'
-import { sampleData } from '../components/domain/AreaChartComponent/sampleXNY1'
-import { sampleData2 } from '../components/domain/AreaChartComponent/sampleXNY2'
+// import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1'
+// import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 import { DUMMY_DATA_POST, FILTERING } from '../constants/PostData'
 
-const ApexChart = dynamic(
-  () => import('components/domain/AreaChartComponent'),
-  {
-    ssr: false,
-  },
-)
+// const ApexChart = dynamic(
+//   () => import('components/domain/AreaChartComponent'),
+//   {
+//     ssr: false,
+//   },
+// )
 
-const dataset = []
-dataset.push({ data: sampleData, name: 'react' })
-dataset.push({ data: sampleData2, name: 'Vue' })
+// const dataset = []
+// dataset.push({ data: areaChartComponent1, name: 'react' })
+// dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -27,10 +27,10 @@ const MainWrapper = styled.div`
 const ChartHeader = styled.div`
   margin-bottom: 10px;
 `
-const HeatmapChart = dynamic(
-  () => import('../components/domain/HeatmapChartComponent'),
-  { ssr: false },
-)
+// const HeatmapChart = dynamic(
+//   () => import('../components/domain/HeatmapChartComponent'),
+//   { ssr: false },
+// )
 
 const ChartWrapper = styled.div`
   height: 46%;
@@ -58,6 +58,7 @@ const Main = () => (
       {Children.toArray(
         DUMMY_DATA_POST.map(
           ({ date, categoryName, score, title, content, profileImage }) => (
+            // eslint-disable-next-line react/jsx-key
             <Post
               height={100}
               date={date}

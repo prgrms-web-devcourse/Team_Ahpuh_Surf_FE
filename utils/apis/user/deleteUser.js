@@ -1,9 +1,6 @@
-import interceptor from 'utils/apis/interceptor'
+import request from '../api'
 
-const deleteUser = async (userId) => {
-  const { data = false } = await interceptor.delete(`/users/${userId}`)
-
-  return data
-}
+// const deleteUser = (userId) => request.delete(`/users/${userId}`)
+const deleteUser = () => request.delete(`/users`)
 
 export default deleteUser

@@ -2,7 +2,7 @@ import ReactApexChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
 import { getMonth } from './getMonth'
 
-const HeatmapChartComponent = ({ data, height, width }) => {
+const HeatmapChartComponent = ({ data, height }) => {
   const months = [
     'Jan',
     'Feb',
@@ -40,7 +40,9 @@ const HeatmapChartComponent = ({ data, height, width }) => {
   const options = {
     chart: {
       type: 'heatmap',
+      width: '100%',
       height,
+      background: '#ffffff',
     },
     yaxis: {
       show: false,
@@ -55,13 +57,24 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       position: 'bottom',
       show: false,
     },
+    noData: {
+      text: 'Loading...',
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: '#000000',
+        fontSize: '16px',
+      },
+    },
     responsive: [
       {
-        breakpoint: 375,
+        breakpoint: 376,
         options: {
           chart: {
-            width: 360,
-            height: 200,
+            width: 340,
+            height: 210,
           },
           yaxis: {
             labels: {
@@ -75,12 +88,12 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       {
         breakpoint: 414,
         options: {
-          chart:{
-            width:400,
-            height:250,
-          }
-        }
-      }
+          chart: {
+            width: 370,
+            height: 250,
+          },
+        },
+      },
     ],
     plotOptions: {
       heatmap: {
@@ -123,25 +136,21 @@ const HeatmapChartComponent = ({ data, height, width }) => {
       },
     },
   }
+
   return (
-    <div>
-      <ReactApexChart
-        options={options}
-        series={dataset}
-        type="heatmap"
-        height={height}
-        width={width}
-      />
-    </div>
+    <ReactApexChart
+      options={options}
+      series={dataset}
+      type="heatmap"
+      style={{ marginBottom: 10, marginTop: 20, zIndex: 1 }}
+    />
   )
 }
 HeatmapChartComponent.propTypes = {
   data: PropTypes.array.isRequired,
   height: PropTypes.string,
-  width: PropTypes.string,
 }
 HeatmapChartComponent.defaultProps = {
   height: '350px',
-  width: '100%',
 }
 export default HeatmapChartComponent

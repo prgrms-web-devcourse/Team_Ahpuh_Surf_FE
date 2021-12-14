@@ -12,6 +12,7 @@ import EditAboutMe from 'components/domain/EditAboutMe'
 import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
 import { sampleData } from 'utils/SampleData/Mypage'
 import * as Style from './style'
+import SkeletonBox from '../../components/domain/SkeletonBox'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -89,13 +90,30 @@ const Mypage = () => {
         )}
         <Style.Content>{sampleData.aboutMe}</Style.Content>
       </Style.Introduction>
-      <Style.Graph>
-        <Style.Title>Main ></Style.Title>
-        <AreaChartComponent data={dataset} width="100%" height={300} isMyPage />
+      <Style.Graph style={{ width: '100%', height: 380 }}>
+        <Link href="/">
+          <Style.Title>{`Main >`}</Style.Title>
+        </Link>
+        <Style.AreaChartSkeleton>
+          <Text size={30} color="darkGray">
+            Loading
+          </Text>
+        </Style.AreaChartSkeleton>
+        <AreaChartComponent data={dataset} isMyPage />
       </Style.Graph>
+      <Link href="/dashboard">
+        <Style.Title>{`Dashboard >`}</Style.Title>
+      </Link>
       <Style.Graph>
-        <Style.Title>Dashboard ></Style.Title>
-        <HeatmapComponent data={heatmapSampleData}  />
+        <SkeletonBox
+          position="absolute"
+          width="100%"
+          height={190}
+          borderRadius={10}
+          style={{ top: 20, left: 0, marginBottom: 10 }}
+          text="Loading"
+        />
+        <HeatmapComponent data={heatmapSampleData} height="370px" />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
