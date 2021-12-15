@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import { Dropdown } from 'components/base'
 import { Post } from 'components/domain'
 import dynamic from 'next/dynamic'
-import { Children } from 'react'
+import Cookies from 'js-cookie'
+import { ToastContainer, toast } from 'react-toastify'
+import { useEffect, Children } from 'react'
 import { areaChartComponent1 } from '../utils/SampleData/AreaChartComponent1'
 import { areaChartComponent2 } from '../utils/SampleData/AreaChartComponent2'
 import { DUMMY_DATA_POST, FILTERING } from '../constants/PostData'
@@ -44,33 +46,46 @@ const PostListWrapper = styled.div`
   gap: 10px;
 `
 
-const Main = () => (
-  <MainWrapper>
-    <ChartHeader>
-      <Dropdown data={FILTERING} isObj border={false} />
-    </ChartHeader>
-    <ChartWrapper>
-      <ApexChart data={dataset} />
-    </ChartWrapper>
-    <PostListWrapper>
-      {Children.toArray(
-        DUMMY_DATA_POST.map(
-          ({ date, categoryName, score, title, content, profileImage }) => (
-            // eslint-disable-next-line react/jsx-key
-            <Post
-              height={100}
-              date={date}
-              categoryName={categoryName}
-              score={score}
-              title={title}
-              content={content}
-              profileImage={profileImage}
-            />
-          ),
-        ),
-      )}
-    </PostListWrapper>
-  </MainWrapper>
-)
+const Main = () => {
+  useEffect(() => {
+    if (Cookies.get('isSignup')) {
+      toast.success('Signup was sucessfull 🎉', {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 3000,
+      })
+    }
+  }, [])
+  return (
+    <>
+      <ToastContainer />
+      <MainWrapper>
+        <ChartHeader>
+          <Dropdown data={FILTERING} isObj border={false} />
+        </ChartHeader>
+        <ChartWrapper>
+          <ApexChart data={dataset} />
+        </ChartWrapper>
+        <PostListWrapper>
+          {Children.toArray(
+            DUMMY_DATA_POST.map(
+              ({ date, categoryName, score, title, content, profileImage }) => (
+                // eslint-disable-next-line react/jsx-key
+                <Post
+                  height={100}
+                  date={date}
+                  categoryName={categoryName}
+                  score={score}
+                  title={title}
+                  content={content}
+                  profileImage={profileImage}
+                />
+              ),
+            ),
+          )}
+        </PostListWrapper>
+      </MainWrapper>
+    </>
+  )
+}
 
 export default Main
