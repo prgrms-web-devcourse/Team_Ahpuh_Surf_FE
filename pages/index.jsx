@@ -49,7 +49,7 @@ const PostListWrapper = styled.div`
 const Main = () => {
   useEffect(() => {
     if (Cookies.get('isSignup')) {
-      toast.success('Signup was sucessfull 🎉', {
+      toast.success('Signup was sucessful 🎉', {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 3000,
       })
