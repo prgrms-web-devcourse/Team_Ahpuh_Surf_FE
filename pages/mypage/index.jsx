@@ -7,13 +7,14 @@ import Link from 'next/link'
 import { Text } from 'components/base'
 import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
 import { heatmapSampleData } from 'utils/SampleData/heatmapChart' // 일년치 게시글 점수 조회
-import { sampleData } from 'utils/SampleData/Mypage' // 회원 정보 조회
+// import { sampleData } from 'utils/SampleData/Mypage' // 회원 정보 조회
+import Cookies from 'js-cookie'
+import SkeletonBox from 'components/domain/SkeletonBox'
+import useGetUser from 'utils/apis/user/useGetUser'
 import * as Style from './style'
-import SkeletonBox from '../../components/domain/SkeletonBox'
-import useGetUser from '../../utils/apis/user/useGetUser'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -29,27 +30,25 @@ const Mypage = () => {
   dataset.push({ data: areaChartComponent1, name: 'react' })
   dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
-  // 회원 정보 조회
-  const { data, isLoading, isError } = useGetUser(7)
-  console.log(data)
-  // modal 보이는지 여부 관리
+  // token, userId 가져옴
+  const [user, setUser] = useState('')
+  const { data } = useGetUser(user.userId)
+  useEffect(() => {
+    setUser(JSON.parse(Cookies.get('user')))
+  }, [])
+  useEffect(() => {}, [user])
   const [visible, setVisible] = useState(false)
   const toggle = () => {
     setVisible(!visible)
   }
-
+  // console.log(user)
   const handleNotice = () => {
     console.log('click notice')
   }
 
   return (
     <Style.Container>
-      <EditAboutMe
-        url={sampleData.url}
-        aboutMe={sampleData.aboutMe}
-        visible={visible}
-        toggle={toggle}
-      />
+      <EditAboutMe userId={user?.userId} visible={visible} toggle={toggle} />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <Link href="/mypage/edit">
           <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
@@ -61,17 +60,21 @@ const Mypage = () => {
         />
       </div>
       <Profile
-        profilePhotoUrl={sampleData.profilePhotoUrl}
-        userName={sampleData.userName}
-        email={sampleData.email}
+        profilePhotoUrl={
+          data?.profilePhotoUrl === null
+            ? 'https://picsum.photos/200'
+            : data?.profilePhotoUrl
+        }
+        userName={data?.userName}
+        email={data?.email}
       />
       <Style.FollowContainer>
         <Style.FollowItem>
-          <Text size={36}>{sampleData.followerCount}</Text>
+          <Text size={36}>{data?.followerCount}</Text>
           <Text size={20}>Follower</Text>
         </Style.FollowItem>
         <Style.FollowItem>
-          <Text size={36}>{sampleData.followingCount}</Text>
+          <Text size={36}>{data?.followingCount}</Text>
           <Text size={20}>Following</Text>
         </Style.FollowItem>
       </Style.FollowContainer>
@@ -80,19 +83,19 @@ const Mypage = () => {
           About Me&nbsp;
           <BsFillPencilFill
             size={20}
-            style={{ color: '#8d8d8d' }}
+            style={{ color: '#8d8d8d', cursor: 'pointer' }}
             onClick={() => toggle()}
           />
         </Style.Title>
         <Style.Title>URL: </Style.Title>
-        {sampleData.url ? (
-          <Style.Title>{sampleData.url}</Style.Title>
+        {data?.url ? (
+          <Style.Title>{data?.url}</Style.Title>
         ) : (
           <Style.Title style={{ fontSize: 20, color: '#8D8D8D' }}>
             추가해보세요
           </Style.Title>
         )}
-        <Style.Content>{sampleData.aboutMe}</Style.Content>
+        <Style.Content>{data?.aboutMe}</Style.Content>
       </Style.Introduction>
       <Style.Graph style={{ width: '100%', height: 380 }}>
         <Link href="/">
@@ -124,4 +127,5 @@ const Mypage = () => {
     </Style.Container>
   )
 }
+
 export default Mypage
