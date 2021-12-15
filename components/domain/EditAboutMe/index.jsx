@@ -32,7 +32,8 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
   const { data } = useGetUser(userId)
   useEffect(() => {
     setUserData(data)
-  }, [])
+  }, [data])
+  // console.log(userData)
   useEffect(() => {}, [userData])
   useEffect(() => {
     if (!urlRef && !aboutMeRef) {
@@ -50,19 +51,41 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
       accoutPublic: userData?.accountPublic,
     },
     onSubmit: async () => {
-      // console.log('for test in onsubmit', userData)
-
-      const { data } = await updateUser({
+      console.log('for test in onsubmit', userData.accountPublic)
+      console.log(urlRef.current.value)
+      console.log(aboutMeRef.current.value)
+      // const formData = new FormData()
+      // formData.set('request', {
+      //   userName: userData?.userName,
+      //   password: null,
+      //   url: urlRef.current.value,
+      //   aboutMe: aboutMeRef.current.value,
+      //   accountPublic: userData?.accountPublic,
+      // })
+      // formData.set('file', null)
+      // const res = await updateUser(formData)
+      console.log({
         request: {
+          userName: userData?.userName,
+          password: null,
           url: urlRef.current.value,
           aboutMe: aboutMeRef.current.value,
-          userName: userData.userName,
-          password: null,
-          accountPublic: userData.accountPublic,
+          accountPublic: userData?.accountPublic,
         },
-        file: '',
+        file: null,
       })
-      console.log(data) // 요청 오는거 체크한 담에, statusCode보고 안내 메시지 뭐 보낼지 판별하는 로직 추가하기
+      // TODO: API 완성되면 테스트 해보기
+      const res = await updateUser({
+        request: {
+          userName: userData?.userName,
+          password: null,
+          url: urlRef.current.value,
+          aboutMe: aboutMeRef.current.value,
+          accountPublic: userData?.accountPublic,
+        },
+        file: null,
+      })
+      console.log(res) // 요청 오는거 체크한 담에, statusCode보고 안내 메시지 뭐 보낼지 판별하는 로직 추가하기
       toggle()
     },
     validate: () => {
