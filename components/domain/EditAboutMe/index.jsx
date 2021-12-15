@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-import { updateUser, useGetUser } from 'utils/apis/user'
+import { useEffect, useRef } from 'react'
+import { updateUser } from 'utils/apis/user'
+import useForm from 'hooks/useForm'
 import { Text, Modal } from '../../base'
 import * as Style from './style'
-import useForm from 'hooks/useForm'
 
-const EditAboutMe = ({ userId, visible, toggle }) => {
+const EditAboutMe = ({ visible, toggle, userData }) => {
   const modalArgs = {
     on: visible,
     toggle: () => toggle(),
@@ -28,13 +28,6 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
   const urlRef = useRef(null)
   const aboutMeRef = useRef(null)
 
-  const [userData, setUserData] = useState(null)
-  const { data } = useGetUser(userId)
-  useEffect(() => {
-    setUserData(data)
-  }, [data])
-  // console.log(userData)
-  useEffect(() => {}, [userData])
   useEffect(() => {
     if (!urlRef && !aboutMeRef) {
       urlRef.current.value = userData?.url
@@ -42,6 +35,11 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
     }
   }, [visible])
 
+  if (!userData) {
+    return <p />
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { values, isLoading, errors, handleSubmit, handleChange } = useForm({
     initialValues: {
       url: userData?.url,
@@ -51,19 +49,11 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
       accoutPublic: userData?.accountPublic,
     },
     onSubmit: async () => {
-      console.log('for test in onsubmit', userData.accountPublic)
-      console.log(urlRef.current.value)
-      console.log(aboutMeRef.current.value)
-      // const formData = new FormData()
-      // formData.set('request', {
-      //   userName: userData?.userName,
-      //   password: null,
-      //   url: urlRef.current.value,
-      //   aboutMe: aboutMeRef.current.value,
-      //   accountPublic: userData?.accountPublic,
-      // })
-      // formData.set('file', null)
-      // const res = await updateUser(formData)
+      // console.log('for test in onsubmit', userData)
+      // console.log(urlRef.current.value)
+      // console.log(aboutMeRef.current.value)
+
+      // FIXME: test console
       console.log({
         request: {
           userName: userData?.userName,
@@ -74,7 +64,8 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
         },
         file: null,
       })
-      // TODO: API 완성되면 테스트 해보기
+
+      // FIXME API 완성되면 테스트 해보기
       const res = await updateUser({
         request: {
           userName: userData?.userName,
@@ -88,9 +79,7 @@ const EditAboutMe = ({ userId, visible, toggle }) => {
       console.log(res) // 요청 오는거 체크한 담에, statusCode보고 안내 메시지 뭐 보낼지 판별하는 로직 추가하기
       toggle()
     },
-    validate: () => {
-      return {}
-    }, // 이부분은 별도의 validation을 요구하는 부분은 아닌것 같기에...
+    validate: () => ({}), // 이부분은 별도의 validation을 요구하는 부분은 아닌것 같기에...
   })
 
   return (

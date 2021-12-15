@@ -25,30 +25,32 @@ const Mypage = () => {
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
+  const [visible, setVisible] = useState(false)
 
   const dataset = []
   dataset.push({ data: areaChartComponent1, name: 'react' })
   dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
-  // token, userId 가져옴
-  const [user, setUser] = useState('')
-  const { data } = useGetUser(user.userId)
+  const [uId, setUid] = useState(null)
   useEffect(() => {
-    setUser(JSON.parse(Cookies.get('user')))
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
   }, [])
-  useEffect(() => {}, [user])
-  const [visible, setVisible] = useState(false)
+  const { data } = useGetUser(uId)
+  if (!data) {
+    return <p />
+  }
+
   const toggle = () => {
     setVisible(!visible)
   }
-  // console.log(user)
   const handleNotice = () => {
     console.log('click notice')
   }
 
   return (
     <Style.Container>
-      <EditAboutMe userId={user?.userId} visible={visible} toggle={toggle} />
+      <EditAboutMe userData={data} visible={visible} toggle={toggle} />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <Link href="/mypage/edit">
           <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
