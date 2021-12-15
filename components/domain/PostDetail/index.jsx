@@ -14,7 +14,6 @@ const PostDetail = ({
   backgroundColor,
   categoryName,
   score,
-  title,
   imageUrl,
   follow,
   like,
@@ -122,7 +121,7 @@ const PostDetail = ({
         style={Style.imageStyle}
       />
       <Style.Main>
-        <Style.Title>{title}</Style.Title>
+        {/*<Style.Title>{title}</Style.Title>*/}
         <Style.Title>score: {score}</Style.Title>
         <p style={{ marginTop: 10, fontSize: 17 }}>{content}</p>
       </Style.Main>
