@@ -7,7 +7,7 @@ const fetcher = (url) =>
     .get(`${API_END_POINT}${url}`, {
       withCredentials: true,
       headers: {
-        token: `${JSON.parse(Cookies.get(LOGIN_COOKIE))?.token}`,
+        token: `${JSON.parse(Cookies.get(LOGIN_COOKIE))?.token}`
       },
     })
     .then((response) => response.data)
