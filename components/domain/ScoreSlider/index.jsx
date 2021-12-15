@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from 'react'
 import theme from 'styles/theme'
 import { ToastContainer, toast } from 'react-toastify'
 import * as Style from './style'
-import 'react-toastify/dist/ReactToastify.css'
 
 const SliderTheme = withStyles({
   root: {
@@ -46,9 +45,7 @@ const ScoreSlider = ({ onChange }) => {
     if (+value < 0 || +value > 100) {
       toast.error('0 ~ 100 사이로 입력해주세요', {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
-        closeOnClick: true,
-        pauseOnHover: true,
+        autoClose: 2000,
         toastId: TOAST_SLIDER_ID,
       })
       return false
