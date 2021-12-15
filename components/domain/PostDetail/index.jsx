@@ -4,8 +4,11 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
+import Router from 'next/router'
 import * as Style from './style'
 import { Avatar } from '../../base'
+import { deletePost } from '../../../utils/apis/post'
+import postFavorite from '../../../utils/apis/post/postFavorite'
 
 const PostDetail = ({
   backgroundColor,
@@ -19,6 +22,8 @@ const PostDetail = ({
   content,
   profileImage,
   username,
+  postId, // page에서 호출한 API로부터 전달 받아야 한다
+  createdAt, // page에서 호출한 API로부터 전달 받아야 한다
 }) => {
   const [_like, setLike] = useState(like)
   const [_follow, setFollow] = useState(follow)
@@ -30,14 +35,27 @@ const PostDetail = ({
     src: profileImage,
   }
 
-  const handleAddFavorite = () => {
-    console.log('click add favorite')
+  // TODO: backend api가 정상 작동 및 완성이 되었다는 가정하에 작성 되었다. 후추 필시 확인할 것
+  const handleAddFavorite = async () => {
+    // TODO 현재 백엔드 API 미구현 상태
+    // /posts/{postId}/favorite
+    const res = await postFavorite(postId)
+    if (res.status === 200) {
+      // TODO Toast로 대체 해야 함. 나중에 develop에 Toast코드 머지 되면 변경하기
+      console.log('update favorite complete')
+    }
   }
-  const handleDeletePost = () => {
-    console.log('click delete posts')
+  const handleDeletePost = async () => {
+    // /posts/{postId}
+    const res = await deletePost(postId)
+    if (res.status === 204) {
+      const month = createdAt.slice(5, 7)
+      Router.push(`/posts/${month}`)
+    }
   }
   const handleUpdatePost = () => {
-    console.log('click update posts')
+    // console.log('click update posts')
+    Router.push('/posts/month/postId/edit')
   }
 
   const handleFollow = () => {
@@ -95,11 +113,18 @@ const PostDetail = ({
           <div style={{ fontSize: '14px' }}>{categoryName}</div>
         </Style.ProfileRight>
       </Style.Profile>
-      <Image src={imageUrl} alt="post image" width='100%' height='50%' layout='responsive' style={Style.imageStyle} />
+      <Image
+        src={imageUrl}
+        alt="post image"
+        width="100%"
+        height="50%"
+        layout="responsive"
+        style={Style.imageStyle}
+      />
       <Style.Main>
         <Style.Title>{title}</Style.Title>
         <Style.Title>score: {score}</Style.Title>
-        <p style={{ marginTop:10,fontSize: 17 }}>{content}</p>
+        <p style={{ marginTop: 10, fontSize: 17 }}>{content}</p>
       </Style.Main>
     </Style.CardContainer>
   )
