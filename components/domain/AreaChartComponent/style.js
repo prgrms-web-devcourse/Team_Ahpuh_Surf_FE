@@ -10,17 +10,23 @@ export const Button = styled.button`
   background-color: #fff;
   color: #222;
 `
-export const containerStyle = {
-  display: 'flex',
-  position: 'relative',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: 'white',
-  border: '1px solid darkgray',
-  borderRadius: 10,
-  padding: '0 10px 5px',
-}
+
+export const ChartContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  /* padding: 0 10px 5px; */
+  height: 100%;
+  width: 100%;
+  padding: 20px 5px;
+  gap: 5px;
+  
+`
 
 export const ButtonContainer = styled.div`
   display: flex;

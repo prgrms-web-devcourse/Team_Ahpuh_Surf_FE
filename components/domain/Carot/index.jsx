@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 const Container = styled.div`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  display: flex;
+  align-items: center;
 `
 
 const Text = styled.span`

@@ -23,15 +23,15 @@ dataset.push({ data: areaChartComponent2, name: 'Vue' })
 const MainWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 10px;
+  padding: 0 10px;
 `
 
 const ChartHeader = styled.div`
-  margin-bottom: 10px;
+  padding: 10px 0;
 `
 
 const ChartWrapper = styled.div`
-  height: 46%;
+  height: 30%;
   width: 100%;
   margin-bottom: 5px;
 `
@@ -39,11 +39,12 @@ const ChartWrapper = styled.div`
 const PostListWrapper = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
-  height: calc(54% - 29px);
+  height: calc(70% - 37px);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  padding: 10px 0;
 `
 
 const Main = () => {
