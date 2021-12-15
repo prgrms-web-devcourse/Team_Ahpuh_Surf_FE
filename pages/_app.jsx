@@ -3,6 +3,7 @@ import { Header, Navbar } from 'components/common'
 import React from 'react'
 import theme from 'styles/theme'
 import 'styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 import styled from '@emotion/styled'
 import Head from 'next/head'
 
