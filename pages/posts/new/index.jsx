@@ -1,17 +1,16 @@
 import { Upload, Text, Dropdown, Textarea } from 'components/base'
 import { toast } from 'react-toastify'
-import { DUMMY_DATA_CAT } from 'constants/DropdownData'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'
 import UploadImage from 'public/images/upload.svg'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import theme from 'styles/theme'
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { checkEmpty } from 'utils/validation'
 import { useGetCategories } from 'utils/apis/category'
-import { changeToBlob } from 'utils/common/changeToBlob'
-import * as Style from './style'
 import { uploadPost } from 'utils/apis/post'
+import * as Style from './style'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,
@@ -25,11 +24,11 @@ const AddSurfModalSSR = dynamic(
 )
 
 const PostNew = () => {
+  const router = useRouter()
   const isInitialMount = useRef(true)
   const { data: categories, isLoading: categoriesLoading } = useGetCategories({
     revalidateOnFocus: false,
   })
-  const [category, setCategory] = useState(categories || [])
   const [fileObject, setFileObject] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
   const [clickedDate, setClikedDate] = useState('')
@@ -44,9 +43,9 @@ const PostNew = () => {
 
   const handleSubmit = async (e) => {
     e?.preventDefault()
-    // const formData = new FormData()
 
     const necessities = {
+      category: selectedCategory.categoryId,
       date: clickedDate,
       score,
       content: textareaValue[0],
@@ -58,51 +57,36 @@ const PostNew = () => {
       for (const word of errorWords) {
         toast.error(word, {
           position: toast.POSITION.TOP_RIGHT,
-          autoClose: 3000,
+          autoClose: 2000,
         })
       }
     } else {
       await setLoading(true)
-      // formData.set('categoryId', selectedCategory?.categoryId) // optional
-      // formData.set('selectedDate', new Date(clickedDate).toJSON())
-      // formData.set('content', textareaValue[0])
-      // formData.set('score', score)
-      // formData.set('fileUrl', fileObject) // optional
-
-      // for (const item of formData.entries()) {
-      //   console.log(item, 'formdata')
-      // }
-
-      // const { data: postId } = await uploadPost({
-      //   categoryId: selectedCategory?.categoryId,
-      //   selectedDate: new Date(clickedDate),
-      //   content: textareaValue[0],
-      //   score,
-      //   fileUrl: fileObject,
-      // })
-
-      console.log({
-        categoryId: selectedCategory?.categoryId,
-        selectedDate: new Date(clickedDate),
+      const formData = new FormData()
+      const requestObject = {
+        categoryId: selectedCategory.categoryId,
+        // categoryId: 1, FIXME: 임시 id
+        selectedDate: clickedDate,
         content: textareaValue[0],
         score,
-        fileUrl: fileObject,
-      })
+      }
+
+      formData.set('request', JSON.stringify(requestObject))
+      formData.set('file', fileObject || null)
+
+      const postId = await uploadPost(formData)
       setLoading(false)
       setTextareaValue(['', false])
+      router.push('/posts/all')
+      // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
     }
   }
-
-  useEffect(() => {
-    const newPost = { name: '+ New' }
-    categories && categories.push(newPost)
-  }, [])
 
   useEffect(() => {
     if (selectedCategory.name === '+ New') {
       setToggleModal(true)
     }
-  }, [selectedCategory])
+  }, [selectedCategory.name])
 
   useEffect(() => {
     if (textareaValue[1]) {
@@ -149,11 +133,11 @@ const PostNew = () => {
         </Upload>
         <Style.OptionWrapper>
           <Dropdown
-            // data={categories || []}
-            data={[]}
+            data={categories}
             height={45}
             isObj
             onChange={setSelectedCategory}
+            isNew
           />
           <DatePicker onChange={setClikedDate} />
         </Style.OptionWrapper>
