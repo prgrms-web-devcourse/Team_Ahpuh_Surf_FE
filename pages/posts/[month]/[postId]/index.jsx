@@ -14,7 +14,7 @@ const Detail = () => {
     flex-direction: column;
     align-items: center;
   `
-  const [isMine, setMine] = useState(false)
+  // const [isMine, setMine] = useState(false)
   const [pId, setPId] = useState(null)
   const router = useRouter()
   useEffect(() => {
@@ -27,14 +27,14 @@ const Detail = () => {
   const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
   const { data: user } = useGetUser(posting.userId)
 
-  useEffect(() => {
-    const { userId } = JSON.parse(Cookies.get('user'))
-    if (userId === posting?.userId) {
-      setMine(true)
-    } else {
-      setMine(false)
-    }
-  }, [posting])
+  // useEffect(() => {
+  //   const { userId } = JSON.parse(Cookies.get('user'))
+  //   if (userId === posting?.userId) {
+  //     setMine(true)
+  //   } else {
+  //     setMine(false)
+  //   }
+  // }, [posting])
 
   const getCategoryName = () => {
     const res = categories.filter(
@@ -77,7 +77,8 @@ const Detail = () => {
             ? user.profilePhotoUrl
             : 'https://picsum.photos/200'
         }
-        follow={isMine}
+        authorId={posting?.userId}
+        // follow={isMine}
         imageUrl={
           posting.fileUrl ? posting.fileUrl : 'https://picsum.photos/200'
         }

@@ -1,21 +1,25 @@
 import { RiArrowGoBackLine } from 'react-icons/ri'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import Router, { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 import * as Style from './style'
 import { Avatar } from '../../base'
 import { deleteFavorite, deletePost } from '../../../utils/apis/post'
 import postFavorite from '../../../utils/apis/post/postFavorite'
+import deleteFollow from '../../../utils/apis/follow/deleteFollow'
+import useGetFollowingList from '../../../utils/apis/follow/useGetFollowingList'
+import postFollow from '../../../utils/apis/follow/postFollow'
 
 const PostDetail = ({
   backgroundColor,
   categoryName,
   score,
   imageUrl,
-  follow,
+  authorId,
   like,
   date,
   content,
@@ -26,7 +30,7 @@ const PostDetail = ({
   favorite,
 }) => {
   const [_like, setLike] = useState(like)
-  const [_follow, setFollow] = useState(follow)
+  const [_follow, setFollow] = useState(null)
   const [menu, setMenu] = useState(false)
   const [_favorite, setFavorite] = useState(favorite)
   const menuRef = useRef(null)
@@ -36,6 +40,24 @@ const PostDetail = ({
     src: profileImage,
   }
   const router = useRouter()
+
+  const [uid, setUid] = useState(null)
+  useEffect(() => {
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
+  }, [])
+  const { data: followingList } = useGetFollowingList(uid)
+
+  const isUserFollow = () => {
+    console.log(followingList)
+    const res = followingList.filter((item) => item.userId === uid)
+    if (res.length === 1) {
+      setFollow(true)
+      return true
+    }
+    setFollow(false)
+    return false
+  }
 
   const handleFavorite = async () => {
     // TODO 추후 Toast 로 변경
@@ -77,8 +99,22 @@ const PostDetail = ({
     Router.push(`/posts/month/${postId}/edit`)
   }
 
-  const handleFollow = () => {
-    setFollow(!_follow)
+  const handleFollow = async () => {
+    // 이미 팔로우 상태
+    if (isUserFollow()) {
+      setFollow(false)
+      const res = await deleteFollow()
+      if (res.status === 204) {
+        console.log('unfollow author')
+      }
+    } else {
+      // 팔로우 안된 상태 -> 팔로우ㅇ
+      setFollow(true)
+      const res = await postFollow(authorId)
+      if (res.status === 201) {
+        console.log('follow author')
+      }
+    }
   }
   const handleLike = () => {
     setLike(!_like)
@@ -96,7 +132,9 @@ const PostDetail = ({
       setMenu(() => !menu)
     }
   }
-
+  if (!followingList || !uid) {
+    return <p />
+  }
   return (
     <Style.CardContainer backgroundColor={backgroundColor}>
       <Style.ControlBox>
@@ -144,7 +182,7 @@ const PostDetail = ({
         // style={Style.imageStyle}
       />
       <Style.Main>
-        {/*<Style.Title>{title}</Style.Title>*/}
+        {/* <Style.Title>{title}</Style.Title> */}
         <Style.Title>score: {score}</Style.Title>
         <p style={{ marginTop: 10, fontSize: 17 }}>{content}</p>
       </Style.Main>
@@ -155,7 +193,6 @@ PostDetail.propTypes = {
   backgroundColor: PropTypes.string.isRequired,
   categoryName: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
   imageUrl: PropTypes.string,
   follow: PropTypes.bool,
   like: PropTypes.bool,
