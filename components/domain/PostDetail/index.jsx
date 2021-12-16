@@ -13,6 +13,7 @@ import postFavorite from '../../../utils/apis/post/postFavorite'
 import deleteFollow from '../../../utils/apis/follow/deleteFollow'
 import useGetFollowingList from '../../../utils/apis/follow/useGetFollowingList'
 import postFollow from '../../../utils/apis/follow/postFollow'
+import { deleteLike, postLike } from '../../../utils/apis/like'
 
 const PostDetail = ({
   backgroundColor,
@@ -21,6 +22,7 @@ const PostDetail = ({
   imageUrl,
   authorId,
   like,
+  likeId,
   date,
   content,
   profileImage,
@@ -30,6 +32,7 @@ const PostDetail = ({
   favorite,
 }) => {
   const [_like, setLike] = useState(like)
+  const [_likeId, setLikeId] = useState(likeId)
   const [_follow, setFollow] = useState(null)
   const [menu, setMenu] = useState(false)
   const [_favorite, setFavorite] = useState(favorite)
@@ -83,11 +86,13 @@ const PostDetail = ({
         console.log(e)
       }
     }
+    menuRef.current.style.display = 'none'
+    setMenu(() => !menu)
   }
+  // TODO: 맨 마지막에 활성화 시킬 것!
   const handleDeletePost = async () => {
     // /posts/{postId}
     console.log('delete post no.', postId)
-    // TODO: 맨 마지막에 활성화 시킬 것!
     // const res = await deletePost(postId)
     // if (res.status === 204) {
     //   const month = createdAt.slice(5, 7)
@@ -116,8 +121,32 @@ const PostDetail = ({
       }
     }
   }
-  const handleLike = () => {
-    setLike(!_like)
+  // TODO: handleLike 구현
+  const handleLike = async () => {
+    if (_like) {
+      // 이미 like 눌린 상태
+      try {
+        const res = await postLike(postId)
+        if (res.status === 200) {
+          setLike(!_like)
+          setLikeId(res.data.likeId)
+          console.log('unlike this post')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      // like 안눌린 상태
+      try {
+        const res = await deleteLike(postId, likeId)
+        if (res.status === 204) {
+          setLike(!_like)
+          console.log('like this post')
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
   const handleBack = () => {
     const { month } = router.query

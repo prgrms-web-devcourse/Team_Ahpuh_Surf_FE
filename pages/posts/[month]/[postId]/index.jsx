@@ -71,6 +71,7 @@ const Detail = () => {
         username={!user.userName ? '' : user.userName}
         date={posting?.selectedDate}
         like={posting?.isLiked}
+        likeId={posting?.likeId}
         content={posting?.content}
         profileImage={
           user.profilePhotoUrl
