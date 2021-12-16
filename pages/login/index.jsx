@@ -2,24 +2,31 @@ import { useForm } from 'hooks'
 import { Input } from 'components/base'
 import { checkForm } from 'utils/validation'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import * as Style from 'pages/signup/style'
 import { login } from 'utils/apis/user'
 import Cookies from 'js-cookie'
+import { LOGIN_COOKIE } from 'constants/environment'
+import { useRouter } from 'next/router'
 
 const Login = () => {
+  const router = useRouter()
+  const inputRef = useRef(null)
+
   const { values, isLoading, errors, handleSubmit, handleChange } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
     onSubmit: async () => {
-      console.log('work', values)
       const { data } = await login({
         email: values.email,
         password: values.password,
       })
-      Cookies.set('user', JSON.stringify(data), { expires: 28, secure: true })
+      Cookies.set(LOGIN_COOKIE, JSON.stringify(data), {
+        expires: 28,
+        secure: true,
+      })
     },
     validate: ({ email, password }) => {
       const newErrors = {}
@@ -31,7 +38,11 @@ const Login = () => {
     },
   })
 
-  const inputRef = useRef(null)
+  useEffect(() => {
+    if (Cookies.get(LOGIN_COOKIE)) {
+      router.push('/')
+    }
+  }, [])
 
   return (
     <Style.FormWrapper>
@@ -79,7 +90,7 @@ const Login = () => {
       </Style.Form>
       <Style.LinkWrapper>
         Not a member?{' '}
-        <Link href="/login" passHref>
+        <Link href="/signup" passHref>
           <Style.RedLink>Go to sign up</Style.RedLink>
         </Link>
       </Style.LinkWrapper>
