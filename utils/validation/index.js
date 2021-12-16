@@ -13,3 +13,9 @@ export const checkForm = (value, type) => {
   }
   return false
 }
+
+export const checkEmpty = (necessities) =>
+  Object.entries(necessities).reduce(
+    (prev, [key, value]) => (value ? prev : [...prev, `Enter the ${key}`]),
+    [],
+  )
