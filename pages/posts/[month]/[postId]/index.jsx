@@ -1,4 +1,3 @@
-import { PostDetailSampleData } from 'utils/SampleData/PostDetail'
 import theme from 'styles/theme'
 import { PostDetail } from 'components/domain'
 import styled from '@emotion/styled'
@@ -16,28 +15,32 @@ const Detail = () => {
     align-items: center;
   `
   const [isMine, setMine] = useState(false)
-  const { postId } = useRouter().query
-  const { data: post } = useGetPost(postId) // FIXME 현재 postId가 제대로 된 값이 아니기 때문에 정상적인 값을 리턴 못한다...
-  const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
-  const { data: user } = useGetUser(post?.userId)
-  // FIXME: 제대로 된 postId가 들어갔으면 여기도 제대로 된 값이 들어가서 문제 없음!
-  // 본인이 작성한지 여부 체크하기 위해 사용
+  const [pId, setPId] = useState(null)
+  const router = useRouter()
+  useEffect(() => {
+    if (!router.isReady) return
+    const { postId } = router.query
+    setPId(postId)
+  }, [router.isReady])
+  const { data: posting } = useGetPost(pId)
 
-  // TODO: useGetUser()를 선택적으로 호출할 수 있도록 swr쪽에서 핸들링하는 방법 찾아낼것!!!
+  const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
+  const { data: user } = useGetUser(posting.userId)
+
   useEffect(() => {
     const { userId } = JSON.parse(Cookies.get('user'))
-    // console.log(Cookies.get('user'))
-    // console.log(user Id)
-    if (userId === post?.userId) {
+    if (userId === posting?.userId) {
       setMine(true)
     } else {
       setMine(false)
     }
-  }, [post])
+  }, [posting])
 
   const getCategoryName = () => {
-    const res = categories.filter((item) => item.categoryId === post.categoryId)
-    return res.name
+    const res = categories.filter(
+      (item) => item.categoryId === posting.categoryId,
+    )
+    return res[0]?.name
   }
   // eslint-disable-next-line consistent-return
   const getColorRandomly = () => {
@@ -56,22 +59,30 @@ const Detail = () => {
       default:
     }
   }
-  if (!post || !categories || !user) {
+  if (!posting || !categories || !user || !pId) {
     return <p />
   }
   return (
     <Container>
       <PostDetail
         backgroundColor={getColorRandomly()}
-        score={post.score}
-        categoryName={() => getCategoryName()}
-        username={user.userName}
-        date={post.selectedDate}
-        like={post.isLiked}
-        content={post.content}
-        profileImage={user.profilePhotoUrl}
+        score={!posting.score ? '' : posting.score}
+        categoryName={getCategoryName()}
+        username={!user.userName ? '' : user.userName}
+        date={posting?.selectedDate}
+        like={posting?.isLiked}
+        content={posting?.content}
+        profileImage={
+          user.profilePhotoUrl
+            ? user.profilePhotoUrl
+            : 'https://picsum.photos/200'
+        }
         follow={isMine}
-        imageUrl={post.fileUrl}
+        imageUrl={
+          posting.fileUrl ? posting.fileUrl : 'https://picsum.photos/200'
+        }
+        postId={posting?.postId}
+        createdAt={posting?.createdAt}
       />
     </Container>
   )

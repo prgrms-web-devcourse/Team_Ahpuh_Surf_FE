@@ -34,27 +34,33 @@ const PostDetail = ({
     src: profileImage,
   }
 
-  // TODO: backend api가 정상 작동 및 완성이 되었다는 가정하에 작성 되었다. 후추 필시 확인할 것
   const handleAddFavorite = async () => {
     // TODO 현재 백엔드 API 미구현 상태
     // /posts/{postId}/favorite
-    const res = await postFavorite(postId)
-    if (res.status === 200) {
-      // TODO Toast로 대체 해야 함. 나중에 develop에 Toast코드 머지 되면 변경하기
-      console.log('update favorite complete')
+
+    // TODO 추후 Toast 로 변경
+    try {
+      const res = await postFavorite(postId)
+      if (res.status === 200) {
+        console.log('update favorite complete')
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
   const handleDeletePost = async () => {
     // /posts/{postId}
-    const res = await deletePost(postId)
-    if (res.status === 204) {
-      const month = createdAt.slice(5, 7)
-      Router.push(`/posts/${month}`)
-    }
+    console.log('delete post no.', postId)
+    // TODO: 맨 마지막에 활성화 시킬 것!
+    // const res = await deletePost(postId)
+    // if (res.status === 204) {
+    //   const month = createdAt.slice(5, 7)
+    //   Router.push(`/posts/${month}`)
+    // }
   }
   const handleUpdatePost = () => {
     // console.log('click update posts')
-    Router.push('/posts/month/postId/edit')
+    Router.push(`/posts/month/${postId}/edit`)
   }
 
   const handleFollow = () => {
@@ -113,7 +119,7 @@ const PostDetail = ({
         </Style.ProfileRight>
       </Style.Profile>
       <Image
-        src={imageUrl}
+        src={imageUrl || 'https://picsum.photos/200'}
         alt="post image"
         width="100%"
         height="50%"
