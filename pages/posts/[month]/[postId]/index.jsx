@@ -83,6 +83,7 @@ const Detail = () => {
         }
         postId={posting?.postId}
         createdAt={posting?.createdAt}
+        favorite={posting?.favorite}
       />
     </Container>
   )

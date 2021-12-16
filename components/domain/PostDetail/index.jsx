@@ -4,10 +4,10 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import * as Style from './style'
 import { Avatar } from '../../base'
-import { deletePost } from '../../../utils/apis/post'
+import { deleteFavorite, deletePost } from '../../../utils/apis/post'
 import postFavorite from '../../../utils/apis/post/postFavorite'
 
 const PostDetail = ({
@@ -23,29 +23,43 @@ const PostDetail = ({
   username,
   postId, // page에서 호출한 API로부터 전달 받아야 한다
   createdAt, // page에서 호출한 API로부터 전달 받아야 한다
+  favorite,
 }) => {
   const [_like, setLike] = useState(like)
   const [_follow, setFollow] = useState(follow)
   const [menu, setMenu] = useState(false)
+  const [_favorite, setFavorite] = useState(favorite)
   const menuRef = useRef(null)
   const avatarArgs = {
     alt: 'avatar',
     size: 40,
     src: profileImage,
   }
+  const router = useRouter()
 
-  const handleAddFavorite = async () => {
-    // TODO 현재 백엔드 API 미구현 상태
-    // /posts/{postId}/favorite
-
+  const handleFavorite = async () => {
     // TODO 추후 Toast 로 변경
-    try {
-      const res = await postFavorite(postId)
-      if (res.status === 200) {
-        console.log('update favorite complete')
+
+    if (!_favorite) {
+      try {
+        const res = await postFavorite(postId)
+        if (res.status === 200) {
+          console.log('add favorite complete')
+          setFavorite(true)
+        }
+      } catch (e) {
+        console.log(e)
       }
-    } catch (e) {
-      console.log(e)
+    } else {
+      try {
+        const res = await deleteFavorite(postId)
+        if (res.status === 200) {
+          console.log('remove favorite complete')
+          setFavorite(false)
+        }
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
   const handleDeletePost = async () => {
@@ -70,7 +84,8 @@ const PostDetail = ({
     setLike(!_like)
   }
   const handleBack = () => {
-    console.log('back clicked')
+    const { month } = router.query
+    Router.push(`/posts/${month}`)
   }
   const handleMenu = () => {
     if (menu) {
@@ -92,7 +107,9 @@ const PostDetail = ({
           <Style.Menu ref={menuRef} style={{ display: 'none' }}>
             <div onClick={handleUpdatePost}>기록 수정</div>
             <div onClick={handleDeletePost}>기록 삭제</div>
-            <div onClick={handleAddFavorite}>즐겨찾기 추가</div>
+            <div onClick={handleFavorite}>
+              {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
+            </div>
           </Style.Menu>
         </div>
       </Style.ControlBox>
@@ -124,7 +141,7 @@ const PostDetail = ({
         width="100%"
         height="50%"
         layout="responsive"
-        style={Style.imageStyle}
+        // style={Style.imageStyle}
       />
       <Style.Main>
         {/*<Style.Title>{title}</Style.Title>*/}
