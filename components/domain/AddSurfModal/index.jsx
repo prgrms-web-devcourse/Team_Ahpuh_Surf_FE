@@ -1,9 +1,14 @@
 import { toast } from 'react-toastify'
 import { Text, Modal, Input } from 'components/base'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef, useState, useEffect } from 'react'
 import * as Form from 'pages/signup/style'
 import dynamic from 'next/dynamic'
 import { useToggle } from 'hooks'
+import { shuffle } from 'utils/common/shuffle'
+import theme from 'styles/theme'
+import { useGetCategories, uploadCategory } from 'utils/apis/category'
+import { mutate } from 'swr'
+import { useGetCategoriesPath } from 'constants/apiPath'
 import * as Style from './style'
 
 const Picker = dynamic(() => import('emoji-picker-react'), {
@@ -11,6 +16,9 @@ const Picker = dynamic(() => import('emoji-picker-react'), {
 })
 
 const AddSurfModal = ({ toggleModal, setToggleModal }) => {
+  const { data: categories, isLoading: categoriesLoading } = useGetCategories({
+    revalidateOnFocus: false,
+  })
   const TOAST_TITLE_ID = 'toast-title-id'
   const inputRef = useRef(null)
   const [chosenEmoji, setChosenEmoji] = useState(null)
@@ -25,21 +33,33 @@ const AddSurfModal = ({ toggleModal, setToggleModal }) => {
     onToggleEmoji()
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const inputValue = inputRef.current.value
-    if (inputValue.length > 0) {
-      // 비동기 작업
-      console.log(inputValue, chosenEmoji.emoji)
-      onToggleModal()
-    } else {
-      toast.error('Please enter surf title', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
-        closeOnClick: true,
-        pauseOnHover: true,
-        toastId: TOAST_TITLE_ID,
-      })
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      const inputValue = inputRef.current.value
+      if (inputValue.length > 0 && categories.length <= 5) {
+        const request = {
+          name: `${inputValue} ${chosenEmoji ? chosenEmoji?.emoji : ''}`,
+          colorCode: shuffle(Object.values(theme.surfColor)),
+        }
+        const categoryId = await uploadCategory(request)
+        onToggleModal()
+        mutate(useGetCategoriesPath)
+      } else if (categories.length > 5) {
+        toast.error('Maximum categories are 5', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+          toastId: TOAST_TITLE_ID,
+        })
+      } else {
+        toast.error('Please enter surf title', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+          toastId: TOAST_TITLE_ID,
+        })
+      }
+    } catch (error) {
+      console.error(error.message)
     }
   }
 
