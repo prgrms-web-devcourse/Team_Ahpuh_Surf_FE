@@ -1,5 +1,6 @@
-import { Upload, Text, Dropdown, Textarea } from 'components/base'
 import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
+import { Upload, Text, Dropdown, Textarea } from 'components/base'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'
 import UploadImage from 'public/images/upload.svg'
@@ -31,7 +32,7 @@ const PostNew = () => {
   })
   const [fileObject, setFileObject] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [clickedDate, setClikedDate] = useState('')
+  const [clickedDate, setClikedDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [score, setScore] = useState(0)
   const [textareaValue, setTextareaValue] = useState([])
   const [toggleModal, setToggleModal] = useState(false)
@@ -42,51 +43,55 @@ const PostNew = () => {
   }
 
   const handleSubmit = async (e) => {
-    e?.preventDefault()
+    try {
+      e?.preventDefault()
 
-    const necessities = {
-      category: selectedCategory.categoryId,
-      date: clickedDate,
-      score,
-      content: textareaValue[0],
-    }
-    const errorWords = checkEmpty(necessities)
-
-    if (errorWords.length > 0) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const word of errorWords) {
-        toast.error(word, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        })
-      }
-    } else {
-      await setLoading(true)
-      const formData = new FormData()
-      const requestObject = {
-        categoryId: selectedCategory.categoryId,
-        // categoryId: 1, FIXME: 임시 id
-        selectedDate: clickedDate,
-        content: textareaValue[0],
+      const necessities = {
+        category: selectedCategory.categoryId,
+        date: clickedDate,
         score,
+        content: textareaValue[0],
       }
+      const errorWords = checkEmpty(necessities)
 
-      formData.set('request', JSON.stringify(requestObject))
-      formData.set('file', fileObject || null)
+      if (errorWords.length > 0) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const word of errorWords) {
+          toast.error(word, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          })
+        }
+      } else {
+        await setLoading(true)
+        const formData = new FormData()
+        const requestObject = {
+          // categoryId: 1,
+          categoryId: selectedCategory.categoryId,
+          selectedDate: clickedDate,
+          content: textareaValue[0],
+          score,
+        }
 
-      const postId = await uploadPost(formData)
-      setLoading(false)
-      setTextareaValue(['', false])
-      router.push('/posts/all')
-      // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
+        formData.set('request', JSON.stringify(requestObject))
+        formData.set('file', fileObject || null)
+
+        const postId = await uploadPost(formData)
+        setTextareaValue(['', false])
+        router.push('/posts/all')
+        // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
+      }
+    } catch (error) {
+      console.error(error.message)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
     if (selectedCategory.name === '+ New') {
       setToggleModal(true)
     }
-  }, [selectedCategory.name])
+  }, [selectedCategory])
 
   useEffect(() => {
     if (textareaValue[1]) {
