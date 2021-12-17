@@ -22,14 +22,14 @@ const NavbarWrapper = styled.ul`
 const Navbar = ({ height, color, iconSize }) => (
   <NavbarWrapper height={height}>
     <li>
-      <Link href="/" passHref>
+      <Link href="/explore" passHref>
         <a>
           <AiFillCompass size={iconSize} color={color} />
         </a>
       </Link>
     </li>
     <li>
-      <Link href="/" passHref>
+      <Link href="/posts/new" passHref>
         <a>
           <AiFillPlusCircle size={iconSize * 1.6} color={color} />
         </a>
