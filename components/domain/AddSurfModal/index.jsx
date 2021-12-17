@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 import { Text, Modal, Input } from 'components/base'
-import { useCallback, useRef, useState, useEffect } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import * as Form from 'pages/signup/style'
 import dynamic from 'next/dynamic'
 import { useToggle } from 'hooks'
@@ -42,7 +42,7 @@ const AddSurfModal = ({ toggleModal, setToggleModal }) => {
           name: `${inputValue} ${chosenEmoji ? chosenEmoji?.emoji : ''}`,
           colorCode: shuffle(Object.values(theme.surfColor)),
         }
-        const categoryId = await uploadCategory(request)
+        await uploadCategory(request)
         onToggleModal()
         mutate(useGetCategoriesPath)
       } else if (categories.length > 5) {
