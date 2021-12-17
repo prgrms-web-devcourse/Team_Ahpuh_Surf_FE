@@ -54,7 +54,7 @@ export const AreaChartSkeleton = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 35px;
+  top: 34px;
   left: 0;
   border-radius: 10px;
   //width: ${({ width }) => width};

@@ -13,6 +13,7 @@ export const Button = styled.button`
 export const containerStyle = {
   display: 'flex',
   position: 'relative',
+  marginTop: 10,
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',

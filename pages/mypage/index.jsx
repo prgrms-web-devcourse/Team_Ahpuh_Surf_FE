@@ -10,7 +10,6 @@ import Profile from 'components/domain/Profile'
 import { useEffect, useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
 import { heatmapSampleData } from 'utils/SampleData/heatmapChart' // 일년치 게시글 점수 조회
-// import { sampleData } from 'utils/SampleData/Mypage' // 회원 정보 조회
 import Cookies from 'js-cookie'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
@@ -118,7 +117,7 @@ const Mypage = () => {
             Loading
           </Text>
         </Style.AreaChartSkeleton>
-        <AreaChartComponent data={dataset} isMyPage />
+        <AreaChartComponent data={dataset} isMyPage style={{ marginTop: 10 }} />
       </Style.Graph>
       <Link href="/dashboard">
         <Style.Title>{`Dashboard >`}</Style.Title>
