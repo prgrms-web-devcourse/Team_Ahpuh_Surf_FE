@@ -62,11 +62,14 @@ const Mypage = () => {
       <EditAboutMe userData={data} visible={visible} toggle={toggle} />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <Link href="/mypage/edit">
-          <AiTwotoneSetting size={30} style={{ marginRight: 5 }} />
+          <AiTwotoneSetting
+            size={30}
+            style={{ marginRight: 5, cursor: 'pointer' }}
+          />
         </Link>
         <BsFillBellFill
           size={30}
-          style={{ marginLeft: 5 }}
+          style={{ marginLeft: 5, cursor: 'pointer' }}
           onClick={() => handleNotice()}
         />
       </div>

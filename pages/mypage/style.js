@@ -15,6 +15,7 @@ export const FollowItem = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px;
+  cursor: pointer;
   & * {
     margin-top: 10px;
   }
@@ -30,6 +31,7 @@ export const Title = styled.div`
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 10px;
+  cursor: pointer;
 `
 export const Content = styled.div`
   font-size: 25px;
