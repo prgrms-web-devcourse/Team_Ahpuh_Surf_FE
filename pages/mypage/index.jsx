@@ -14,7 +14,9 @@ import { heatmapSampleData } from 'utils/SampleData/heatmapChart' // 일년치 �
 import Cookies from 'js-cookie'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
+import FollowModal from 'components/domain/FollowModal'
 import * as Style from './style'
+import { useToggle } from '../../hooks'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -25,8 +27,8 @@ const Mypage = () => {
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
+  const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
-
   const dataset = []
   dataset.push({ data: areaChartComponent1, name: 'react' })
   dataset.push({ data: areaChartComponent2, name: 'Vue' })
@@ -37,19 +39,27 @@ const Mypage = () => {
     setUid(userId)
   }, [])
   const { data } = useGetUser(uId)
-  if (!data) {
-    return <p />
-  }
 
   const toggle = () => {
     setVisible(!visible)
+  }
+  const toggleFollowModal = () => {
+    setToggleTabs()
   }
   const handleNotice = () => {
     console.log('click notice')
   }
 
+  if (!data || !uId) {
+    return <p />
+  }
   return (
     <Style.Container>
+      <FollowModal
+        userId={uId}
+        toggleTabs={toggleTabs}
+        setToggleTabs={setToggleTabs}
+      />
       <EditAboutMe userData={data} visible={visible} toggle={toggle} />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <Link href="/mypage/edit">
@@ -70,7 +80,7 @@ const Mypage = () => {
         userName={data?.userName}
         email={data?.email}
       />
-      <Style.FollowContainer>
+      <Style.FollowContainer onClick={() => toggleFollowModal()}>
         <Style.FollowItem>
           <Text size={36}>{data?.followerCount}</Text>
           <Text size={20}>Follower</Text>

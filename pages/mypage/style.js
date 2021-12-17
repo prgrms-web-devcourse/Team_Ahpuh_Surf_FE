@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 
 export const Container = styled.div`
+  position: relative;
   margin: 0 20px 100px 20px;
 `
 export const FollowContainer = styled.div`
@@ -40,7 +41,7 @@ export const Graph = styled.div`
   margin-bottom: 10px;
 `
 
-const skeletonLoading=keyframes`
+const skeletonLoading = keyframes`
   0%{
     background-color: hsl(200,20%,70%);
   }
@@ -48,22 +49,21 @@ const skeletonLoading=keyframes`
     background-color: hsl(200,20%,95%);
   }
 `
-export const AreaChartSkeleton=styled.div`
+export const AreaChartSkeleton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 35px;
-  left:0;
+  left: 0;
   border-radius: 10px;
-  //width: ${({width})=>(width)};
+  //width: ${({ width }) => width};
   width: 100%;
-  // height:  ${({height})=>(`${height}px`)}
+  // height:  ${({ height }) => `${height}px`}
   height: 305px;
   animation: ${skeletonLoading} 1s linear infinite alternate;
-  
 `
-export const HeatmapSkeleton=styled.div`
+export const HeatmapSkeleton = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
