@@ -9,7 +9,12 @@ export const getFilteredData = (data) => {
       }),
     )
     .sort((a, b) => b.postCount - a.postCount)
-  const sorted = res.sort((a, b) => b.postCount - a.postCount)
+  const sorted = res
+    .sort((a, b) => b.postCount - a.postCount)
+    .map((item) => ({
+      ...item,
+      postCount: Math.round(((item.postCount * 100) / 365) * 100) / 100,
+    }))
   const dataset = []
   for (let i = 0; i < 4; i += 1) {
     dataset.push(sorted[i])

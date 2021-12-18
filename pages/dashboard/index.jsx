@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { sampleData } from 'utils/SampleData/RadialChartComponent'
-import { heatmapSampleData } from 'utils/SampleData/heatmapChart'
-import { CategoryScore } from 'utils/SampleData/CategoryScore'
 import { Text } from 'components/base'
+import Cookies from 'js-cookie'
+import { useEffect, useState } from 'react'
 import * as Style from './style'
-import { DashboardCard } from '../../components/domain'
-import SkeletonBox from '../../components/domain/SkeletonBox'
+import { DashboardCard } from 'components/domain'
+import SkeletonBox from 'components/domain/SkeletonBox'
+import { useGetDashboard } from 'utils/apis/category'
+import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 
 const Dashboard = () => {
   const averageBoxStyle = {
@@ -16,10 +17,23 @@ const Dashboard = () => {
     alignItems: 'center',
     padding: 10,
   }
-  const avgScores = CategoryScore.map((data) => data.averageScore).reduce(
-    (avg, value, _, { length }) => avg + value / length,
-    0,
-  )
+
+  const [uid, setUid] = useState(null)
+  useEffect(() => {
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
+  }, [])
+  const { data: CategoryScore } = useGetDashboard(uid)
+  const { data: heatmapData } = useGetPostsCountYear(2021, uid)
+  const getAvgScore = () => {
+    if (!CategoryScore) {
+      return 0
+    }
+    return CategoryScore.map((data) => data.averageScore).reduce(
+      (avg, value, _, { length }) => avg + value / length,
+      0,
+    )
+  }
 
   const RadialChart = dynamic(
     import('components/domain/RadialBarChartComponent'),
@@ -34,6 +48,9 @@ const Dashboard = () => {
     },
   )
 
+  if (!CategoryScore) {
+    return <p />
+  }
   return (
     <Style.Container>
       <Style.HorizontalBox>
@@ -66,9 +83,9 @@ const Dashboard = () => {
             score
           </div>
         </div>
-        <div style={{ fontSize: 70 }}>{Math.floor(avgScores)}</div>
+        <div style={{ fontSize: 70 }}>{Math.floor(getAvgScore())}</div>
       </Style.Box>
-      <Style.Graph style={{ height: 300, width: '80%' }}>
+      <Style.Graph style={{ height: 350, width: '80%' }}>
         <SkeletonBox
           position="absolute"
           width="100%"
@@ -79,8 +96,8 @@ const Dashboard = () => {
           color="darkGray"
         />
         <RadialChart
-          data={sampleData}
-          height={350}
+          data={CategoryScore}
+          height={380}
           style={{ marginBottom: 20 }}
         />
       </Style.Graph>
@@ -101,7 +118,7 @@ const Dashboard = () => {
           text="Loading"
           color="darkGray"
         />
-        <HeatmapChart data={heatmapSampleData} height="370px" />
+        <HeatmapChart data={heatmapData} height="370px" />
       </Style.Graph>
       <div style={{ width: '100%' }}>
         {CategoryScore.map(
