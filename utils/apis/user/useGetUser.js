@@ -4,6 +4,7 @@ import fetcher from 'utils/apis/fetcher'
 const useUser = (userId) => {
   const { data, error } = useSWR(userId ? `/users/${userId}` : null, fetcher)
 
+
   return {
     data,
     isLoading: !error && !data,
@@ -11,4 +12,4 @@ const useUser = (userId) => {
   }
 }
 
-export default useUser
+export default useGetUser
