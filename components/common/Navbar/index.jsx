@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { AiFillCompass, AiFillPlusCircle } from 'react-icons/ai'
+// import { IoDocumentText } from 'react-icons/io'
 import { IoDocumentText } from 'react-icons/io5'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
@@ -22,14 +23,14 @@ const NavbarWrapper = styled.ul`
 const Navbar = ({ height, color, iconSize }) => (
   <NavbarWrapper height={height}>
     <li>
-      <Link href="/" passHref>
+      <Link href="/explore" passHref>
         <a>
           <AiFillCompass size={iconSize} color={color} />
         </a>
       </Link>
     </li>
     <li>
-      <Link href="/" passHref>
+      <Link href="/posts/new" passHref>
         <a>
           <AiFillPlusCircle size={iconSize * 1.6} color={color} />
         </a>

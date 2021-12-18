@@ -1,21 +1,12 @@
-import { useCallback, useState, Children, useEffect } from 'react'
+/* eslint-disable */
+import { useCallback, useState, Children, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import * as Style from './style'
 
-/*
-  category data 형태
-  {
-    "categoryId":Long,
-    "name":String,
-    "isPublic":Boolean,
-    "colorCode":String
-	},
-
-
-*/
-
 const Dropdown = ({
+  selected,
+  handleClick,
   data,
   width,
   height,
@@ -23,8 +14,10 @@ const Dropdown = ({
   border,
   isObj,
   onChange,
+  isNew,
   ...rest
 }) => {
+  const isInitialMount = useRef(true)
   const [selectedObj, setSelectedObj] = useState({
     name: 'SELECT',
   })
@@ -34,23 +27,29 @@ const Dropdown = ({
     toggleList(!listOpened)
   }
 
-  const handleClick = useCallback((item) => {
-    setSelectedObj(
-      isObj
-        ? {
-            ...item,
-          }
-        : {
-            name: `${item}`,
-          },
-    )
-    toggleList(false)
-  }, [])
+  // const handleClick = (item) => {
+  //   setObj(
+  //     isObj
+  //       ? {
+  //           ...item,
+  //         }
+  //       : `${item}`,
+  //   )
+  //   toggleList(false)
+  // }
 
   useEffect(() => {
     // eslint-disable-next-line no-unused-expressions
     onChange && onChange(selectedObj)
-  }, [selectedObj])
+  }, [selectedObj, onChange])
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isNew && data.push({ name: '+ New' })
+    } else {
+      isInitialMount.current = false
+    }
+  }, [data])
 
   return (
     <Style.DropdownWrapper width={width} fontSize={fontSize} {...rest}>
@@ -58,7 +57,7 @@ const Dropdown = ({
         height={height}
         border={border}
         onClick={toggleDropdown}>
-        <Style.SelectedWord>{selectedObj.name}</Style.SelectedWord>
+        <Style.SelectedWord>{selected?.name}</Style.SelectedWord>
         <div style={{ flexShrink: '0' }}>
           {listOpened ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
         </div>
@@ -68,10 +67,11 @@ const Dropdown = ({
         itemCnt={data.length}>
         <ul>
           {Children.toArray(
-            data.map((item) => (
+            data?.map((item) => (
               <Style.ItemWrapper
                 onClick={() => {
                   handleClick(item)
+                  toggleList(false)
                 }}>
                 <Style.ItemContent>
                   {isObj ? item.name : item}
@@ -88,15 +88,19 @@ const Dropdown = ({
 Dropdown.propTypes = {
   data: PropTypes.array.isRequired,
   width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontSize: PropTypes.number,
   border: PropTypes.bool,
   isObj: PropTypes.bool.isRequired,
+  isNew: PropTypes.bool,
 }
 
 Dropdown.defaultProps = {
   width: 100,
+  height: 30,
   fontSize: 16,
   border: true,
+  isNew: false,
 }
 
 export default Dropdown

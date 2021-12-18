@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Posts } from 'utils/SampleData/Posts'
 import { Post } from 'components/domain'
 import styled from '@emotion/styled'
@@ -28,7 +30,6 @@ const Month = () => {
       position: absolute;
       right: 25px;
     }
-
   `
 
   // TODO: query로부터 받은 [month] 바탕으로 api에 쿼리 날린뒤 해당 데이터 바탕으로 랜더링 해야 한다
@@ -50,27 +51,23 @@ const Month = () => {
   return (
     <Container>
       <SearchBox>
-        <input type='text' placeholder='keyword search...' ref={inputRef} />
-        <BsSearch className='btnSearch' onClick={handleSearch} />
+        <input type="text" placeholder="keyword search..." ref={inputRef} />
+        <BsSearch className="btnSearch" onClick={handleSearch} />
       </SearchBox>
-      {Posts.map(({
-                    categoryName,
-                    content,
-                    score,
-                    selectedDate,
-                    colorCode,
-                  }
-      ) => (
-        <Post
-          score={score}
-          backgroundColor={colorCode}
-          categoryName={categoryName}
-          content={content}
-          createdAt={selectedDate}
-          like={false}
-          style={{ marginTop: 10, marginBottom: 10 }}
-        />
-      ))}
-    </Container>)
+      {Posts.map(
+        ({ categoryName, content, score, selectedDate, colorCode }) => (
+          <Post
+            score={score}
+            backgroundColor={colorCode}
+            categoryName={categoryName}
+            content={content}
+            createdAt={selectedDate}
+            like={false}
+            style={{ marginTop: 10, marginBottom: 10 }}
+          />
+        ),
+      )}
+    </Container>
+  )
 }
 export default Month

@@ -13,12 +13,12 @@ export const CardWrapper = styled.div`
   flex-shrink: 0;
   background-color: transparent;
   cursor: pointer;
-  
+
   &.front .cardInner {
     transform: rotateY(180deg);
   }
 
-  padding: 0 0 0 20px;
+  padding: 0 10px;
 `
 
 export const CardFront = styled.div`
@@ -111,6 +111,8 @@ export const ToggleBtn = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
+  display: block;
+  margin: 0 auto;
 
   &:active {
     background-color: rgba(0, 0, 0, 0.2);

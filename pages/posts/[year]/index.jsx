@@ -1,16 +1,21 @@
+/* eslint-disable */
+
 import styled from '@emotion/styled'
 import router from 'next/router'
 import Flicking from '@egjs/react-flicking'
 import { CalendarCard } from 'components/domain'
 import { Children, useEffect, useRef, useState } from 'react'
+import Cookies from 'js-cookie'
 import range from 'lodash-es/range'
 import dayjs from 'dayjs'
-import { Dropdown } from 'components/base'
+import { Dropdown, Loading } from 'components/base'
 import { DUMMY_DATA_YEAR } from 'constants/DropdownData'
 import '@egjs/react-flicking/dist/flicking.css'
+import { useGetCalendar } from 'utils/apis/post'
 
 const today = dayjs()
 const todayMonth = today.month()
+const todayYear = today.year()
 
 export const ToggleBtn = styled.button`
   border: none;
@@ -18,7 +23,8 @@ export const ToggleBtn = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  margin-left: 130px;
+  display: block;
+  margin: 0 auto;
 
   &:active {
     background-color: rgba(0, 0, 0, 0.2);
@@ -26,7 +32,7 @@ export const ToggleBtn = styled.button`
 `
 
 const flickingOptions = {
-  align: 'prev',
+  align: 'center',
   defaultIndex: todayMonth,
   horizontal: true,
   circular: true,
@@ -58,7 +64,16 @@ const flickingStyle = {
   margin: '20px 0 30px',
 }
 
-const Main = () => {
+const Year = () => {
+  const [user, setUser] = useState({})
+  const [selectedYear, setYear] = useState('2021')
+
+  useEffect(() => {
+    setUser(JSON.parse(Cookies.get('user')))
+  }, [])
+
+  const { data, isLoading, isError } = useGetCalendar(todayYear, user.userId)
+
   const flicking = useRef()
 
   const selectHandler = (e) => {
@@ -84,7 +99,13 @@ const Main = () => {
   return (
     <AllWrapper>
       <FlickingHeader>
-        <Dropdown data={DUMMY_DATA_YEAR} isObj={false} border={false} />
+        <Dropdown
+          selectedObj={selectedYear}
+          setObj={setYear}
+          data={DUMMY_DATA_YEAR}
+          isObj={false}
+          border={false}
+        />
         <TodayDate>{today.format('YYYY-MM-DD')}</TodayDate>
       </FlickingHeader>
       <Flicking
@@ -118,4 +139,4 @@ const TodayDate = styled.div`
   font-weight: 700;
 `
 
-export default Main
+export default Year

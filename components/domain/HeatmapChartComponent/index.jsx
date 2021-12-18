@@ -98,7 +98,6 @@ const HeatmapChartComponent = ({ data, height }) => {
     plotOptions: {
       heatmap: {
         colorScale: {
-          // 작성 갯수를 0~10으로 잡았는데, 추후 작성 갯수에 따라 조정
           ranges: [
             {
               from: 0,
@@ -108,26 +107,26 @@ const HeatmapChartComponent = ({ data, height }) => {
             },
             {
               from: 1,
-              to: 3,
+              to: 1,
               color: '#e7f7ff',
               name: 'Lv.1(1~3)',
             },
             {
-              from: 4,
-              to: 6,
+              from: 2,
+              to: 2,
               color: '#d0ebff',
               name: 'Lv.2(4~6)',
             },
             {
-              from: 5,
-              to: 8,
+              from: 3,
+              to: 4,
               color: '#a5d8ff',
               name: 'Lv.3(5~8)',
             },
 
             {
-              from: 8,
-              to: 10,
+              from: 5,
+              to: 5,
               color: '#4dabf7',
               name: 'Lv.4(8~10)',
             },

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import PropTypes from 'prop-types'
 import { Slider } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'

@@ -7,7 +7,10 @@ export const Container = styled.div`
 `
 export const UrlInput = styled.input`
   width: 100%;
-  height: 25px;
+  height: 30px;
+  border: 0.5px solid black;
+  border-radius: 4px;
+  padding: 5px;
   margin-top: 10px;
   font-size: 20px;
 `

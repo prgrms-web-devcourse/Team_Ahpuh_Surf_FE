@@ -66,29 +66,29 @@ export const DUMMY_DATA_POST = [
 
 export const FILTERING = [
   {
-    name: 'All',
+    categoryName: 'All',
   },
   {
     categoryId: 12341234,
-    name: 'React ⚛️',
+    categoryName: 'React ⚛️',
     isPublic: true,
     colorCode: '#918ae2',
   },
   {
     categoryId: 12323424,
-    name: 'Violin 🎻',
+    categoryName: 'Violin 🎻',
     isPublic: true,
     colorCode: '#CBC8F1',
   },
   {
     categoryId: 78909878,
-    name: 'Marathon 🏃‍♂️',
+    categoryName: 'Marathon 🏃‍♂️',
     isPublic: true,
     colorCode: '#5D55B4',
   },
   {
     categoryId: 789123878,
-    name: '하루에 100개씩 외우는 영단어 어쩌구 ㅋㅋㅋ',
+    categoryName: '하루에 100개씩 외우는 영단어 어쩌구 ㅋㅋㅋ',
     isPublic: true,
     colorCode: '#ffffff',
   },

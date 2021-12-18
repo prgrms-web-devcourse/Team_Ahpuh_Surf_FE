@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export const getMonth = (date) => {
   switch (new Date(date).getMonth()) {
     case 0:

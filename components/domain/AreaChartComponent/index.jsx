@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { useCallback, useEffect, useState } from 'react'
 import AreaChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { AiTwotoneSetting } from 'react-icons/all'
+import { AiTwotoneSetting } from 'react-icons/ai'
 import Carot from 'components/domain/Carot'
 import * as Style from './style'
 import { getDefaultOptions } from './getDefaultOptions'

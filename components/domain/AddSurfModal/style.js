@@ -41,7 +41,9 @@ export const Text = styled.p`
 export const EmojiBox = styled.div`
   display: inline-block;
   position: absolute;
+  top: 50%;
   right: 0;
+  transform: translateY(-50%);
   width: 50px;
   height: 100%;
   text-align: center;

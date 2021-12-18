@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import dayjs from 'dayjs'
 import { useState, useCallback } from 'react'
 import { Text } from 'components/base'

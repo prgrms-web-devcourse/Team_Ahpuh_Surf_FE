@@ -1,18 +1,26 @@
-import { Upload, Text, Dropdown, Textarea } from 'components/base'
+<<<<<<< Updated upstream
+import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
+=======
+/* eslint-disable */
 
-import { DUMMY_DATA_CAT } from 'constants/DropdownData'
+>>>>>>> Stashed changes
+import { Upload, Text, Dropdown, Textarea } from 'components/base'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'
 import UploadImage from 'public/images/upload.svg'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import theme from 'styles/theme'
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { checkEmpty } from 'utils/validation'
+import { useGetCategories } from 'utils/apis/category'
+import { uploadPost } from 'utils/apis/post'
 import * as Style from './style'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,
 })
-
 
 const AddSurfModalSSR = dynamic(
   () => import('components/domain/AddSurfModal'),
@@ -22,48 +30,67 @@ const AddSurfModalSSR = dynamic(
 )
 
 const PostNew = () => {
+  const router = useRouter()
   const isInitialMount = useRef(true)
-  const [category, setCategory] = useState(DUMMY_DATA_CAT)
+  const { data: categories, isLoading: categoriesLoading } = useGetCategories({
+    revalidateOnFocus: false,
+  })
   const [fileObject, setFileObject] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [clickedDate, setClikedDate] = useState('')
+  const [clickedDate, setClikedDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [score, setScore] = useState(0)
-  const [textareaValue, setTextareaValue] = useState('')
+  const [textareaValue, setTextareaValue] = useState([])
   const [toggleModal, setToggleModal] = useState(false)
-
-  const changeToBlob = (data) => {
-    if (!data) return
-    const binaryData = []
-    binaryData.push(data)
-    const blob = URL.createObjectURL(new Blob(binaryData, { type: data.type }))
-    return blob
-  }
+  const [isLoading, setLoading] = useState(false)
 
   const handleChange = (value) => {
     setFileObject(value)
   }
 
-  const handleSubmit = (e) => {
-    e?.preventDefault()
-    const formData = new FormData()
+  const handleSubmit = async (e) => {
+    try {
+      e?.preventDefault()
 
-    formData.set('categoryId', 1234)
-    formData.set('selectedDate', new Date(clickedDate).toJSON())
-    formData.set('content', textareaValue)
-    formData.set('score', score)
-    formData.set('fileUrl', changeToBlob(fileObject))
+      const necessities = {
+        category: selectedCategory.categoryId,
+        date: clickedDate,
+        score,
+        content: textareaValue[0],
+      }
+      const errorWords = checkEmpty(necessities)
 
-    for (const item of formData.entries()) {
-      console.log(item)
+      if (errorWords.length > 0) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const word of errorWords) {
+          toast.error(word, {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 2000,
+          })
+        }
+      } else {
+        await setLoading(true)
+        const formData = new FormData()
+        const requestObject = {
+          // categoryId: 1,
+          categoryId: selectedCategory.categoryId,
+          selectedDate: clickedDate,
+          content: textareaValue[0],
+          score,
+        }
+
+        formData.set('request', JSON.stringify(requestObject))
+        formData.set('file', fileObject || null)
+
+        const postId = await uploadPost(formData)
+        setTextareaValue(['', false])
+        router.push('/posts/all')
+        // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
+      }
+    } catch (error) {
+      console.error(error.message)
     }
+    setLoading(false)
   }
-
-  useMemo(() => changeToBlob, [])
-
-  useEffect(() => {
-    const newPost = { name: '+ New' }
-    category.push(newPost)
-  }, [])
 
   useEffect(() => {
     if (selectedCategory.name === '+ New') {
@@ -72,12 +99,18 @@ const PostNew = () => {
   }, [selectedCategory])
 
   useEffect(() => {
+    if (textareaValue[1]) {
+      handleSubmit()
+    }
+  }, [textareaValue])
+
+  useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
     } else {
       handleSubmit()
     }
-  }, [textareaValue])
+  }, [])
 
   return (
     <Style.PostNewWrapper onSubmit={handleSubmit}>
@@ -110,11 +143,11 @@ const PostNew = () => {
         </Upload>
         <Style.OptionWrapper>
           <Dropdown
-            data={category || {}}
-            width="100%"
+            data={categories}
             height={45}
             isObj
             onChange={setSelectedCategory}
+            isNew
           />
           <DatePicker onChange={setClikedDate} />
         </Style.OptionWrapper>
@@ -122,7 +155,9 @@ const PostNew = () => {
       </Style.UpperSide>
       <Style.BottomSide>
         <Textarea onChange={setTextareaValue} />
-        <Style.Button>submit</Style.Button>
+        <Style.Button disabled={isLoading}>
+          {isLoading ? 'Loading' : 'submit'}
+        </Style.Button>
       </Style.BottomSide>
       {toggleModal && (
         <AddSurfModalSSR

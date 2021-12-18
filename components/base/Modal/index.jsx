@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useEffect, useMemo, useRef } from 'react'
 import ReactDom from 'react-dom'
 import PropTypes from 'prop-types'

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import FollowCard from '../../FollowCard'
 
 const TabPanelWrapper = styled.ul`
   width: 100%;
@@ -6,15 +7,19 @@ const TabPanelWrapper = styled.ul`
 `
 
 const TabPanel = ({ activeLabelSet, fontSize }) => {
-  const { label, query: queryKey } = activeLabelSet
-
-  // cookie에서 userId 가져오기
-  // const {data: followList} = useSWR(`/follow?${queryKey}=${userId}`, fetcher)
+  const { payload } = activeLabelSet
 
   return (
     <TabPanelWrapper fontSize={fontSize}>
-      {/* followList.map(list => <li></li>) */}
-      {label} {queryKey}
+      {payload.map(({ userId, userName, profilePhotoUrl }) => {
+        return (
+          <FollowCard
+            key={userId}
+            profilePhotoUrl={profilePhotoUrl}
+            userName={userName}
+          />
+        )
+      })}
     </TabPanelWrapper>
   )
 }

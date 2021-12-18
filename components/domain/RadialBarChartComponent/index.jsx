@@ -1,9 +1,9 @@
+/* eslint-disable */
+
 import ReactApexChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
 import { getFilteredData } from './getFilteredData'
 
-// api: '해당 사용자의 카테고리 정보' 에서 받아오면 된다.
-// data: api에서 받아온 데이터 그대로 집어 넣으면 된다 .. getFilteredDate()에서 필요한 데이터만 정제함.
 const RadialBarChartComponent = ({ data, height }) => {
   const dataset = getFilteredData(data)
   const series = []
@@ -15,7 +15,7 @@ const RadialBarChartComponent = ({ data, height }) => {
 
   const options = {
     chart: {
-      height: 390,
+      height: 400,
       type: 'radialBar',
       background: '#ffffff',
     },
@@ -45,10 +45,10 @@ const RadialBarChartComponent = ({ data, height }) => {
     labels,
     legend: {
       show: true,
-      floating: true,
-      fontSize: '20px',
+      floating: false,
+      fontSize: '18px',
       offsetX: 0,
-      offsetY: 5,
+      offsetY: 30,
 
       position: 'bottom',
       labels: {
@@ -58,35 +58,12 @@ const RadialBarChartComponent = ({ data, height }) => {
         size: 0,
       },
       formatter(seriesName, opts) {
-        return `${seriesName}:  ${opts.w.globals.series[opts.seriesIndex]}`
+        return `${seriesName}:  ${opts.w.globals.series[opts.seriesIndex]} %`
       },
       itemMargin: {
         vertical: 3,
       },
     },
-    responsive: [
-      {
-        breakpoint: 600,
-        options: {
-          legend: {
-            show: true,
-            position: 'bottom',
-            offsetX: 0,
-            offsetY: 30,
-          },
-        },
-      },
-      {
-        breakpoint: 650,
-        options: {
-          legend: {
-            position: 'bottom',
-            offsetX: 0,
-            offsetY: 30,
-          },
-        },
-      },
-    ],
   }
 
   return (
