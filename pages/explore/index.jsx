@@ -3,20 +3,24 @@ import Link from 'next/link'
 import dayjs from 'dayjs'
 import { Children, useEffect } from 'react'
 import { Post } from 'components/domain'
-import { Explores } from 'utils/SampleData/Explores'
+import { useGetFollowingPosts } from 'utils/apis/follow'
 
 const Container = styled.div`
   padding: 0 20px;
 `
 
 const Explore = () => {
-  const test = 1
+  let lastPostId = 0
+  const { data: followingPosts } = useGetFollowingPosts(lastPostId)
+  useEffect(() => {
+    console.log(followingPosts, 'followingPosts')
+  }, [followingPosts])
 
   return (
     <Container>
       {Children.toArray(
-        Explores.map(({ user, post }) => {
-          const month = dayjs(post.selectedDate).format('M')
+        followingPosts?.values?.map((followingPost) => {
+          const month = dayjs(followingPost.selectedDate).format('M')
 
           return (
             // <Link key={user.userId} href={`/posts/${month}/${post.postId}`}>
@@ -28,16 +32,22 @@ const Explore = () => {
             //     }}>
             <Post
               isMine={false}
-              profileImage={user.profileUrl ? user.profileUrl : undefined}
-              username={user.username}
-              follow={user.follow}
-              date={post.selectedDate}
-              createdAt={post.createdAt}
-              categoryName={post.categoryName}
-              content={post.content}
-              score={post.score}
-              backgroundColor={post.colorCode}
-              key={user.userId}
+              profileImage={
+                followingPost.photoProfileUrl
+                  ? followingPost.photoProfileUrl
+                  : undefined
+              }
+              username={followingPost.userName}
+              follow={true}
+              like={followingPost.isLiked}
+              date={followingPost.selectedDate}
+              createdAt={followingPost.createdAt}
+              categoryName={followingPost.categoryName}
+              content={followingPost.content}
+              score={followingPost.score}
+              backgroundColor={followingPost.colorCode}
+              key={followingPost.categoryName}
+              style={{ marginBottom: '10px' }}
             />
             //   </a>
             // </Link>
