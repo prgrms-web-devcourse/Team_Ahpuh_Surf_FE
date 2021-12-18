@@ -3,11 +3,11 @@ import dynamic from 'next/dynamic'
 import { Text } from 'components/base'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
-import * as Style from './style'
 import { DashboardCard } from 'components/domain'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import { useGetDashboard } from 'utils/apis/category'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
+import * as Style from './style'
 
 const Dashboard = () => {
   const averageBoxStyle = {
@@ -24,7 +24,10 @@ const Dashboard = () => {
     setUid(userId)
   }, [])
   const { data: CategoryScore } = useGetDashboard(uid)
-  const { data: heatmapData } = useGetPostsCountYear(2021, uid)
+  const { data: heatmapData } = useGetPostsCountYear(
+    new Date().getFullYear(),
+    uid,
+  )
   const getAvgScore = () => {
     if (!CategoryScore) {
       return 0
