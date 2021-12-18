@@ -1,6 +1,6 @@
 import request from '../api'
 
-const deleteCategory = (categoryId, payload) =>
-  request.delete(`/categories/${categoryId}`, payload)
+const deleteCategory = (categoryId) =>
+  request.delete(`/categories/${categoryId}`)
 
 export default deleteCategory
