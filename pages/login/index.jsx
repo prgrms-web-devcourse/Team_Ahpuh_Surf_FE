@@ -85,7 +85,7 @@ const Login = () => {
         </Style.InputWrapper>
         <Style.ErrorText>{errors.password && errors.password}</Style.ErrorText>
         <Style.Button type="submit" disabled={isLoading}>
-          {isLoading ? 'loading...' : 'Login'}
+          {isLoading ? 'loading…' : 'Login'}
         </Style.Button>
       </Style.Form>
       <Style.LinkWrapper>

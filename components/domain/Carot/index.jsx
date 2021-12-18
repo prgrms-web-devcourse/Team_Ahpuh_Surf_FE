@@ -3,7 +3,7 @@ import { VscTriangleLeft, VscTriangleRight } from 'react-icons/all'
 import PropTypes from 'prop-types'
 
 const Container = styled.div`
-  width: ${({ width }) => width};
+  /* width: ${({ width }) => width}; */
   height: ${({ height }) => height};
 `
 

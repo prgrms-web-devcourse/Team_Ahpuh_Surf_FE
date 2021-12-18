@@ -6,6 +6,9 @@ export const getDefaultOptions = (height, isMyPage) => {
   const year = new Date().getFullYear()
   const quarter = getCurrentQuarter()
   let options = {
+    legend: {
+      show: false,
+    },
     chart: {
       id: 'area-datetime',
       type: 'area',

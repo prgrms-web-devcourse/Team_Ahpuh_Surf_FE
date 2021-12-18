@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import { useCallback, useEffect, useState } from 'react'
 import AreaChart from 'react-apexcharts'
 import PropTypes from 'prop-types'
-import { AiTwotoneSetting } from 'react-icons/all'
+import { AiTwotoneSetting } from 'react-icons/ai'
 import Carot from 'components/domain/Carot'
 import * as Style from './style'
 import { getDefaultOptions } from './getDefaultOptions'
@@ -68,8 +70,9 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    padding: '5px',
-    marginTop: '-10px',
+    height: '10%',
+    // padding: '5px',
+    // marginTop: '-10px',
     fontSize: 16,
     curQuarter,
     handleLeftCarot,
@@ -82,8 +85,9 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
   useEffect(() => {
     handleData(curQuarter)
   }, [curQuarter])
+
   return (
-    <div style={{ ...Style.containerStyle, width }}>
+    <Style.ChartContainer>
       {!isMyPage && (
         <AiTwotoneSetting
           style={Style.settingButtonStyle}
@@ -91,11 +95,12 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
           size={20}
         />
       )}
-      <AreaChart {...areaChartArgs} style={{ width: '100%' }} />
+      <AreaChart {...areaChartArgs} style={{ width: '100%', flexGrow: 1 }} />
       <Carot {...carotArgs} />
-    </div>
+    </Style.ChartContainer>
   )
 }
+
 AreaChart.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -103,6 +108,6 @@ AreaChart.propTypes = {
 }
 AreaChart.defaultProps = {
   width: '100%',
-  height: 250,
+  height: '100%',
 }
 export default AreaChartComponent
