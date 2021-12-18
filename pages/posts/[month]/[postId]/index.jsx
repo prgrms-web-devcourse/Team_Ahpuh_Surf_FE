@@ -2,7 +2,6 @@ import theme from 'styles/theme'
 import { PostDetail } from 'components/domain'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import Cookies from 'js-cookie'
 import { useGetPost } from 'utils/apis/post'
 import { useGetCategories } from 'utils/apis/category'
 import useGetUser from 'utils/apis/user/useGetUser'
@@ -14,27 +13,19 @@ const Detail = () => {
     flex-direction: column;
     align-items: center;
   `
-  // const [isMine, setMine] = useState(false)
-  const [pId, setPId] = useState(null)
   const router = useRouter()
+  const [pId, setPId] = useState(null)
+  const [bgColor, setBgColor] = useState(null)
+
   useEffect(() => {
     if (!router.isReady) return
     const { postId } = router.query
     setPId(postId)
   }, [router.isReady])
-  const { data: posting } = useGetPost(pId)
 
+  const { data: posting } = useGetPost(pId)
   const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
   const { data: user } = useGetUser(posting.userId)
-
-  // useEffect(() => {
-  //   const { userId } = JSON.parse(Cookies.get('user'))
-  //   if (userId === posting?.userId) {
-  //     setMine(true)
-  //   } else {
-  //     setMine(false)
-  //   }
-  // }, [posting])
 
   const getCategoryName = () => {
     const res = categories.filter(
@@ -59,13 +50,17 @@ const Detail = () => {
       default:
     }
   }
-  if (!posting || !categories || !user || !pId) {
+  useEffect(() => {
+    setBgColor(getColorRandomly())
+  }, [])
+
+  if (!posting || !categories || !user || !pId || !bgColor) {
     return <p />
   }
   return (
     <Container>
       <PostDetail
-        backgroundColor={getColorRandomly()}
+        backgroundColor={bgColor}
         score={!posting.score ? '' : posting.score}
         categoryName={getCategoryName()}
         username={!user.userName ? '' : user.userName}

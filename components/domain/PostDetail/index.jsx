@@ -27,8 +27,8 @@ const PostDetail = ({
   content,
   profileImage,
   username,
-  postId, // page에서 호출한 API로부터 전달 받아야 한다
-  createdAt, // page에서 호출한 API로부터 전달 받아야 한다
+  postId,
+  createdAt,
   favorite,
 }) => {
   const [_like, setLike] = useState(like)
@@ -52,7 +52,6 @@ const PostDetail = ({
   const { data: followingList } = useGetFollowingList(uid)
 
   const isUserFollow = () => {
-    console.log(followingList)
     const res = followingList.filter((item) => item.userId === uid)
     if (res.length === 1) {
       setFollow(true)
@@ -89,23 +88,20 @@ const PostDetail = ({
     menuRef.current.style.display = 'none'
     setMenu(() => !menu)
   }
-  // TODO: 맨 마지막에 활성화 시킬 것!
   const handleDeletePost = async () => {
-    // /posts/{postId}
     console.log('delete post no.', postId)
-    // const res = await deletePost(postId)
-    // if (res.status === 204) {
-    //   const month = createdAt.slice(5, 7)
-    //   Router.push(`/posts/${month}`)
-    // }
+    const res = await deletePost(postId)
+    if (res.status === 204) {
+      const month = createdAt.slice(5, 7)
+      Router.push(`/posts/${month}`)
+    }
   }
   const handleUpdatePost = () => {
-    // console.log('click update posts')
     Router.push(`/posts/month/${postId}/edit`)
   }
 
   const handleFollow = async () => {
-    // 이미 팔로우 상태
+    // follow -> un-follow
     if (isUserFollow()) {
       setFollow(false)
       const res = await deleteFollow()
@@ -113,7 +109,7 @@ const PostDetail = ({
         console.log('unfollow author')
       }
     } else {
-      // 팔로우 안된 상태 -> 팔로우ㅇ
+      // un-follow -> follow
       setFollow(true)
       const res = await postFollow(authorId)
       if (res.status === 201) {
@@ -121,10 +117,9 @@ const PostDetail = ({
       }
     }
   }
-  // TODO: handleLike 구현
   const handleLike = async () => {
     if (_like) {
-      // 이미 like 눌린 상태
+      // like -> un-like
       try {
         const res = await postLike(postId)
         if (res.status === 200) {
@@ -136,9 +131,9 @@ const PostDetail = ({
         console.log(e)
       }
     } else {
-      // like 안눌린 상태
+      // un-like -> like
       try {
-        const res = await deleteLike(postId, likeId)
+        const res = await deleteLike(postId, _likeId)
         if (res.status === 204) {
           setLike(!_like)
           console.log('like this post')
