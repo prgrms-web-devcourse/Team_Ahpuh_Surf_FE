@@ -9,14 +9,13 @@ import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
 import { useEffect, useState } from 'react'
 import EditAboutMe from 'components/domain/EditAboutMe'
-import { heatmapSampleData } from 'utils/SampleData/heatmapChart' // 일년치 게시글 점수 조회
-import Cookies from 'js-cookie'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
 import FollowModal from 'components/domain/FollowModal'
+import { useRouter } from 'next/router'
 import * as Style from './style'
 import { useToggle } from '../../../hooks'
-import { useRouter } from 'next/router'
+import useGetPostsCountYear from '../../../utils/apis/post/useGetPostsCountYear'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -42,7 +41,10 @@ const Mypage = () => {
     setUid(userId)
   }, [])
   const { data } = useGetUser(uId)
-
+  const { data: heatmapData } = useGetPostsCountYear(
+    new Date().getFullYear(),
+    uId,
+  )
   const toggle = () => {
     setVisible(!visible)
   }
@@ -138,7 +140,7 @@ const Mypage = () => {
           style={{ top: 20, left: 0, marginBottom: 10 }}
           text="Loading"
         />
-        <HeatmapComponent data={heatmapSampleData} height="370px" />
+        <HeatmapComponent data={heatmapData} height="370px" />
       </Style.Graph>
       <ContentBox title="Images" fontSize={20} />
       <ContentBox title="files" fontSize={20} />
