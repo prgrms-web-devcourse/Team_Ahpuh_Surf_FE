@@ -4,7 +4,17 @@ import theme from 'styles/theme'
 
 const Input = forwardRef(
   (
-    { width, height, validate, fontSize, placeholder, type, name, ...props },
+    {
+      width,
+      height,
+      validate,
+      fontSize,
+      placeholder,
+      type,
+      maxLength,
+      name,
+      ...props
+    },
     ref,
   ) => {
     const inputStyle = {
@@ -29,6 +39,7 @@ const Input = forwardRef(
         placeholder={placeholder}
         type={type}
         name={name}
+        maxLength={maxLength}
         {...props}
       />
     )
@@ -40,6 +51,7 @@ Input.propTypes = {
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   placeholder: PropTypes.string,
   type: PropTypes.string,
+  maxLength: PropTypes.number,
 }
 Input.defaultProps = {
   width: 190,
@@ -47,6 +59,7 @@ Input.defaultProps = {
   fontSize: 16,
   placeholder: 'input text',
   type: 'text',
+  maxLength: 999,
 }
 
 Input.displayName = 'Input'

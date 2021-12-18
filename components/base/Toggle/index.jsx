@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useToggle } from 'hooks'
 import { forwardRef } from 'react'
+import PropTypes from 'prop-types'
 
 const ToggleContainer = styled.label`
   display: inline-block;
@@ -53,28 +54,38 @@ const ToggleSwitch = styled.div`
   }
 `
 
-const Toggle = forwardRef(
-  ({ isToggle = false, disabled, onChange, ...props }, ref) => {
-    const [checked, onToggle] = useToggle(isToggle)
-    const handleChange = (e) => {
-      onToggle()
-      // eslint-disable-next-line no-unused-expressions
-      onChange && onChange(e)
-    }
+const Toggle = forwardRef(({ isToggle, disabled, onChange, ...props }, ref) => {
+  const [checked, onToggle] = useToggle({ initialState: isToggle })
+  const handleChange = (e) => {
+    onToggle()
+    // eslint-disable-next-line no-unused-expressions
+    onChange && onChange(e)
+  }
 
-    return (
-      <ToggleContainer {...props}>
-        <ToggleInput
-          type="checkbox"
-          checked={checked}
-          disabled={disabled}
-          onChange={handleChange}
-          ref={ref}
-        />
-        <ToggleSwitch />
-      </ToggleContainer>
-    )
-  },
-)
+  return (
+    <ToggleContainer {...props}>
+      <ToggleInput
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={handleChange}
+        ref={ref}
+      />
+      <ToggleSwitch />
+    </ToggleContainer>
+  )
+})
+
 Toggle.displayName = 'Toggle'
+
+Toggle.propTypes = {
+  isToggle: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+}
+
+Toggle.defaultProps = {
+  isToggle: false,
+  disabled: false,
+}
 export default Toggle
