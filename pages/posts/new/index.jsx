@@ -74,7 +74,7 @@ const PostNew = () => {
         }
 
         formData.set('request', JSON.stringify(requestObject))
-        formData.set('file', fileObject || null)
+        formData.set('file', fileObject || new File([''], 'empty.txt'))
 
         const postId = await uploadPost(formData)
         setTextareaValue(['', false])
