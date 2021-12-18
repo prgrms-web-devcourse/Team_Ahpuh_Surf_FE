@@ -6,6 +6,8 @@ import { useGetPost } from 'utils/apis/post'
 import { useGetCategories } from 'utils/apis/category'
 import useGetUser from 'utils/apis/user/useGetUser'
 import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
+import useGetFollowingList from 'utils/apis/follow/useGetFollowingList'
 
 const Detail = () => {
   const Container = styled.div`
@@ -16,23 +18,31 @@ const Detail = () => {
   const router = useRouter()
   const [pId, setPId] = useState(null)
   const [bgColor, setBgColor] = useState(null)
-
+  const [uId, setUid] = useState(null)
   useEffect(() => {
     if (!router.isReady) return
     const { postId } = router.query
     setPId(postId)
   }, [router.isReady])
-
+  useEffect(() => {
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
+  }, [])
   const { data: posting } = useGetPost(pId)
   const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
   const { data: user } = useGetUser(posting.userId)
-
+  const { data: followingList } = useGetFollowingList(uId)
+  const isUserFollow = () => {
+    const res = followingList.filter((item) => item.userId === posting.userId)
+    return res[0]?.userId === posting.userId
+  }
   const getCategoryName = () => {
     const res = categories.filter(
       (item) => item.categoryId === posting.categoryId,
     )
     return res[0]?.name
   }
+  const isPostMine = () => uId === posting.userId
   // eslint-disable-next-line consistent-return
   const getColorRandomly = () => {
     const value = Math.floor(Math.random() * 5)
@@ -54,7 +64,15 @@ const Detail = () => {
     setBgColor(getColorRandomly())
   }, [])
 
-  if (!posting || !categories || !user || !pId || !bgColor) {
+  if (
+    !posting ||
+    !categories ||
+    !user ||
+    !pId ||
+    !bgColor ||
+    !uId ||
+    !followingList
+  ) {
     return <p />
   }
   return (
@@ -65,16 +83,17 @@ const Detail = () => {
         categoryName={getCategoryName()}
         username={!user.userName ? '' : user.userName}
         date={posting?.selectedDate}
-        like={posting?.isLiked}
+        isLiked={posting?.isLiked}
         likeId={posting?.likeId}
         content={posting?.content}
+        isFollow={isUserFollow()}
+        isMine={isPostMine()}
         profileImage={
           user.profilePhotoUrl
             ? user.profilePhotoUrl
             : 'https://picsum.photos/200'
         }
         authorId={posting?.userId}
-        // follow={isMine}
         imageUrl={
           posting.fileUrl ? posting.fileUrl : 'https://picsum.photos/200'
         }

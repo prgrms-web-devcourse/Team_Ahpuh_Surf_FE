@@ -6,14 +6,14 @@ import PropTypes from 'prop-types'
 import { BiDotsHorizontalRounded } from 'react-icons/bi'
 import Router, { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
-import * as Style from './style'
+import { toast, ToastContainer } from 'react-toastify'
+import { deleteFavorite, deletePost } from 'utils/apis/post'
+import postFavorite from 'utils/apis/post/postFavorite'
+import deleteFollow from 'utils/apis/follow/deleteFollow'
+import postFollow from 'utils/apis/follow/postFollow'
+import { deleteLike, postLike } from 'utils/apis/like'
 import { Avatar } from '../../base'
-import { deleteFavorite, deletePost } from '../../../utils/apis/post'
-import postFavorite from '../../../utils/apis/post/postFavorite'
-import deleteFollow from '../../../utils/apis/follow/deleteFollow'
-import useGetFollowingList from '../../../utils/apis/follow/useGetFollowingList'
-import postFollow from '../../../utils/apis/follow/postFollow'
-import { deleteLike, postLike } from '../../../utils/apis/like'
+import * as Style from './style'
 
 const PostDetail = ({
   backgroundColor,
@@ -21,7 +21,7 @@ const PostDetail = ({
   score,
   imageUrl,
   authorId,
-  like,
+  isLiked,
   likeId,
   date,
   content,
@@ -30,10 +30,14 @@ const PostDetail = ({
   postId,
   createdAt,
   favorite,
+  isMine,
+  isFollow,
 }) => {
-  const [_like, setLike] = useState(like)
+  // eslint-disable-next-line no-unused-vars
+  const [_pid, setPid] = useState(postId)
+  const [_like, setLike] = useState(!(isLiked === false || !isLiked))
   const [_likeId, setLikeId] = useState(likeId)
-  const [_follow, setFollow] = useState(null)
+  const [_follow, setFollow] = useState(isFollow)
   const [menu, setMenu] = useState(false)
   const [_favorite, setFavorite] = useState(favorite)
   const menuRef = useRef(null)
@@ -49,37 +53,33 @@ const PostDetail = ({
     const { userId } = JSON.parse(Cookies.get('user'))
     setUid(userId)
   }, [])
-  const { data: followingList } = useGetFollowingList(uid)
 
-  const isUserFollow = () => {
-    const res = followingList.filter((item) => item.userId === uid)
-    if (res.length === 1) {
-      setFollow(true)
-      return true
-    }
-    setFollow(false)
-    return false
+  const toastOptions = {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    progress: undefined,
   }
 
   const handleFavorite = async () => {
-    // TODO 추후 Toast 로 변경
-
-    if (!_favorite) {
+    if (_favorite) {
       try {
-        const res = await postFavorite(postId)
-        if (res.status === 200) {
-          console.log('add favorite complete')
-          setFavorite(true)
+        const res = await deleteFavorite(_pid)
+        if (res.status === 204) {
+          toast.success('remove favorite complete', toastOptions)
+          setFavorite(false)
         }
       } catch (e) {
         console.log(e)
       }
     } else {
       try {
-        const res = await deleteFavorite(postId)
+        const res = await postFavorite(_pid)
         if (res.status === 200) {
-          console.log('remove favorite complete')
-          setFavorite(false)
+          toast.success('add favorite complete', toastOptions)
+          setFavorite(true)
         }
       } catch (e) {
         console.log(e)
@@ -89,11 +89,16 @@ const PostDetail = ({
     setMenu(() => !menu)
   }
   const handleDeletePost = async () => {
-    console.log('delete post no.', postId)
-    const res = await deletePost(postId)
-    if (res.status === 204) {
-      const month = createdAt.slice(5, 7)
-      Router.push(`/posts/${month}`)
+    try {
+      const res = await deletePost(postId)
+      if (res.status === 204) {
+        toast.success('delete post complete', toastOptions)
+
+        const month = createdAt.slice(5, 7)
+        Router.push(`/posts/${month}`)
+      }
+    } catch (e) {
+      console.log(e)
     }
   }
   const handleUpdatePost = () => {
@@ -102,18 +107,26 @@ const PostDetail = ({
 
   const handleFollow = async () => {
     // follow -> un-follow
-    if (isUserFollow()) {
-      setFollow(false)
-      const res = await deleteFollow()
-      if (res.status === 204) {
-        console.log('unfollow author')
+    if (_follow) {
+      try {
+        const res = await deleteFollow(authorId)
+        if (res.status === 204) {
+          toast.success('unfollow ', toastOptions)
+          setFollow(false)
+        }
+      } catch (e) {
+        console.log(e)
       }
     } else {
       // un-follow -> follow
-      setFollow(true)
-      const res = await postFollow(authorId)
-      if (res.status === 201) {
-        console.log('follow author')
+      try {
+        const res = await postFollow(authorId)
+        if (res.status === 201) {
+          toast.success('follow ', toastOptions)
+          setFollow(true)
+        }
+      } catch (e) {
+        console.log(e)
       }
     }
   }
@@ -121,11 +134,11 @@ const PostDetail = ({
     if (_like) {
       // like -> un-like
       try {
-        const res = await postLike(postId)
-        if (res.status === 200) {
+        const res = await deleteLike(postId, _likeId)
+        if (res.status === 204) {
           setLike(!_like)
           setLikeId(res.data.likeId)
-          console.log('unlike this post')
+          toast('unlike this post', toastOptions)
         }
       } catch (e) {
         console.log(e)
@@ -133,10 +146,10 @@ const PostDetail = ({
     } else {
       // un-like -> like
       try {
-        const res = await deleteLike(postId, _likeId)
-        if (res.status === 204) {
+        const res = await postLike(postId)
+        if (res.status === 200) {
           setLike(!_like)
-          console.log('like this post')
+          toast('like this post', toastOptions)
         }
       } catch (e) {
         console.log(e)
@@ -156,11 +169,12 @@ const PostDetail = ({
       setMenu(() => !menu)
     }
   }
-  if (!followingList || !uid) {
+  if (!uid || !_pid) {
     return <p />
   }
   return (
     <Style.CardContainer backgroundColor={backgroundColor}>
+      <ToastContainer />
       <Style.ControlBox>
         <RiArrowGoBackLine size={30} onClick={handleBack} />
 
@@ -183,17 +197,27 @@ const PostDetail = ({
             {date}
           </div>
         </div>
-        <Style.Follow onClick={handleFollow}>
-          {_follow ? <span>팔로우 취소</span> : <span>팔로우</span>}
-        </Style.Follow>
+        {isMine ? (
+          <div />
+        ) : (
+          <Style.Follow onClick={handleFollow}>
+            {_follow ? <span>팔로우 취소</span> : <span>팔로우</span>}
+          </Style.Follow>
+        )}
+
         <Style.ProfileRight>
-          <div onClick={handleLike}>
-            {_like ? (
-              <AiFillHeart size={30} color="red" />
-            ) : (
-              <AiOutlineHeart size={30} />
-            )}
-          </div>
+          {isMine ? (
+            <div />
+          ) : (
+            <div onClick={handleLike}>
+              {_like ? (
+                <AiFillHeart size={30} color="red" />
+              ) : (
+                <AiOutlineHeart size={30} />
+              )}
+            </div>
+          )}
+
           <div style={{ fontSize: '14px' }}>{categoryName}</div>
         </Style.ProfileRight>
       </Style.Profile>
@@ -203,10 +227,8 @@ const PostDetail = ({
         width="100%"
         height="50%"
         layout="responsive"
-        // style={Style.imageStyle}
       />
       <Style.Main>
-        {/* <Style.Title>{title}</Style.Title> */}
         <Style.Title>score: {score}</Style.Title>
         <p style={{ marginTop: 10, fontSize: 17 }}>{content}</p>
       </Style.Main>

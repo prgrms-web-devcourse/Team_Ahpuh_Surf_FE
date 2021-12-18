@@ -1,5 +1,5 @@
 import request from '../api'
 
-const deleteFollow = (followId) => request.delete(`/posts/${followId}`)
+const deleteFollow = (userId) => request.delete(`/posts/${userId}`)
 
 export default deleteFollow
