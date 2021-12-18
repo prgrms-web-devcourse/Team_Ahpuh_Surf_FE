@@ -3,18 +3,6 @@ import PropTypes from 'prop-types'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import * as Style from './style'
 
-/*
-  category data 형태
-  {
-    "categoryId":Long,
-    "name":String,
-    "isPublic":Boolean,
-    "colorCode":String
-	},
-
-
-*/
-
 const Dropdown = ({
   data = [],
   width,
@@ -98,6 +86,7 @@ const Dropdown = ({
 Dropdown.propTypes = {
   data: PropTypes.array.isRequired,
   width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontSize: PropTypes.number,
   border: PropTypes.bool,
   isObj: PropTypes.bool.isRequired,
@@ -106,6 +95,7 @@ Dropdown.propTypes = {
 
 Dropdown.defaultProps = {
   width: 100,
+  height: 30,
   fontSize: 16,
   border: true,
   isNew: false,
