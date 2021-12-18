@@ -1,8 +1,9 @@
 import useSWR from 'swr'
 import fetcher from 'utils/apis/fetcher'
+import { useGetCategoriesPath } from 'constants/apiPath'
 
-const useGetCategories = () => {
-  const { data, error } = useSWR('/categories', fetcher)
+const useGetCategories = (options = {}) => {
+  const { data = [], error } = useSWR(useGetCategoriesPath, fetcher, options)
 
   return {
     data,

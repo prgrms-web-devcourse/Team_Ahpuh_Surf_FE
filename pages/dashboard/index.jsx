@@ -49,9 +49,9 @@ const Dashboard = () => {
         <Style.Box width="30%">
           <Image
             src="https://picsum.photos/300/300"
-            layout="responsive"
             width="100%"
             height="100%"
+            layout="responsive"
             alt="image"
           />
         </Style.Box>

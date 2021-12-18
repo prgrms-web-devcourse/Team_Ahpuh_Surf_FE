@@ -19,9 +19,11 @@ const TextareaInput = styled.textarea`
 const Textarea = ({ width, height, fontSize, placeholder, onChange }) => {
   const handleWrite = (e) => {
     if (e.target.value.trim() === '') return
+    // TODO: onChange([바꿀 state, submit 여부])
+    onChange && onChange([e.target.value, false])
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      onChange && onChange(e.target.value)
+      onChange && onChange([e.target.value, true])
       e.target.value = ''
     }
   }

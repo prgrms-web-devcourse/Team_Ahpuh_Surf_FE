@@ -28,7 +28,8 @@ const DatePicker = ({
       setMonth(clickedDateInfo.format('MM'))
       setDate(clickedDateInfo.format('DD'))
       setToggleCalendar(false)
-      onChange && onChange(clickedDateInfo.format('YYYY/MM/DD'))
+      onChange &&
+        onChange(clickedDateInfo.format(`YYYY${delimeter}MM${delimeter}DD`))
     },
     [setToggleCalendar],
   )

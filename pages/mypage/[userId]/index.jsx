@@ -15,7 +15,8 @@ import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
 import FollowModal from 'components/domain/FollowModal'
 import * as Style from './style'
-import { useToggle } from '../../hooks'
+import { useToggle } from '../../../hooks'
+import { useRouter } from 'next/router'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -26,6 +27,8 @@ const Mypage = () => {
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
+  const router = useRouter()
+
   const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
   const dataset = []
@@ -34,7 +37,8 @@ const Mypage = () => {
 
   const [uId, setUid] = useState(null)
   useEffect(() => {
-    const { userId } = JSON.parse(Cookies.get('user'))
+    // const { userId } = JSON.parse(Cookies.get('user'))
+    const { userId } = router.query
     setUid(userId)
   }, [])
   const { data } = useGetUser(uId)
