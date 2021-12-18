@@ -5,3 +5,7 @@ export { default as useGetPost } from './useGetPost'
 export { default as useGetPostsMonth } from './useGetPostsMonth'
 export { default as postFavorite } from './postFavorite'
 export { default as deleteFavorite } from './deleteFavorite'
+export { default as useGetYearScore } from './useGetYearScore'
+export { default as useGetPostAll } from './useGetPostAll'
+
+
