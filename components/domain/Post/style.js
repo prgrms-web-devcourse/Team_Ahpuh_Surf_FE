@@ -82,10 +82,12 @@ export const Time = styled.p`
 export const Content = styled.div`
   height: 50px;
   width: 200px;
+  display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  word-break: break-all;
   color: #000;
 `
 export const Follow = styled.button`
