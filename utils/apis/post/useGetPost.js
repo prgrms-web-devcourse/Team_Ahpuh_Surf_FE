@@ -1,9 +1,8 @@
 import useSWR from 'swr'
 import fetcher from 'utils/apis/fetcher'
 
-const useUser = (postId) => {
-  const { data, error } = useSWR(`/posts/${postId}`, fetcher)
-
+const useGetPost = (postId) => {
+  const { data = {}, error } = useSWR(`/posts/${postId}`, fetcher)
   return {
     data,
     isLoading: !error && !data,
@@ -11,4 +10,4 @@ const useUser = (postId) => {
   }
 }
 
-export default useUser
+export default useGetPost

@@ -1,9 +1,9 @@
 import useSWR from 'swr'
 import fetcher from 'utils/apis/fetcher'
 
-const useUser = (userId) => {
-  const { data, error } = useSWR(userId ? `/users/${userId}` : null, fetcher)
 
+const useGetUser = (userId) => {
+  const { data = {}, error } = useSWR(`/users/${userId}`, fetcher)
 
   return {
     data,
