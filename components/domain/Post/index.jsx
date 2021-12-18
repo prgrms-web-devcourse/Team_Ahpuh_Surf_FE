@@ -7,6 +7,7 @@ import {
   AiOutlineStar,
 } from 'react-icons/ai'
 import { useState } from 'react'
+import { timeForToday } from 'utils/common/timeForToday'
 import * as Style from './style'
 
 const Post = ({
@@ -20,10 +21,11 @@ const Post = ({
   like,
   favorite,
   profileImage,
-  username,
+  username = 'Test',
   follow,
   createdAt,
   height,
+  ...props
 }) => {
   const [fav, setFav] = useState(favorite)
   const [_like, setLike] = useState(like)
@@ -44,27 +46,38 @@ const Post = ({
     setFollow(!_follow)
   }
   return (
-    <Style.CardContainer backgroundColor={backgroundColor} height={height}>
+    <Style.CardContainer
+      backgroundColor={backgroundColor}
+      height={height}
+      style={{ ...props.style }}>
       {isMine ? null : (
         <div>
           <Style.Profile>
             <Avatar {...avatarArgs} style={{ marginRight: 10 }} />
-            <div>
-              <div style={{ fontWeight: 'bold', fontSize: 20 }}>{username}</div>
-              <div style={{ fontWeight: 'bold', fontSize: 13, marginTop: 5 }}>
-                {date}
-              </div>
-            </div>
-            <Style.Follow onClick={handleFollow}>
-              {_follow ? <span>팔로우 취소</span> : <span>팔로우</span>}
-            </Style.Follow>
-            <Style.Like onClick={handleLike}>
-              {_like ? (
-                <AiFillHeart size={20} color="red" />
-              ) : (
-                <AiOutlineHeart size={20} />
-              )}
-            </Style.Like>
+            <Style.ProfileInfo>
+              <header>
+                <div>
+                  <Style.UserInfo>
+                    <strong>{username}</strong>
+                    <Style.Follow onClick={handleFollow}>
+                      {_follow ? '팔로우 취소' : '팔로우'}
+                    </Style.Follow>
+                  </Style.UserInfo>
+                  <Style.Time>
+                    <strong>{date}</strong>
+                    <span>({timeForToday(createdAt)})</span>
+                  </Style.Time>
+                </div>
+
+                <Style.Like onClick={handleLike}>
+                  {_like ? (
+                    <AiFillHeart size={20} color="red" />
+                  ) : (
+                    <AiOutlineHeart size={20} />
+                  )}
+                </Style.Like>
+              </header>
+            </Style.ProfileInfo>
           </Style.Profile>
         </div>
       )}
@@ -86,7 +99,7 @@ const Post = ({
             ) : (
               <span />
             )}
-            <div>{categoryName}</div>
+            <p>{categoryName}</p>
           </Style.Header>
           {isMine ? (
             <Style.Favorite onClick={handleFavorite}>
