@@ -58,7 +58,7 @@ const HeatmapChartComponent = ({ data, height }) => {
       show: false,
     },
     noData: {
-      text: 'Do Data',
+      text: 'No Data',
       align: 'center',
       verticalAlign: 'middle',
       offsetX: 0,
