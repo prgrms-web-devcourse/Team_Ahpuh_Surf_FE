@@ -1,27 +1,44 @@
 import Profile from 'components/domain/Profile'
-import { useCallback, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
 import { Input, Text, Toggle, Upload } from 'components/base'
 import InputItem from 'components/domain/InputItem'
-import { sampleData } from 'utils/SampleData/Mypage'
+import Cookies from 'js-cookie'
+import { toast, ToastContainer } from 'react-toastify'
+import { updateUser } from 'utils/apis/user'
+import useGetUser from 'utils/apis/user/useGetUser'
+import { useRouter } from 'next/router'
 import * as Style from './style'
-import { updateUser } from '../../../utils/apis/user'
 
 const ProfileModification = () => {
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require
   const FormData = require('form-data')
+  const router = useRouter()
   const result = new FormData()
   const [fileObject, setFileObject] = useState('')
 
-  const { email } = sampleData
   const inputStyle = {
     width: '100%',
     height: 40,
     fontSize: 20,
   }
+  const toastOptions = {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    progress: undefined,
+  }
+  const [uId, setUid] = useState(null)
+  useEffect(() => {
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
+  }, [])
+  const { data: profileData } = useGetUser(uId, { revalidateOnFocus: false })
 
   const onChangeProfileImage = (value) => {
     setFileObject(value)
+    console.log(value)
   }
 
   const publicRef = useRef(null)
@@ -29,35 +46,33 @@ const ProfileModification = () => {
     e.preventDefault()
     const data = new FormData(e.target)
 
-    // if (data.get('password') !== data.get('passwordConfirm')) {
-    //   alert(`password and password confirm don't match`)
-    //   return
-    // }
-    // if (
-    //   data.get('username') === '' &&
-    //   (data.get('password') === '' || data.get('passwordConfirm') === '')
-    // ) {
-    //   alert('check again')
-    //   return
-    // }
+    if (!(data.get('password') === data.get('passwordConfirm'))) {
+      toast('비밀번호, 비밀번호 확인이 일치 하지 않습니다', toastOptions)
+      return
+    }
     const requestObject = {
-      userName: data.get('username'),
-      password: data.get('password'),
+      userName: data.get('username') || profileData.userName,
+      password: data.get('password') || null,
       accountPublic: publicRef.current.checked,
-      url: '',
-      aboutMe: '',
+      url: profileData.url,
+      aboutMe: profileData.aboutMe,
     }
     result.set('request', JSON.stringify(requestObject))
     result.set('file', fileObject || new File([''], 'empty.txt'))
-
     const res = await updateUser(result)
-    console.log(res)
-
-    // router.push('/mypage')
+    if (res.status === 200) {
+      router.push('/mypage')
+    }
+  }
+  if (!profileData) {
+    return <p />
   }
   return (
     <Style.Container onSubmit={handleSubmit}>
-      <Profile profilePhotoUrl={sampleData.profilePhotoUrl} email={email}>
+      <ToastContainer />
+      <Profile
+        profilePhotoUrl={profileData?.profilePhotoUrl}
+        email={profileData?.email}>
         <Upload onChange={onChangeProfileImage}>
           <Style.ButtonPlus>+</Style.ButtonPlus>
         </Upload>
@@ -86,7 +101,7 @@ const ProfileModification = () => {
           <Text size={20} style={{ width: '18%' }}>
             public
           </Text>
-          <Toggle ref={publicRef} />
+          <Toggle ref={publicRef} isToggle />
         </div>
       </div>
       <Style.ButtonSubmit type="submit">submit</Style.ButtonSubmit>
