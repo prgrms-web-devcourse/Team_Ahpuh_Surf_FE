@@ -135,7 +135,9 @@ const HeatmapChartComponent = ({ data, height }) => {
       },
     },
   }
-
+  if (!dataset) {
+    return <div />
+  }
   return (
     <ReactApexChart
       options={options}
@@ -146,7 +148,6 @@ const HeatmapChartComponent = ({ data, height }) => {
   )
 }
 HeatmapChartComponent.propTypes = {
-  data: PropTypes.array.isRequired,
   height: PropTypes.string,
 }
 HeatmapChartComponent.defaultProps = {
