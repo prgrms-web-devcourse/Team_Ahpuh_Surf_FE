@@ -20,6 +20,17 @@ export const getDefaultOptions = (height, isMyPage) => {
         show: false,
       },
     },
+    noData: {
+      text: 'Do Data',
+      align: 'center',
+      verticalAlign: 'middle',
+      offsetX: 0,
+      offsetY: 0,
+      style: {
+        color: '#807c7e',
+        fontSize: '16px',
+      },
+    },
     dataLabels: {
       enabled: false,
     },
