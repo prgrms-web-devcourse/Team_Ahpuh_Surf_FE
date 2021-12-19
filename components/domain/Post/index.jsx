@@ -62,17 +62,13 @@ const Post = ({
     }
   }
 
-  // useEffect(() => {
-  //   console.log(postId, likeId, 'post, like Id')
-  // }, [postId, likeId])
-
   const handleFollow = async () => {
     try {
       if (_follow) {
-        const res = await deleteFollow(userId)
+        await deleteFollow(userId)
         setFollow((isFollow) => !isFollow)
       } else {
-        const followId = await postFollow(userId)
+        await postFollow(userId)
         setFollow((isFollow) => !isFollow)
       }
       setFollow(!_follow)
