@@ -8,18 +8,16 @@ const TabPanelWrapper = styled.ul`
 
 const TabPanel = ({ activeLabelSet, fontSize }) => {
   const { payload } = activeLabelSet
-
   return (
     <TabPanelWrapper fontSize={fontSize}>
-      {payload.map(({ userId, userName, profilePhotoUrl }) => {
-        return (
-          <FollowCard
-            key={userId}
-            profilePhotoUrl={profilePhotoUrl}
-            userName={userName}
-          />
-        )
-      })}
+      {payload.map(({ userId, userName, profilePhotoUrl }) => (
+        <FollowCard
+          key={userId}
+          userId={userId}
+          profilePhotoUrl={profilePhotoUrl}
+          userName={userName}
+        />
+      ))}
     </TabPanelWrapper>
   )
 }
