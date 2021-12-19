@@ -1,10 +1,8 @@
 import dynamic from 'next/dynamic'
-import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1' // 일년치 게시글 점수 조회 .. api 미완성 상태
-import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { BsFillBellFill, BsFillPencilFill } from 'react-icons/bs'
 import Link from 'next/link'
-import { Text } from 'components/base'
+import { MainDropdown, Text } from 'components/base'
 import ContentBox from 'components/domain/ContentBox'
 import Profile from 'components/domain/Profile'
 import { useEffect, useState } from 'react'
@@ -13,9 +11,11 @@ import Cookies from 'js-cookie'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
 import FollowModal from 'components/domain/FollowModal'
+import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 import * as Style from './style'
 import { useToggle } from '../../hooks'
-import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
+import { useGetPostAll, useGetYearScore } from '../../utils/apis/post'
+import { useGetCategories } from '../../utils/apis/category'
 
 const Mypage = () => {
   const AreaChartComponent = dynamic(
@@ -28,9 +28,6 @@ const Mypage = () => {
   )
   const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
-  const dataset = []
-  dataset.push({ data: areaChartComponent1, name: 'react' })
-  dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
   const [uId, setUid] = useState(null)
   useEffect(() => {
@@ -43,6 +40,60 @@ const Mypage = () => {
     uId,
   )
 
+  const { data: categories } = useGetCategories()
+  const { data: surfData } = useGetYearScore(uId)
+  const { data: allPosts } = useGetPostAll(uId, 0)
+
+  const [dataset, setDataset] = useState([])
+  const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
+  const [catList, setCatList] = useState([])
+
+  useEffect(() => {
+    if (surfData && surfData.length !== 0) {
+      const allData = surfData?.map((surf) => ({
+        data: surf.postScores,
+        name: surf.categoryName,
+      }))
+      setDataset(allData)
+    }
+  }, [surfData, allPosts])
+
+  useEffect(() => {
+    if (categories && categories.length !== 0) {
+      setCatList([
+        {
+          categoryId: null,
+          name: 'All',
+        },
+        ...categories,
+      ])
+    }
+  }, [categories])
+
+  useEffect(() => {
+    console.log(selectedSurf)
+  }, [selectedSurf])
+
+  const handleClick = (item) => {
+    setSurf(item)
+    if (!item.categoryId) {
+      const allData = surfData.map((surf) => ({
+        data: surf.postScores,
+        name: surf.categoryName,
+      }))
+      setDataset(allData)
+    } else {
+      const result = surfData.filter(
+        (surf) => surf.categoryId === item.categoryId,
+      )
+      setDataset([
+        {
+          data: result[0].postScores,
+          name: result[0].categoryName,
+        },
+      ])
+    }
+  }
   const toggle = () => {
     setVisible(!visible)
   }
@@ -115,21 +166,39 @@ const Mypage = () => {
         )}
         <Style.Content>{data?.aboutMe}</Style.Content>
       </Style.Introduction>
-      <Style.Graph style={{ width: '100%', height: 380 }}>
+      <Style.Graph style={{ width: '100%', height: 350 }}>
         <Link href="/">
           <Style.Title>{`Main >`}</Style.Title>
         </Link>
-        <Style.AreaChartSkeleton>
-          <Text size={30} color="darkGray">
-            Loading
-          </Text>
-        </Style.AreaChartSkeleton>
-        <AreaChartComponent data={dataset} isMyPage style={{ marginTop: 10 }} />
+        <MainDropdown
+          height={30}
+          fontSize={15}
+          width={100}
+          selected={selectedSurf}
+          handleClick={handleClick}
+          data={catList}
+          isObj
+          border
+          style={{ marginTop: 10 }}
+        />
+        <div style={{ position: 'relative', top: 15 }}>
+          <Style.AreaChartSkeleton>
+            <Text size={30} color="darkGray">
+              Loading
+            </Text>
+          </Style.AreaChartSkeleton>
+          <AreaChartComponent
+            data={dataset}
+            isMyPage
+            style={{ marginTop: 10 }}
+          />
+        </div>
       </Style.Graph>
+
       <Link href="/dashboard">
         <Style.Title>{`Dashboard >`}</Style.Title>
       </Link>
-      <Style.Graph>
+      <Style.Graph style={{ width: '100%', height: 300 }}>
         <SkeletonBox
           position="absolute"
           width="100%"

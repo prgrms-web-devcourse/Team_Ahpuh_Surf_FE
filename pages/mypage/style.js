@@ -30,7 +30,6 @@ export const Title = styled.div`
   font-size: 25px;
   font-weight: bold;
   margin-top: 10px;
-  margin-bottom: 10px;
   cursor: pointer;
 `
 export const Content = styled.div`
@@ -56,13 +55,13 @@ export const AreaChartSkeleton = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 34px;
+  top: 64px;
   left: 0;
   border-radius: 10px;
   //width: ${({ width }) => width};
   width: 100%;
   // height:  ${({ height }) => `${height}px`}
-  height: 305px;
+  height: 150px;
   animation: ${skeletonLoading} 1s linear infinite alternate;
 `
 export const HeatmapSkeleton = styled.div`
