@@ -17,24 +17,24 @@ import { useRouter } from 'next/router'
 import * as Style from './style'
 
 const Mypage = () => {
+  const router = useRouter()
+  const [uId, setUid] = useState(null)
   const HeatmapComponent = dynamic(
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
-  const router = useRouter()
   const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
 
-  const [uId, setUid] = useState(null)
   useEffect(() => {
+    if (!router.isReady) return
     const { userId } = router.query
     setUid(userId)
-  }, [])
+  }, [router.isReady])
   const { data: profileData } = useGetUser(uId)
   const { data: heatmapData } = useGetPostsCountYear(
     new Date().getFullYear(),
     uId,
-    { revalidateOnFocus: false },
   )
 
   const toggle = () => {
@@ -114,7 +114,7 @@ const Mypage = () => {
         <Link href="/">
           <Style.Title>{`Main >`}</Style.Title>
         </Link>
-        <AreaChartModule userId={uId} isMyPage={false} />
+        <AreaChartModule userId={uId} isMyPage />
       </Style.Graph>
 
       <Link href="/dashboard">
