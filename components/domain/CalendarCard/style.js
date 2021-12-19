@@ -18,7 +18,7 @@ export const CardWrapper = styled.div`
     transform: rotateY(180deg);
   }
 
-  padding: 0 0 0 20px;
+  padding: 0 15px;
 `
 
 export const CardFront = styled.div`
@@ -44,7 +44,7 @@ export const CardBack = styled.div`
   border-radius: 30px;
   backface-visibility: hidden;
   background-color: rgba(0, 0, 0, 0.05);
-  padding: 40px 30px 30px;
+  padding: 40px 20px 30px;
   color: black;
 `
 

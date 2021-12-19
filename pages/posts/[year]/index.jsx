@@ -18,7 +18,8 @@ export const ToggleBtn = styled.button`
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
-  margin-left: 130px;
+  display: block;
+  margin: 0 auto;
 
   &:active {
     background-color: rgba(0, 0, 0, 0.2);
@@ -26,13 +27,13 @@ export const ToggleBtn = styled.button`
 `
 
 const flickingOptions = {
-  align: 'prev',
+  align: 'center',
   defaultIndex: todayMonth,
   horizontal: true,
   circular: true,
   noPanelStyleOverride: false,
   moveType: 'snap',
-  renderOnlyVisible: true,
+  renderOnlyVisible: false,
   autoResize: false,
   inputType: ['touch', 'mouse'],
 }
@@ -41,7 +42,7 @@ const CardArray = Children.toArray(
   range(12).map((month) => (
     <CalendarCard
       index={month}
-      key={`${month}`}
+      key={month}
       width={300}
       fontSize={60}
       monthFont={12}
