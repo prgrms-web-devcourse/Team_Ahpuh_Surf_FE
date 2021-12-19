@@ -5,8 +5,11 @@ import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify'
 import { useEffect, Children, useState } from 'react'
 import * as Style from 'styles/pageStyles/indexStyle'
-import { useGetYearScore , useGetPostAll } from 'utils/apis/post'
-import { DUMMY_DATA_POST } from 'constants/PostData'
+import {
+  useGetYearScore,
+  useGetPostAll,
+  useGetPostsCategory,
+} from 'utils/apis/post'
 import { useGetCategories } from 'utils/apis/category'
 
 const ApexChart = dynamic(
@@ -18,6 +21,7 @@ const ApexChart = dynamic(
 
 const Main = () => {
   const [user, setUser] = useState({})
+  const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
 
   useEffect(() => {
     setUser(JSON.parse(Cookies.get('user')))
@@ -26,10 +30,12 @@ const Main = () => {
   const { data: categories } = useGetCategories()
   const { data: surfData } = useGetYearScore(user.userId)
   const { data: allPosts } = useGetPostAll(user.userId, 0)
+  // const { data: categoryPosts } = useGetPostsCategory(user.userId, selectedSurf.categoryId, 0)
 
+  console.log(allPosts.values)
+  // console.log(categoryPosts)
 
   const [dataset, setDataset] = useState([])
-  const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
   const [catList, setCatList] = useState([])
   const [postList, setPostList] = useState([])
 
@@ -42,7 +48,6 @@ const Main = () => {
       setDataset(allData)
     }
     setPostList(allPosts.values)
-    // console.log(postList)
   }, [surfData, allPosts])
 
   useEffect(() => {
@@ -56,10 +61,6 @@ const Main = () => {
       ])
     }
   }, [categories])
-
-  useEffect(() => {
-    console.log(selectedSurf)
-  }, [selectedSurf])
 
   const handleClick = (item) => {
     setSurf(item)
@@ -80,8 +81,10 @@ const Main = () => {
         },
       ])
     }
+    // setPostList(categoryPosts?.values)
   }
 
+  // 회원가입 성공 후 toast
   useEffect(() => {
     if (Cookies.get('isSignup')) {
       toast.success('Signup was sucessful 🎉', {
@@ -108,33 +111,27 @@ const Main = () => {
           <ApexChart data={dataset} />
         </Style.ChartWrapper>
         <Style.PostListWrapper>
-          {Children.toArray(
+          {postList && postList.length !== 0 ? 
             postList.map(
               ({
                 categoryName,
-                // colorCode,
+                colorCode,
                 content,
-                // fileUrl,
-                // imageUrl,
-                // isLiked,
-                // likeId,
-                // postId,
                 score,
                 selectedDate,
               }) => (
                 // eslint-disable-next-line react/jsx-key
                 <Post
+                  colorCode={colorCode}
                   height={100}
                   date={selectedDate}
                   categoryName={categoryName}
                   score={score}
-                  title={title}
                   content={content}
-                  profileImage={profileImage}
                 />
               ),
-            ),
-          )}
+            )
+           : null}
         </Style.PostListWrapper>
       </Style.MainWrapper>
     </>
