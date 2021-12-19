@@ -91,11 +91,13 @@ const Detail = () => {
         profileImage={
           user.profilePhotoUrl
             ? user.profilePhotoUrl
-            : 'https://picsum.photos/200'
+            : '/images/avatarDefault.png'
         }
         authorId={posting?.userId}
         imageUrl={
-          posting.fileUrl ? posting.fileUrl : 'https://picsum.photos/200'
+          posting.fileUrl
+            ? posting.fileUrl
+            : 'https://via.placeholder.com/250x150/d0d0d3/a9a9a9/?text=No+Image'
         }
         postId={posting?.postId}
         createdAt={posting?.createdAt}
