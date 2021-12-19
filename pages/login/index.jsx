@@ -19,14 +19,19 @@ const Login = () => {
       password: '',
     },
     onSubmit: async () => {
-      const { data } = await login({
-        email: values.email,
-        password: values.password,
-      })
-      Cookies.set(LOGIN_COOKIE, JSON.stringify(data), {
-        expires: 28,
-        secure: true,
-      })
+      try {
+        const { data } = await login({
+          email: values.email,
+          password: values.password,
+        })
+        Cookies.set(LOGIN_COOKIE, JSON.stringify(data), {
+          expires: 28,
+          secure: true,
+        })
+        router.push('/')
+      } catch (error) {
+        console.error(error.message)
+      }
     },
     validate: ({ email, password }) => {
       const newErrors = {}
