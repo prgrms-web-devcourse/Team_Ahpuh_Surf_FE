@@ -9,11 +9,12 @@ import * as Style from './style'
 import { getDefaultOptions } from './getDefaultOptions'
 import { getCurrentQuarter } from './getCurrentQuarter'
 import { updateXAxis } from './updateXAxis'
+import { useRouter } from 'next/router'
 
-const AreaChartComponent = ({ width, height, data, isMyPage }) => {
+const AreaChartComponent = ({ height, data, isMyPage }) => {
   const [options, setOptions] = useState(getDefaultOptions(height, isMyPage))
   const [curQuarter, setCurQuarter] = useState(getCurrentQuarter())
-
+  const router = useRouter()
   const areaChartArgs = {
     options,
     series: data,
@@ -71,15 +72,13 @@ const AreaChartComponent = ({ width, height, data, isMyPage }) => {
     alignItems: 'center',
     width: '100%',
     height: '10%',
-    // padding: '5px',
-    // marginTop: '-10px',
     fontSize: 16,
     curQuarter,
     handleLeftCarot,
     handleRightCarot,
   }
   const handleSettingButton = () => {
-    console.log('has to move to Category Manage Page ')
+    router.push('/categorymanange')
   }
 
   useEffect(() => {
