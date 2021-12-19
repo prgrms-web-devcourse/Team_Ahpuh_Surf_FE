@@ -7,6 +7,4 @@ export { default as postFavorite } from './postFavorite'
 export { default as deleteFavorite } from './deleteFavorite'
 export { default as useGetYearScore } from './useGetYearScore'
 export { default as useGetPostAll } from './useGetPostAll'
-export { default as useGetPostsCategory } from './useGetPostsCategory'
-
-
+export { default as useGetPostsCategory } from './useGetPostsCategory' 

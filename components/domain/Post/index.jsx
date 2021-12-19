@@ -46,7 +46,10 @@ const Post = ({
     setFollow(!_follow)
   }
   return (
-    <Style.CardContainer backgroundColor={colorCode} height={height} style={{...props.style}}>
+    <Style.CardContainer
+      backgroundColor={colorCode}
+      height={height}
+      style={{ ...props.style }}>
       {isMine ? null : (
         <div>
           <Style.Profile>

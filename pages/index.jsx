@@ -3,7 +3,7 @@ import { Post } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify'
-import { useEffect, Children, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Style from 'styles/pageStyles/indexStyle'
 import {
   useGetYearScore,
@@ -11,6 +11,7 @@ import {
   useGetPostsCategory,
 } from 'utils/apis/post'
 import { useGetCategories } from 'utils/apis/category'
+import {useSWRConfig} from 'swr'
 
 const ApexChart = dynamic(
   () => import('components/domain/AreaChartComponent'),
@@ -22,6 +23,8 @@ const ApexChart = dynamic(
 const Main = () => {
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
+  
+  const {mutate} = useSWRConfig()
 
   useEffect(() => {
     setUser(JSON.parse(Cookies.get('user')))
@@ -30,11 +33,8 @@ const Main = () => {
   const { data: categories } = useGetCategories()
   const { data: surfData } = useGetYearScore(user.userId)
   const { data: allPosts } = useGetPostAll(user.userId, 0)
-  // const { data: categoryPosts } = useGetPostsCategory(user.userId, selectedSurf.categoryId, 0)
-
-  console.log(allPosts.values)
-  // console.log(categoryPosts)
-
+  const { data: categoryPosts } = useGetPostsCategory(user.userId, selectedSurf.categoryId, 0)
+  
   const [dataset, setDataset] = useState([])
   const [catList, setCatList] = useState([])
   const [postList, setPostList] = useState([])
@@ -51,13 +51,19 @@ const Main = () => {
   }, [surfData, allPosts])
 
   useEffect(() => {
+    if (selectedSurf.categoryId) {
+      mutate(`/posts?userId=${user.userId}&categoryId=${selectedSurf.categoryId}&cursorId=0`)
+    }
+  }, [selectedSurf])
+
+  useEffect(() => {
     if (categories && categories.length !== 0) {
       setCatList([
         {
           categoryId: null,
           name: 'All',
         },
-        ...categories,
+        ...categories
       ])
     }
   }, [categories])
@@ -80,6 +86,7 @@ const Main = () => {
           name: result[0].categoryName,
         },
       ])
+      
     }
     // setPostList(categoryPosts?.values)
   }
@@ -111,27 +118,33 @@ const Main = () => {
           <ApexChart data={dataset} />
         </Style.ChartWrapper>
         <Style.PostListWrapper>
-          {postList && postList.length !== 0 ? 
-            postList.map(
-              ({
-                categoryName,
-                colorCode,
-                content,
-                score,
-                selectedDate,
-              }) => (
-                // eslint-disable-next-line react/jsx-key
-                <Post
-                  colorCode={colorCode}
-                  height={100}
-                  date={selectedDate}
-                  categoryName={categoryName}
-                  score={score}
-                  content={content}
-                />
-              ),
-            )
-           : null}
+          {categoryPosts?.values && categoryPosts?.values.length !== 0
+            ? categoryPosts?.values.map(
+                ({ categoryName, colorCode, content, score, selectedDate }) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Post
+                    colorCode={colorCode}
+                    height={100}
+                    date={selectedDate}
+                    categoryName={categoryName}
+                    score={score}
+                    content={content}
+                  />
+                ),
+              )
+            : postList?.map(
+                ({ categoryName, colorCode, content, score, selectedDate }) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Post
+                    colorCode={colorCode}
+                    height={100}
+                    date={selectedDate}
+                    categoryName={categoryName}
+                    score={score}
+                    content={content}
+                  />
+                ),
+              )}
         </Style.PostListWrapper>
       </Style.MainWrapper>
     </>
