@@ -21,7 +21,7 @@ export const getDefaultOptions = (height, isMyPage) => {
       },
     },
     noData: {
-      text: 'Do Data',
+      text: 'No Data',
       align: 'center',
       verticalAlign: 'middle',
       offsetX: 0,
