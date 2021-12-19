@@ -80,9 +80,9 @@ export const Time = styled.p`
   }
 `
 export const Content = styled.div`
-  height: 50px;
-  width: 200px;
   display: -webkit-box;
+  height: 50px;
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;

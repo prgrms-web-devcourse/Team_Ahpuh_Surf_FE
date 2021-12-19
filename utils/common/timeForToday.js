@@ -12,5 +12,5 @@ export const timeForToday = (createdAt) => {
   if (betweenTime < 60) return `${betweenTime}분 전`
   if (betweenTimeHour < 24) return `${betweenTimeHour}시간 전`
   if (betweenTimeDay < 365) return `${betweenTimeDay}일 전`
-  return `${betweenTimeDay / 365}년 전`
+  return `${Math.floor(betweenTimeDay / 365)}년 전`
 }

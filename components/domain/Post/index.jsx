@@ -6,8 +6,12 @@ import {
   AiOutlineHeart,
   AiOutlineStar,
 } from 'react-icons/ai'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { timeForToday } from 'utils/common/timeForToday'
+import dayjs from 'dayjs'
+import { postFollow, deleteFollow } from 'utils/apis/follow'
+import { postLike, deleteLike } from 'utils/apis/like'
+import { mutate } from 'swr'
 import * as Style from './style'
 
 const Post = ({
@@ -21,6 +25,9 @@ const Post = ({
   like,
   favorite,
   profileImage,
+  userId,
+  postId,
+  likeId,
   username = 'Test',
   follow,
   createdAt,
@@ -36,15 +43,41 @@ const Post = ({
     size: 40,
     src: profileImage,
   }
-  const handleFavorite = () => {
-    setFav(!fav)
+  const handleFavorite = async () => {}
+  const handleLike = async () => {
+    try {
+      if (like) {
+        await deleteLike(postId, likeId)
+        mutate('/posts/recent')
+      } else {
+        await postLike(postId)
+        mutate('/posts/recent')
+      }
+      setLike((liked) => !liked)
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-  const handleLike = () => {
-    setLike(!_like)
+
+  useEffect(() => {
+    console.log(_like, 'like')
+  }, [_like])
+
+  const handleFollow = async () => {
+    try {
+      if (follow) {
+        const res = await deleteFollow(userId)
+        mutate('/posts/recent')
+      } else {
+        const followId = await postFollow(userId)
+        mutate('/posts/recent')
+      }
+      setFollow(!_follow)
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-  const handleFollow = () => {
-    setFollow(!_follow)
-  }
+
   return (
     <Style.CardContainer
       backgroundColor={backgroundColor}
@@ -64,7 +97,7 @@ const Post = ({
                     </Style.Follow>
                   </Style.UserInfo>
                   <Style.Time>
-                    <strong>{date}</strong>
+                    <strong>{dayjs(createdAt).format('YYYY-MM-DD')}</strong>
                     <span>({timeForToday(createdAt)})</span>
                   </Style.Time>
                 </div>

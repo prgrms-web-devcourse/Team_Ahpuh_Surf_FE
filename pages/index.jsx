@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify'
 import { useEffect, Children, useState } from 'react'
 import * as Style from 'styles/pageStyles/indexStyle'
-import { useGetYearScore , useGetPostAll } from 'utils/apis/post'
+import { useGetYearScore, useGetPostAll } from 'utils/apis/post'
 import { DUMMY_DATA_POST } from 'constants/PostData'
 import { useGetCategories } from 'utils/apis/category'
 
@@ -26,7 +26,6 @@ const Main = () => {
   const { data: categories } = useGetCategories()
   const { data: surfData } = useGetYearScore(user.userId)
   const { data: allPosts } = useGetPostAll(user.userId, 0)
-
 
   const [dataset, setDataset] = useState([])
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
@@ -109,7 +108,7 @@ const Main = () => {
         </Style.ChartWrapper>
         <Style.PostListWrapper>
           {Children.toArray(
-            postList.map(
+            postList?.map(
               ({
                 categoryName,
                 // colorCode,
@@ -128,9 +127,9 @@ const Main = () => {
                   date={selectedDate}
                   categoryName={categoryName}
                   score={score}
-                  title={title}
+                  // title={title}
                   content={content}
-                  profileImage={profileImage}
+                  // profileImage={profileImage}
                 />
               ),
             ),

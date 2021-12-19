@@ -25,7 +25,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
 
   return (
     <AvatarWrapper size={size} style={props.style}>
-      <Image
+      <img
         width={size}
         height={size}
         src={src}
