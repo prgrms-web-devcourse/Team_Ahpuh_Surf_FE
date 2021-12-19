@@ -25,8 +25,9 @@ const Mypage = () => {
   const router = useRouter()
   const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
-
   const [uId, setUid] = useState(null)
+  const [_url, setUrl] = useState(null)
+  const [_aboutMe, setAboutMe] = useState(null)
   useEffect(() => {
     const { userId } = JSON.parse(Cookies.get('user'))
     setUid(userId)
@@ -58,7 +59,13 @@ const Mypage = () => {
         toggleTabs={toggleTabs}
         setToggleTabs={setToggleTabs}
       />
-      <EditAboutMe userData={profileData} visible={visible} toggle={toggle} />
+      <EditAboutMe
+        userData={profileData}
+        visible={visible}
+        toggle={toggle}
+        setUrl={setUrl}
+        setAboutMe={setAboutMe}
+      />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
         <AiTwotoneSetting
           size={30}
@@ -103,13 +110,13 @@ const Mypage = () => {
         </Style.Title>
         <Style.Title>URL: </Style.Title>
         {profileData?.url ? (
-          <Style.Title>{profileData?.url}</Style.Title>
+          <Style.Title>{_url || profileData?.url}</Style.Title>
         ) : (
           <Style.Title style={{ fontSize: 20, color: '#8D8D8D' }}>
             추가해보세요
           </Style.Title>
         )}
-        <Style.Content>{profileData?.aboutMe}</Style.Content>
+        <Style.Content>{_aboutMe || profileData?.aboutMe}</Style.Content>
       </Style.Introduction>
       <Style.Graph style={{ width: '100%', height: 350 }}>
         <Link href="/">
