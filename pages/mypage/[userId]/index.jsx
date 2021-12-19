@@ -90,7 +90,7 @@ const Mypage = () => {
         userName={profileData?.userName}
         email={profileData?.email}
       />
-      {profileData.accountPublic && (
+      {profileData.accountPublic ? (
         <div>
           <Style.FollowContainer onClick={() => toggleFollowModal()}>
             <Style.FollowItem>
@@ -150,6 +150,18 @@ const Mypage = () => {
           <ContentBox title="files" fontSize={20}>
             <Text color="darkGray">No Data</Text>
           </ContentBox>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            position: 'relative',
+            justifyContent: 'center',
+            top: 50,
+          }}>
+          <Text size={20} strong block>
+            Information Closed
+          </Text>
         </div>
       )}
     </Style.Container>
