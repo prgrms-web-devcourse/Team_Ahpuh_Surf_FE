@@ -3,6 +3,7 @@ import { AiFillCompass, AiFillPlusCircle } from 'react-icons/ai'
 import { IoDocumentText } from 'react-icons/io5'
 import PropTypes from 'prop-types'
 import Link from 'next/link'
+import dayjs from 'dayjs'
 
 const NavbarWrapper = styled.ul`
   display: flex;
@@ -19,7 +20,10 @@ const NavbarWrapper = styled.ul`
   background-color: white;
 `
 
-const Navbar = ({ height, color, iconSize }) => (
+const Navbar = ({ height, color, iconSize }) =>{ 
+  const today = dayjs()
+  
+  return (
   <NavbarWrapper height={height}>
     <li>
       <Link href="/explore" passHref>
@@ -36,14 +40,14 @@ const Navbar = ({ height, color, iconSize }) => (
       </Link>
     </li>
     <li>
-      <Link href="/posts/all" passHref>
+      <Link href={`/posts/${today.year()}`} passHref>
         <a>
           <IoDocumentText size={iconSize} color={color} />
         </a>
       </Link>
     </li>
   </NavbarWrapper>
-)
+)}
 
 Navbar.propTypes = {
   color: PropTypes.string,
