@@ -100,7 +100,7 @@ const Mypage = () => {
         </Style.FollowItem>
       </Style.FollowContainer>
       <Style.Introduction>
-        <Style.Title style={{ display: 'block' }}>
+        <Style.Title style={{ display: 'block', marginBottom: 10 }}>
           About Me&nbsp;
           <BsFillPencilFill
             size={20}
@@ -128,7 +128,7 @@ const Mypage = () => {
       <Link href="/dashboard">
         <Style.Title>{`Dashboard >`}</Style.Title>
       </Link>
-      <Style.Graph style={{ width: '100%', height: 300 }}>
+      <Style.Graph style={{ width: '100%', height: 250 }}>
         <SkeletonBox
           position="absolute"
           width="100%"
@@ -139,8 +139,12 @@ const Mypage = () => {
         />
         <HeatmapComponent data={heatmapData} height="370px" />
       </Style.Graph>
-      <ContentBox title="Images" fontSize={20} />
-      <ContentBox title="files" fontSize={20} />
+      <ContentBox title="Images" fontSize={20}>
+        <Text color="darkGray">No Data</Text>
+      </ContentBox>
+      <ContentBox title="files" fontSize={20}>
+        <Text color="darkGray">No Data</Text>
+      </ContentBox>
     </Style.Container>
   )
 }

@@ -27,13 +27,13 @@ export const Introduction = styled.div`
 `
 export const Title = styled.div`
   display: inline;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 10px;
   cursor: pointer;
 `
 export const Content = styled.div`
-  font-size: 25px;
+  font-size: 15px;
   margin-top: 10px;
 `
 export const Graph = styled.div`

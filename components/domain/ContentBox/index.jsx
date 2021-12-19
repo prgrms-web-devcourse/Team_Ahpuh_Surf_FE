@@ -18,10 +18,16 @@ const ContentBox = ({ title, fontSize, children }) => {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   `
+  const Content = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - (${fontSize}px + 10px));
+  `
   return (
     <Container>
       <Title style={{ fontSize }}>{title}</Title>
-      {children}
+      <Content>{children}</Content>
     </Container>
   )
 }
