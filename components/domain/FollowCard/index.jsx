@@ -18,7 +18,7 @@ const FollowCard = ({ userName, profilePhotoUrl, key }) => {
   }
   return (
     <Container userId={key} onClick={handleClick}>
-      <Avatar src={profilePhotoUrl || 'https://picsum.photos/200'} size={40} />
+      <Avatar src={profilePhotoUrl || '/images/avatarDefault.png'} size={40} />
       <Text style={{ marginLeft: 10 }} size={25}>
         {userName}
       </Text>

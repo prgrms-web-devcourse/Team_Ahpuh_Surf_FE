@@ -83,7 +83,7 @@ const Mypage = () => {
       <Profile
         profilePhotoUrl={
           profileData?.profilePhotoUrl === null
-            ? 'https://picsum.photos/200'
+            ? 'images/avatarDefault.png'
             : profileData?.profilePhotoUrl
         }
         userName={profileData?.userName}
