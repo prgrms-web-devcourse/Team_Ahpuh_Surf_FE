@@ -33,9 +33,8 @@ export const NavButton = styled.button`
 `
 
 export const WeekHeader = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 10px;
   color: inherit;
 
