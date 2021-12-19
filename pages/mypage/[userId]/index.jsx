@@ -1,6 +1,4 @@
 import dynamic from 'next/dynamic'
-import { areaChartComponent1 } from 'utils/SampleData/AreaChartComponent1' // 일년치 게시글 점수 조회 .. api 미완성 상태
-import { areaChartComponent2 } from 'utils/SampleData/AreaChartComponent2'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { BsFillBellFill, BsFillPencilFill } from 'react-icons/bs'
 import Link from 'next/link'
@@ -12,39 +10,33 @@ import EditAboutMe from 'components/domain/EditAboutMe'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import useGetUser from 'utils/apis/user/useGetUser'
 import FollowModal from 'components/domain/FollowModal'
+import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
+import { useToggle } from 'hooks'
+import AreaChartModule from 'components/domain/AreaChartModule'
 import { useRouter } from 'next/router'
 import * as Style from './style'
-import { useToggle } from '../../../hooks'
-import useGetPostsCountYear from '../../../utils/apis/post/useGetPostsCountYear'
 
 const Mypage = () => {
-  const AreaChartComponent = dynamic(
-    import('components/domain/AreaChartComponent'),
-    { ssr: false },
-  )
   const HeatmapComponent = dynamic(
     import('components/domain/HeatmapChartComponent'),
     { ssr: false },
   )
   const router = useRouter()
-
   const [toggleTabs, setToggleTabs] = useToggle(false)
   const [visible, setVisible] = useState(false)
-  const dataset = []
-  dataset.push({ data: areaChartComponent1, name: 'react' })
-  dataset.push({ data: areaChartComponent2, name: 'Vue' })
 
   const [uId, setUid] = useState(null)
   useEffect(() => {
-    // const { userId } = JSON.parse(Cookies.get('user'))
     const { userId } = router.query
     setUid(userId)
   }, [])
-  const { data } = useGetUser(uId)
+  const { data: profileData } = useGetUser(uId)
   const { data: heatmapData } = useGetPostsCountYear(
     new Date().getFullYear(),
     uId,
+    { revalidateOnFocus: false },
   )
+
   const toggle = () => {
     setVisible(!visible)
   }
@@ -55,7 +47,7 @@ const Mypage = () => {
     console.log('click notice')
   }
 
-  if (!data || !uId) {
+  if (!profileData || !uId) {
     return <p />
   }
   return (
@@ -65,14 +57,15 @@ const Mypage = () => {
         toggleTabs={toggleTabs}
         setToggleTabs={setToggleTabs}
       />
-      <EditAboutMe userData={data} visible={visible} toggle={toggle} />
+      <EditAboutMe userData={profileData} visible={visible} toggle={toggle} />
       <div style={{ display: 'flex', justifyContent: 'end' }}>
-        <Link href="/mypage/edit">
-          <AiTwotoneSetting
-            size={30}
-            style={{ marginRight: 5, cursor: 'pointer' }}
-          />
-        </Link>
+        <AiTwotoneSetting
+          size={30}
+          style={{ marginRight: 5, cursor: 'pointer' }}
+          onClick={() => {
+            router.push('/mypage/edit')
+          }}
+        />
         <BsFillBellFill
           size={30}
           style={{ marginLeft: 5, cursor: 'pointer' }}
@@ -81,20 +74,20 @@ const Mypage = () => {
       </div>
       <Profile
         profilePhotoUrl={
-          data?.profilePhotoUrl === null
+          profileData?.profilePhotoUrl === null
             ? 'https://picsum.photos/200'
-            : data?.profilePhotoUrl
+            : profileData?.profilePhotoUrl
         }
-        userName={data?.userName}
-        email={data?.email}
+        userName={profileData?.userName}
+        email={profileData?.email}
       />
       <Style.FollowContainer onClick={() => toggleFollowModal()}>
         <Style.FollowItem>
-          <Text size={36}>{data?.followerCount}</Text>
+          <Text size={36}>{profileData?.followerCount}</Text>
           <Text size={20}>Follower</Text>
         </Style.FollowItem>
         <Style.FollowItem>
-          <Text size={36}>{data?.followingCount}</Text>
+          <Text size={36}>{profileData?.followingCount}</Text>
           <Text size={20}>Following</Text>
         </Style.FollowItem>
       </Style.FollowContainer>
@@ -108,30 +101,26 @@ const Mypage = () => {
           />
         </Style.Title>
         <Style.Title>URL: </Style.Title>
-        {data?.url ? (
-          <Style.Title>{data?.url}</Style.Title>
+        {profileData?.url ? (
+          <Style.Title>{profileData?.url}</Style.Title>
         ) : (
           <Style.Title style={{ fontSize: 20, color: '#8D8D8D' }}>
             추가해보세요
           </Style.Title>
         )}
-        <Style.Content>{data?.aboutMe}</Style.Content>
+        <Style.Content>{profileData?.aboutMe}</Style.Content>
       </Style.Introduction>
-      <Style.Graph style={{ width: '100%', height: 380 }}>
+      <Style.Graph style={{ width: '100%', height: 350 }}>
         <Link href="/">
           <Style.Title>{`Main >`}</Style.Title>
         </Link>
-        <Style.AreaChartSkeleton>
-          <Text size={30} color="darkGray">
-            Loading
-          </Text>
-        </Style.AreaChartSkeleton>
-        <AreaChartComponent data={dataset} isMyPage style={{ marginTop: 10 }} />
+        <AreaChartModule userId={uId} isMyPage={false} />
       </Style.Graph>
+
       <Link href="/dashboard">
         <Style.Title>{`Dashboard >`}</Style.Title>
       </Link>
-      <Style.Graph>
+      <Style.Graph style={{ width: '100%', height: 300 }}>
         <SkeletonBox
           position="absolute"
           width="100%"
