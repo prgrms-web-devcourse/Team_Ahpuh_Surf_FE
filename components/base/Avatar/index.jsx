@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import PropTypes from 'prop-types'
+import { useRouter } from 'next/router'
 
 const AvatarWrapper = styled.div`
   width: ${({ size }) => `${size}px`};
@@ -22,6 +23,10 @@ const Avatar = ({ src, size, alt, ...props }) => {
     display: 'block',
     objectFit: 'cover',
   }
+  const router = useRouter()
+  const handleClick = () => {
+    router.push('/mypage')
+  }
 
   return (
     <AvatarWrapper size={size} style={props.style}>
@@ -31,6 +36,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
         src={src}
         alt={alt}
         style={imageStyle}
+        onClick={handleClick}
         {...props}
       />
     </AvatarWrapper>
@@ -43,7 +49,7 @@ Avatar.propTypes = {
   alt: PropTypes.string,
 }
 Avatar.defaultProps = {
-  src: 'https://picsum.photos/200',
+  src: '/images/avatarDefault.png',
   size: '100',
   alt: 'avatar',
 }
