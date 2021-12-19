@@ -6,12 +6,12 @@ import {
   AiOutlineHeart,
   AiOutlineStar,
 } from 'react-icons/ai'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { timeForToday } from 'utils/common/timeForToday'
 import dayjs from 'dayjs'
 import { postFollow, deleteFollow } from 'utils/apis/follow'
 import { postLike, deleteLike } from 'utils/apis/like'
-import { mutate } from 'swr'
+import Link from 'next/link'
 import * as Style from './style'
 
 const Post = ({
@@ -37,6 +37,7 @@ const Post = ({
   const [fav, setFav] = useState(favorite)
   const [_like, setLike] = useState(like)
   const [_follow, setFollow] = useState(follow)
+  const [_likeId, setLikeId] = useState(likeId)
 
   const avatarArgs = {
     alt: 'avatar',
@@ -44,33 +45,35 @@ const Post = ({
     src: profileImage,
   }
   const handleFavorite = async () => {}
+
   const handleLike = async () => {
     try {
-      if (like) {
-        await deleteLike(postId, likeId)
-        mutate('/posts/recent')
+      if (_like) {
+        const res = await deleteLike(postId, _likeId)
+        setLike((_liked) => !_liked)
+        setLikeId(res.data)
       } else {
-        await postLike(postId)
-        mutate('/posts/recent')
+        const res = await postLike(postId)
+        setLike((_liked) => !_liked)
+        setLikeId(res.data)
       }
-      setLike((liked) => !liked)
     } catch (error) {
-      console.error(error.message)
+      console.error('error')
     }
   }
 
-  useEffect(() => {
-    console.log(_like, 'like')
-  }, [_like])
+  // useEffect(() => {
+  //   console.log(postId, likeId, 'post, like Id')
+  // }, [postId, likeId])
 
   const handleFollow = async () => {
     try {
-      if (follow) {
+      if (_follow) {
         const res = await deleteFollow(userId)
-        mutate('/posts/recent')
+        setFollow((isFollow) => !isFollow)
       } else {
         const followId = await postFollow(userId)
-        mutate('/posts/recent')
+        setFollow((isFollow) => !isFollow)
       }
       setFollow(!_follow)
     } catch (error) {
@@ -114,46 +117,47 @@ const Post = ({
           </Style.Profile>
         </div>
       )}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}>
+      <Link key={postId} href={`/posts/${dayjs(date).format('MM')}/${postId}`}>
         <div
           style={{
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            gap: '5px',
+            flexDirection: 'column',
           }}>
-          <Style.Header>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              gap: '5px',
+            }}>
+            <Style.Header>
+              {isMine ? (
+                <div style={{ marginLeft: 5 }}>{createdAt}</div>
+              ) : (
+                <span />
+              )}
+              <p>{categoryName}</p>
+            </Style.Header>
             {isMine ? (
-              <div style={{ marginLeft: 5 }}>{createdAt}</div>
+              <Style.Favorite onClick={handleFavorite}>
+                {fav ? (
+                  <AiFillStar size="20" color="yellow" />
+                ) : (
+                  <AiOutlineStar size="20" />
+                )}
+              </Style.Favorite>
             ) : (
               <span />
             )}
-            <p>{categoryName}</p>
-          </Style.Header>
-          {isMine ? (
-            <Style.Favorite onClick={handleFavorite}>
-              {fav ? (
-                <AiFillStar size="20" color="yellow" />
-              ) : (
-                <AiOutlineStar size="20" />
-              )}
-            </Style.Favorite>
-          ) : (
-            <span />
-          )}
-        </div>
-        <Style.Main>
-          <Style.Score>{score}</Style.Score>
-          <div>
-            <div style={{ fontSize: 20, fontWeight: 'bold' }}>{title}</div>
-            <Style.Content>{content}</Style.Content>
           </div>
-        </Style.Main>
-      </div>
+          <Style.Main>
+            <Style.Score>{score}</Style.Score>
+            <div>
+              <Style.Content>{content}</Style.Content>
+            </div>
+          </Style.Main>
+        </div>
+      </Link>
     </Style.CardContainer>
   )
 }
