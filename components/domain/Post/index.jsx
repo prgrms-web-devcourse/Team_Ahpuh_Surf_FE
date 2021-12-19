@@ -16,7 +16,7 @@ import * as Style from './style'
 
 const Post = ({
   isMine,
-  backgroundColor,
+  colorCode,
   date,
   categoryName,
   score,
@@ -78,10 +78,7 @@ const Post = ({
   }
 
   return (
-    <Style.CardContainer
-      backgroundColor={backgroundColor}
-      height={height}
-      style={{ ...props.style }}>
+    <Style.CardContainer backgroundColor={colorCode} height={height} style={{...props.style}}>
       {isMine ? null : (
         <div>
           <Style.Profile>
