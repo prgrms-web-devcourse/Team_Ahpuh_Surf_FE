@@ -1,16 +1,17 @@
 import Profile from 'components/domain/Profile'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Input, Text, Toggle, Upload } from 'components/base'
 import InputItem from 'components/domain/InputItem'
 import { sampleData } from 'utils/SampleData/Mypage'
 import * as Style from './style'
+import { updateUser } from '../../../utils/apis/user'
 
 const ProfileModification = () => {
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require
   const FormData = require('form-data')
   const result = new FormData()
-  const router = useRouter()
+  const [fileObject, setFileObject] = useState('')
 
   const { email } = sampleData
   const inputStyle = {
@@ -19,37 +20,40 @@ const ProfileModification = () => {
     fontSize: 20,
   }
 
-  const onChangeProfileImage = useCallback(async (file) => {
-    if (file) {
-      result.append('image', file)
-    } else {
-      console.log('no data')
-    }
-  }, [])
+  const onChangeProfileImage = (value) => {
+    setFileObject(value)
+  }
 
   const publicRef = useRef(null)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
 
-    if (data.get('password') !== data.get('passwordConfirm')) {
-      alert(`password and password confirm don't match`)
-      return
+    // if (data.get('password') !== data.get('passwordConfirm')) {
+    //   alert(`password and password confirm don't match`)
+    //   return
+    // }
+    // if (
+    //   data.get('username') === '' &&
+    //   (data.get('password') === '' || data.get('passwordConfirm') === '')
+    // ) {
+    //   alert('check again')
+    //   return
+    // }
+    const requestObject = {
+      userName: data.get('username'),
+      password: data.get('password'),
+      accountPublic: publicRef.current.checked,
+      url: '',
+      aboutMe: '',
     }
-    if (
-      data.get('username') === '' &&
-      (data.get('password') === '' || data.get('passwordConfirm') === '')
-    ) {
-      alert('check again')
-      return
-    }
-    result.append('username', data.get('username'))
-    result.append('password', data.get('password'))
-    result.append('public', publicRef.current.checked)
+    result.set('request', JSON.stringify(requestObject))
+    result.set('file', fileObject || new File([''], 'empty.txt'))
 
-    // TODO: 입력값들 formData로 감싼 상태임...api 통해서 새로운 값 받아오면 컴포넌트들 재랜더링 하는 방식으로 처리하기
-    // TODO: API 연동 되면 밑에 주석 해제하기
-    router.push('/mypage')
+    const res = await updateUser(result)
+    console.log(res)
+
+    // router.push('/mypage')
   }
   return (
     <Style.Container onSubmit={handleSubmit}>
