@@ -58,13 +58,13 @@ const HeatmapChartComponent = ({ data, height }) => {
       show: false,
     },
     noData: {
-      text: 'Loading...',
+      text: 'Do Data',
       align: 'center',
       verticalAlign: 'middle',
       offsetX: 0,
       offsetY: 0,
       style: {
-        color: '#000000',
+        color: '#807c7e',
         fontSize: '16px',
       },
     },
