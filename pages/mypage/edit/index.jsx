@@ -7,6 +7,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import { updateUser } from 'utils/apis/user'
 import useGetUser from 'utils/apis/user/useGetUser'
 import { useRouter } from 'next/router'
+import { RiArrowGoBackLine } from 'react-icons/ri'
 import * as Style from './style'
 
 const ProfileModification = () => {
@@ -64,48 +65,58 @@ const ProfileModification = () => {
       router.push('/mypage')
     }
   }
+  const handleBack = () => {
+    router.push('/mypage')
+  }
   if (!profileData) {
     return <p />
   }
   return (
-    <Style.Container onSubmit={handleSubmit}>
-      <ToastContainer />
-      <Profile
-        profilePhotoUrl={profileData?.profilePhotoUrl}
-        email={profileData?.email}>
-        <Upload onChange={onChangeProfileImage}>
-          <Style.ButtonPlus>+</Style.ButtonPlus>
-        </Upload>
-      </Profile>
-      <div style={{ width: '100%' }}>
-        <InputItem title="username">
-          <Input {...inputStyle} placeholder="username" name="username" />
-        </InputItem>
-        <InputItem title="password">
-          <Input
-            {...inputStyle}
-            placeholder="optional"
-            name="password"
-            type="password"
-          />
-        </InputItem>
-        <InputItem title="password Confirm">
-          <Input
-            {...inputStyle}
-            placeholder="optional"
-            name="passwordConfirm"
-            type="password"
-          />
-        </InputItem>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Text size={20} style={{ width: '18%' }}>
-            public
-          </Text>
-          <Toggle ref={publicRef} isToggle />
+    <div>
+      <RiArrowGoBackLine
+        size={30}
+        onClick={handleBack}
+        style={{ position: 'absolute', left: 15 }}
+      />
+      <Style.Container onSubmit={handleSubmit}>
+        <ToastContainer />
+        <Profile
+          profilePhotoUrl={profileData?.profilePhotoUrl}
+          email={profileData?.email}>
+          <Upload onChange={onChangeProfileImage}>
+            <Style.ButtonPlus>+</Style.ButtonPlus>
+          </Upload>
+        </Profile>
+        <div style={{ width: '100%' }}>
+          <InputItem title="username">
+            <Input {...inputStyle} placeholder="username" name="username" />
+          </InputItem>
+          <InputItem title="password">
+            <Input
+              {...inputStyle}
+              placeholder="optional"
+              name="password"
+              type="password"
+            />
+          </InputItem>
+          <InputItem title="password Confirm">
+            <Input
+              {...inputStyle}
+              placeholder="optional"
+              name="passwordConfirm"
+              type="password"
+            />
+          </InputItem>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Text size={20} style={{ width: '18%' }}>
+              public
+            </Text>
+            <Toggle ref={publicRef} isToggle />
+          </div>
         </div>
-      </div>
-      <Style.ButtonSubmit type="submit">submit</Style.ButtonSubmit>
-    </Style.Container>
+        <Style.ButtonSubmit type="submit">submit</Style.ButtonSubmit>
+      </Style.Container>
+    </div>
   )
 }
 export default ProfileModification
