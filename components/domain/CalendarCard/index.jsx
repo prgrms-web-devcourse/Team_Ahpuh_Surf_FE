@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs'
 import { forwardRef } from 'react'
-import Link from 'next/link'
 import * as Style from './style'
 import BackCalendar from './calendar'
 
@@ -14,7 +13,6 @@ const CalendarCard = forwardRef(
 
     return (
       <Style.CardWrapper ref={ref} className="front" width={width}>
-        <Link href={`/posts/${thisMonth}`} passHref>
           {/* <Style.CardInner> */}
           <Style.CardInner className="cardInner">
             <Style.CardFront cardColor={cardColor} isLight={isLight}>
@@ -42,7 +40,6 @@ const CalendarCard = forwardRef(
               <BackCalendar thisYear={thisYear} thisMonth={thisMonth} isLight />
             </Style.CardBack>
           </Style.CardInner>
-        </Link>
       </Style.CardWrapper>
     )
   },

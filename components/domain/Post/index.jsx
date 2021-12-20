@@ -113,7 +113,7 @@ const Post = ({
           </Style.Profile>
         </div>
       )}
-      <Link key={postId} href={`/posts/${dayjs(date).format('MM')}/${postId}`}>
+      <Link key={postId} href={`/posts/2021/12/${postId}`}>
         <div
           style={{
             display: 'flex',

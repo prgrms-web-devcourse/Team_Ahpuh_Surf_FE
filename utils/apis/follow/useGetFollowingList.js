@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import fetcher from 'utils/apis/fetcher'
 
 const useGetFollowingList = (userId) => {
-  const { data = {}, error } = useSWR(
+  const { data = [], error } = useSWR(
     userId ? `/users/${userId}/following` : null,
     fetcher,
   )
