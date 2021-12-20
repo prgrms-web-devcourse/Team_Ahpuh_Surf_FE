@@ -39,7 +39,7 @@ const SliderTheme = withStyles({
 
 const TOAST_SLIDER_ID = 'toast-slider-id'
 
-const ScoreSlider = ({ onChange }) => {
+const ScoreSlider = ({ onChange, initialScore }) => {
   const validateScore = (inputValue, newValue) => {
     const value = inputValue || newValue
     if (+value < 0 || +value > 100) {
@@ -58,7 +58,7 @@ const ScoreSlider = ({ onChange }) => {
       e.target.value = e.target.value.slice(0, e.target.maxLength)
     }
   }
-  const [score, setScore] = useState(0)
+  const [score, setScore] = useState(initialScore)
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -132,6 +132,10 @@ const ScoreSlider = ({ onChange }) => {
 
 ScoreSlider.propTypes = {
   onChange: PropTypes.func.isRequired,
+  initialScore: PropTypes.number,
+}
+ScoreSlider.defaultProps = {
+  initialScore: 0,
 }
 
 export default ScoreSlider

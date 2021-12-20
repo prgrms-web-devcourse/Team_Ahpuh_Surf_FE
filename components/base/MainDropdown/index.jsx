@@ -48,10 +48,10 @@ const MainDropdown = ({
   //   toggleList(false)
   // }
 
-  useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    onChange && onChange(selectedObj)
-  }, [selectedObj])
+  // useEffect(() => {
+  //   // eslint-disable-next-line no-unused-expressions
+  //   onChange && onChange(selectedObj)
+  // }, [selectedObj])
 
   return (
     <Style.DropdownWrapper width={width} fontSize={fontSize} {...rest}>
