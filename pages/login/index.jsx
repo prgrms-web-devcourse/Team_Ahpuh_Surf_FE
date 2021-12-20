@@ -44,7 +44,7 @@ const Login = () => {
   })
 
   useEffect(() => {
-    if (Cookies.get(LOGIN_COOKIE)) {
+    if (Cookies.get(LOGIN_COOKIE).token) {
       router.push('/')
     }
   }, [])

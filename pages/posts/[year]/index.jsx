@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
-import router from 'next/router'
+import Cookies from 'js-cookie'
+import router, {useRouter} from 'next/router'
 import Flicking from '@egjs/react-flicking'
 import { CalendarCard } from 'components/domain'
 import { Children, useEffect, useRef, useState } from 'react'
@@ -8,23 +9,13 @@ import dayjs from 'dayjs'
 import { Dropdown } from 'components/base'
 import { DUMMY_DATA_YEAR } from 'constants/DropdownData'
 import '@egjs/react-flicking/dist/flicking.css'
+import * as Style from 'styles/pageStyles/YearStyle'
+
+// TODO: api 호출해서 월별로 파싱,,,한 다음에 다시 일자로 파싱해서 달력에 동그라미 넣기,,,,,
+
 
 const today = dayjs()
 const todayMonth = today.month()
-
-export const ToggleBtn = styled.button`
-  border: none;
-  padding: 8px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  display: block;
-  margin: 0 auto;
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-`
 
 const flickingOptions = {
   align: 'center',
@@ -59,11 +50,23 @@ const flickingStyle = {
   margin: '20px 0 30px',
 }
 
-const Main = () => {
+const Main =  () => {
+  const userouter =  useRouter()
   const flicking = useRef()
+  const [selectedPath, setPath] = useState(null)
+
+  useEffect(() => {
+    if (!userouter.isReady) return
+    const { asPath } = userouter 
+    console.log(asPath)
+    // const { year } = query
+    // setYear(year)
+    setPath(asPath)
+  }, [userouter.isReady])
+  
 
   const selectHandler = (e) => {
-    router.push(`/posts/${e.index + 1}`)
+    router.push(`${selectedPath}/${e.index + 1}`)
   }
 
   const toggleHandler = () => {
@@ -82,12 +85,14 @@ const Main = () => {
     }
   }
 
+  if (!selectedPath) return <div/>
+
   return (
-    <AllWrapper>
-      <FlickingHeader>
+    <Style.AllWrapper>
+      <Style.FlickingHeader>
         <Dropdown data={DUMMY_DATA_YEAR} isObj={false} border={false} />
-        <TodayDate>{today.format('YYYY-MM-DD')}</TodayDate>
-      </FlickingHeader>
+        <Style.TodayDate>{today.format('YYYY-MM-DD')}</Style.TodayDate>
+      </Style.FlickingHeader>
       <Flicking
         onSelect={selectHandler}
         ref={flicking}
@@ -97,26 +102,9 @@ const Main = () => {
         style={{ ...flickingStyle }}>
         {CardArray}
       </Flicking>
-      <ToggleBtn onClick={toggleHandler}>Calendar</ToggleBtn>
-    </AllWrapper>
+      <Style.ToggleBtn onClick={toggleHandler}>Calendar</Style.ToggleBtn>
+    </Style.AllWrapper>
   )
 }
-
-const AllWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 50px 0;
-`
-
-const FlickingHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-`
-
-const TodayDate = styled.div`
-  font-weight: 700;
-`
 
 export default Main

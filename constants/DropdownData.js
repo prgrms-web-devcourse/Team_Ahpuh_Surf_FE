@@ -1,4 +1,4 @@
-export const DUMMY_DATA_YEAR = [2019, 2020, 2021]
+export const DUMMY_DATA_YEAR = [2021, 2020, 2019]
 
 export const DUMMY_DATA_CAT = [
   {
