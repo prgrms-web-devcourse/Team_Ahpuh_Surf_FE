@@ -156,10 +156,7 @@ const PostDetail = ({
       }
     }
   }
-  const handleBack = () => {
-    const { month } = router.query
-    Router.push(`/posts/${month}`)
-  }
+
   const handleMenu = () => {
     if (menu) {
       menuRef.current.style.display = 'none'
@@ -176,7 +173,7 @@ const PostDetail = ({
     <Style.CardContainer backgroundColor={backgroundColor}>
       <ToastContainer />
       <Style.ControlBox>
-        <RiArrowGoBackLine size={30} onClick={handleBack} />
+        <RiArrowGoBackLine size={30} onClick={() => router.back()} />
 
         <div>
           <BiDotsHorizontalRounded size={30} onClick={handleMenu} />
