@@ -1,59 +1,78 @@
 import Profile from 'components/domain/Profile'
-import { useCallback, useRef } from 'react'
-import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
 import { Input, Text, Toggle, Upload } from 'components/base'
 import InputItem from 'components/domain/InputItem'
-import { sampleData } from 'utils/SampleData/Mypage'
+import Cookies from 'js-cookie'
+import { toast, ToastContainer } from 'react-toastify'
+import { updateUser } from 'utils/apis/user'
+import useGetUser from 'utils/apis/user/useGetUser'
+import { useRouter } from 'next/router'
 import * as Style from './style'
 
 const ProfileModification = () => {
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require
   const FormData = require('form-data')
-  const result = new FormData()
   const router = useRouter()
+  const result = new FormData()
+  const [fileObject, setFileObject] = useState('')
 
-  const { email } = sampleData
   const inputStyle = {
     width: '100%',
     height: 40,
     fontSize: 20,
   }
-
-  const onChangeProfileImage = useCallback(async (file) => {
-    if (file) {
-      result.append('image', file)
-    } else {
-      console.log('no data')
-    }
+  const toastOptions = {
+    position: 'top-right',
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    progress: undefined,
+  }
+  const [uId, setUid] = useState(null)
+  useEffect(() => {
+    const { userId } = JSON.parse(Cookies.get('user'))
+    setUid(userId)
   }, [])
+  const { data: profileData } = useGetUser(uId, { revalidateOnFocus: false })
+
+  const onChangeProfileImage = (value) => {
+    setFileObject(value)
+    console.log(value)
+  }
 
   const publicRef = useRef(null)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
 
-    if (data.get('password') !== data.get('passwordConfirm')) {
-      alert(`password and password confirm don't match`)
+    if (!(data.get('password') === data.get('passwordConfirm'))) {
+      toast('비밀번호, 비밀번호 확인이 일치 하지 않습니다', toastOptions)
       return
     }
-    if (
-      data.get('username') === '' &&
-      (data.get('password') === '' || data.get('passwordConfirm') === '')
-    ) {
-      alert('check again')
-      return
+    const requestObject = {
+      userName: data.get('username') || profileData.userName,
+      password: data.get('password') || null,
+      accountPublic: publicRef.current.checked,
+      url: profileData.url,
+      aboutMe: profileData.aboutMe,
     }
-    result.append('username', data.get('username'))
-    result.append('password', data.get('password'))
-    result.append('public', publicRef.current.checked)
-
-    // TODO: 입력값들 formData로 감싼 상태임...api 통해서 새로운 값 받아오면 컴포넌트들 재랜더링 하는 방식으로 처리하기
-    // TODO: API 연동 되면 밑에 주석 해제하기
-    router.push('/mypage')
+    result.set('request', JSON.stringify(requestObject))
+    result.set('file', fileObject || new File([''], 'empty.txt'))
+    const res = await updateUser(result)
+    if (res.status === 200) {
+      router.push('/mypage')
+    }
+  }
+  if (!profileData) {
+    return <p />
   }
   return (
     <Style.Container onSubmit={handleSubmit}>
-      <Profile profilePhotoUrl={sampleData.profilePhotoUrl} email={email}>
+      <ToastContainer />
+      <Profile
+        profilePhotoUrl={profileData?.profilePhotoUrl}
+        email={profileData?.email}>
         <Upload onChange={onChangeProfileImage}>
           <Style.ButtonPlus>+</Style.ButtonPlus>
         </Upload>
@@ -82,7 +101,7 @@ const ProfileModification = () => {
           <Text size={20} style={{ width: '18%' }}>
             public
           </Text>
-          <Toggle ref={publicRef} />
+          <Toggle ref={publicRef} isToggle />
         </div>
       </div>
       <Style.ButtonSubmit type="submit">submit</Style.ButtonSubmit>

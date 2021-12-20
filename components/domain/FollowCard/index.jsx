@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { Avatar } from '../../base'
 
-const FollowCard = ({ userName, profilePhotoUrl, key }) => {
+const FollowCard = ({ userName, profilePhotoUrl, userId }) => {
   const Container = styled.div`
     display: flex;
     justify-content: left;
@@ -11,14 +11,13 @@ const FollowCard = ({ userName, profilePhotoUrl, key }) => {
     margin: 5px;
   `
   const router = useRouter()
-
-  const handleClick = (e) => {
-    const { userId } = e.target
+  const handleClick = () => {
     router.push(`/mypage/${userId}`)
   }
+
   return (
-    <Container userId={key} onClick={handleClick}>
-      <Avatar src={profilePhotoUrl || 'https://picsum.photos/200'} size={40} />
+    <Container value={userId} onClick={handleClick}>
+      <Avatar src={profilePhotoUrl || '/images/avatarDefault.png'} size={40} />
       <Text style={{ marginLeft: 10 }} size={25}>
         {userName}
       </Text>

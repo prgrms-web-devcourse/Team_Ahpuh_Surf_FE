@@ -249,7 +249,7 @@ PostDetail.propTypes = {
 PostDetail.defaultProps = {
   follow: false,
   like: false,
-  imageUrl: 'https://picsum.photos/400/400',
-  profileImage: 'https://picsum.photos/200',
+  imageUrl: 'https://via.placeholder.com/250x150/d0d0d3/a9a9a9/?text=No+Image',
+  profileImage: '/images/avatarDefault.png',
 }
 export default PostDetail

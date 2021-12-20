@@ -84,13 +84,13 @@ const Mypage = () => {
       <Profile
         profilePhotoUrl={
           profileData?.profilePhotoUrl === null
-            ? 'https://picsum.photos/200'
+            ? '/images/avatarDefault.png'
             : profileData?.profilePhotoUrl
         }
         userName={profileData?.userName}
         email={profileData?.email}
       />
-      {profileData.accountPublic && (
+      {profileData.accountPublic ? (
         <div>
           <Style.FollowContainer onClick={() => toggleFollowModal()}>
             <Style.FollowItem>
@@ -144,8 +144,24 @@ const Mypage = () => {
             />
             <HeatmapComponent data={heatmapData} height="370px" />
           </Style.Graph>
-          <ContentBox title="Images" fontSize={20} />
-          <ContentBox title="files" fontSize={20} />
+          <ContentBox title="Images" fontSize={20}>
+            <Text color="darkGray">No Data</Text>
+          </ContentBox>
+          <ContentBox title="files" fontSize={20}>
+            <Text color="darkGray">No Data</Text>
+          </ContentBox>
+        </div>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            position: 'relative',
+            justifyContent: 'center',
+            top: 50,
+          }}>
+          <Text size={20} strong block>
+            Information Closed
+          </Text>
         </div>
       )}
     </Style.Container>
