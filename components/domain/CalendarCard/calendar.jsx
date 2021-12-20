@@ -17,22 +17,25 @@ const BackCalendar = ({ thisYear, thisMonth, isLight, dayFont, monthFont }) => {
         {thisMonthInfo.format('MMM').toUpperCase()}
       </Style.Header>
       <Style.WeekHeader>
-        {weekDays.map((day) => (
-          <Style.Cell fontSize={dayFont} className="week-cell" key={day}>
+        {weekDays.map((day, idx) => (
+          <Style.Cell
+            fontSize={dayFont}
+            className="week-cell"
+            key={`${day}-${idx}`}>
             {day}
           </Style.Cell>
         ))}
       </Style.WeekHeader>
       <Style.WeekWrapper>
         {range(firstDay).map((index) => (
-          <Style.Cell key={index} fontSize={dayFont}>
+          <Style.Cell key={`${index}-firstDay`} fontSize={dayFont}>
             <Text color="#ddd">
               {thisMonthInfo.subtract(firstDay - index, 'day').date()}
             </Text>
           </Style.Cell>
         ))}
         {range(thisMonthDayCnt).map((index) => (
-          <Style.Cell fontSize={dayFont} key={index}>
+          <Style.Cell fontSize={dayFont} key={`${index}-dayCnt`}>
             {index + 1}
           </Style.Cell>
         ))}

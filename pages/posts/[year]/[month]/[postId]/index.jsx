@@ -32,9 +32,12 @@ const Detail = () => {
   const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
   const { data: user } = useGetUser(posting.userId)
   const { data: followingList } = useGetFollowingList(uId)
+
   const isUserFollow = () => {
+    // if (followingList.length === 0) return false
     const res = followingList.filter((item) => item.userId === posting.userId)
     return res[0]?.userId === posting.userId
+    
   }
   const getCategoryName = () => {
     const res = categories.filter(
