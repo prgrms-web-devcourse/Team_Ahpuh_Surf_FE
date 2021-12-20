@@ -17,7 +17,8 @@ const HeaderWrapper = styled.div`
 const Header = () => {
   const [uid, setUid] = useState(null)
   useEffect(() => {
-    const { userId } = JSON.parse(Cookies.get('user'))
+    const userId =
+      Cookies.get('user') && JSON.parse(Cookies.get('user'))?.userId
     setUid(userId)
   }, [])
   const { data: profileData } = useGetUser(uid)

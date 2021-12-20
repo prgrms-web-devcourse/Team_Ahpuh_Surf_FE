@@ -29,9 +29,14 @@ const Mypage = () => {
   const [_url, setUrl] = useState(null)
   const [_aboutMe, setAboutMe] = useState(null)
   useEffect(() => {
-    const { userId } = JSON.parse(Cookies.get('user'))
-    setUid(userId)
+    if (Cookies.get('user')) {
+      const { userId } = JSON.parse(Cookies.get('user'))
+      setUid(userId)
+    } else {
+      router.push('/login')
+    }
   }, [])
+
   const { data: profileData } = useGetUser(uId)
   const { data: heatmapData } = useGetPostsCountYear(
     new Date().getFullYear(),

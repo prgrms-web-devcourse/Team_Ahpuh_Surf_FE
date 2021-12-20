@@ -11,6 +11,7 @@ import { useState, useEffect, useRef } from 'react'
 import { checkEmpty } from 'utils/validation'
 import { useGetCategories } from 'utils/apis/category'
 import { uploadPost } from 'utils/apis/post'
+import Cookies from 'js-cookie'
 import * as Style from './style'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
@@ -77,7 +78,7 @@ const PostNew = () => {
         formData.set('file', fileObject || new File([''], 'empty.txt'))
         const postId = await uploadPost(formData)
         setTextareaValue(['', false])
-        // router.push('/posts/all')
+        router.push('/posts/all')
         // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
       }
     } catch (error) {
@@ -97,6 +98,12 @@ const PostNew = () => {
       handleSubmit()
     }
   }, [textareaValue])
+
+  useEffect(() => {
+    if (!Cookies.get('user')) {
+      router.push('/login')
+    }
+  }, [])
 
   useEffect(() => {
     if (isInitialMount.current) {

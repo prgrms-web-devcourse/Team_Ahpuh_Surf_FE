@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import Cookies from 'js-cookie'
-import router, {useRouter} from 'next/router'
+import router, { useRouter } from 'next/router'
 import Flicking from '@egjs/react-flicking'
 import { CalendarCard } from 'components/domain'
 import { Children, useEffect, useRef, useState } from 'react'
@@ -12,7 +12,6 @@ import '@egjs/react-flicking/dist/flicking.css'
 import * as Style from 'styles/pageStyles/YearStyle'
 
 // TODO: api 호출해서 월별로 파싱,,,한 다음에 다시 일자로 파싱해서 달력에 동그라미 넣기,,,,,
-
 
 const today = dayjs()
 const todayMonth = today.month()
@@ -50,20 +49,25 @@ const flickingStyle = {
   margin: '20px 0 30px',
 }
 
-const Main =  () => {
-  const userouter =  useRouter()
+const Main = () => {
+  const userouter = useRouter()
   const flicking = useRef()
   const [selectedPath, setPath] = useState(null)
 
   useEffect(() => {
     if (!userouter.isReady) return
-    const { asPath } = userouter 
+    const { asPath } = userouter
     console.log(asPath)
     // const { year } = query
     // setYear(year)
     setPath(asPath)
   }, [userouter.isReady])
-  
+
+  useEffect(() => {
+    if (!Cookies.get('user')) {
+      router.push('/login')
+    }
+  }, [])
 
   const selectHandler = (e) => {
     router.push(`${selectedPath}/${e.index + 1}`)
@@ -85,7 +89,7 @@ const Main =  () => {
     }
   }
 
-  if (!selectedPath) return <div/>
+  if (!selectedPath) return <div />
 
   return (
     <Style.AllWrapper>
