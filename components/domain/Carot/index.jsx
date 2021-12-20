@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { VscTriangleLeft, VscTriangleRight } from 'react-icons/all'
+import { VscTriangleLeft, VscTriangleRight } from 'react-icons/vsc'
 import PropTypes from 'prop-types'
 
 const Container = styled.div`

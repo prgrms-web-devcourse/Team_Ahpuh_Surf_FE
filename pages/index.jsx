@@ -126,7 +126,7 @@ const Main = () => {
           />
         </Style.ChartHeader>
         <Style.ChartWrapper>
-          <ApexChart data={dataset} />
+          <ApexChart data={dataset || []} />
         </Style.ChartWrapper>
         <Style.PostListWrapper>
           {categoryPosts?.values && categoryPosts?.values.length !== 0

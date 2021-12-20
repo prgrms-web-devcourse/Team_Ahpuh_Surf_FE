@@ -12,7 +12,7 @@ import { checkEmpty } from 'utils/validation'
 import { useGetCategories } from 'utils/apis/category'
 import { uploadPost } from 'utils/apis/post'
 import Cookies from 'js-cookie'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/newPostStyle'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,

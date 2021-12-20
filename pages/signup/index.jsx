@@ -9,7 +9,7 @@ import { signup, login } from 'utils/apis/user'
 import { useRouter } from 'next/router'
 import { setCookieTimes } from 'utils/common/setTime'
 import { LOGIN_COOKIE, SIGNUP_COOKIE } from 'constants/environment'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/signUpStyle'
 
 const Signup = () => {
   const router = useRouter()
