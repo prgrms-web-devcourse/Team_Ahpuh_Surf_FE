@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "CI= npm run build"
   publish = ".next"
 
 # The following redirect is intended for use with most SPAs that handle routing internally.
