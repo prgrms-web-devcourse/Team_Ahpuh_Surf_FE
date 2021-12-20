@@ -8,6 +8,8 @@ import SkeletonBox from 'components/domain/SkeletonBox'
 import { useGetDashboard } from 'utils/apis/category'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 import * as Style from './style'
+import { RiArrowGoBackLine } from 'react-icons/ri'
+import { useRouter } from 'next/router'
 
 const Dashboard = () => {
   const averageBoxStyle = {
@@ -17,7 +19,7 @@ const Dashboard = () => {
     alignItems: 'center',
     padding: 10,
   }
-
+  const router = useRouter()
   const [uid, setUid] = useState(null)
   useEffect(() => {
     const { userId } = JSON.parse(Cookies.get('user'))
@@ -50,12 +52,19 @@ const Dashboard = () => {
       ssr: false,
     },
   )
-
+  const handleBack = () => {
+    router.push('/mypage')
+  }
   if (!CategoryScore) {
     return <p />
   }
   return (
     <Style.Container>
+      <RiArrowGoBackLine
+        size={30}
+        onClick={handleBack}
+        style={{ position: 'absolute', left: 15, top: 70 }}
+      />
       <Style.HorizontalBox>
         <Style.Box width="70%" style={{ padding: 10 }}>
           <div>You Made</div>

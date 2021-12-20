@@ -157,6 +157,11 @@ const PostDetail = ({
     }
   }
 
+  const handleBack = () => {
+    const { year, month } = router.query
+    Router.push(`/posts/${year}/${month}`)
+  }
+
   const handleMenu = () => {
     if (menu) {
       menuRef.current.style.display = 'none'
