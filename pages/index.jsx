@@ -11,7 +11,8 @@ import {
   useGetPostsCategory,
 } from 'utils/apis/post'
 import { useGetCategories } from 'utils/apis/category'
-import {useSWRConfig} from 'swr'
+import { useSWRConfig } from 'swr'
+import { useRouter } from 'next/router'
 
 const ApexChart = dynamic(
   () => import('components/domain/AreaChartComponent'),
@@ -21,20 +22,29 @@ const ApexChart = dynamic(
 )
 
 const Main = () => {
+  const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
-  
-  const {mutate} = useSWRConfig()
+
+  const { mutate } = useSWRConfig()
 
   useEffect(() => {
-    setUser(JSON.parse(Cookies.get('user')))
+    if (Cookies.get('user')) {
+      setUser(JSON.parse(Cookies.get('user')))
+    } else {
+      router.push('/login')
+    }
   }, [])
 
   const { data: categories } = useGetCategories()
   const { data: surfData } = useGetYearScore(user.userId)
   const { data: allPosts } = useGetPostAll(user.userId, 0)
-  const { data: categoryPosts } = useGetPostsCategory(user.userId, selectedSurf.categoryId, 0)
-  
+  const { data: categoryPosts } = useGetPostsCategory(
+    user.userId,
+    selectedSurf.categoryId,
+    0,
+  )
+
   const [dataset, setDataset] = useState([])
   const [catList, setCatList] = useState([])
   const [postList, setPostList] = useState([])
@@ -52,7 +62,9 @@ const Main = () => {
 
   useEffect(() => {
     if (selectedSurf.categoryId) {
-      mutate(`/posts?userId=${user.userId}&categoryId=${selectedSurf.categoryId}&cursorId=0`)
+      mutate(
+        `/posts?userId=${user.userId}&categoryId=${selectedSurf.categoryId}&cursorId=0`,
+      )
     }
   }, [selectedSurf])
 
@@ -63,7 +75,7 @@ const Main = () => {
           categoryId: null,
           name: 'All',
         },
-        ...categories
+        ...categories,
       ])
     }
   }, [categories])
@@ -86,7 +98,6 @@ const Main = () => {
           name: result[0].categoryName,
         },
       ])
-      
     }
     // setPostList(categoryPosts?.values)
   }

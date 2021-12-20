@@ -2,12 +2,15 @@ import styled from '@emotion/styled'
 import { Children, useEffect, useState } from 'react'
 import { Post } from 'components/domain'
 import { useGetRecentPosts } from 'utils/apis/post'
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 
 const Container = styled.div`
   padding: 0 20px;
 `
 
 const Explore = () => {
+  const router = useRouter()
   const [cursorId, setCursorId] = useState(0)
   const { data: recentPosts, isLoading } = useGetRecentPosts(cursorId)
   const [target, setTarget] = useState(null)
@@ -19,6 +22,12 @@ const Explore = () => {
       setCursorId(postId)
     }
   }
+
+  useEffect(() => {
+    if (!Cookies.get('user')) {
+      router.push('/login')
+    }
+  })
 
   useEffect(() => {
     if (recentPosts && addedPosts === []) {
