@@ -157,8 +157,8 @@ const PostDetail = ({
     }
   }
   const handleBack = () => {
-    const { month } = router.query
-    Router.push(`/posts/${month}`)
+    const { year, month } = router.query
+    Router.push(`/posts/${year}/${month}`)
   }
   const handleMenu = () => {
     if (menu) {
