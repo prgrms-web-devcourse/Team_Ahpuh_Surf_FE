@@ -13,7 +13,7 @@ import useGetUser from 'utils/apis/user/useGetUser'
 import FollowModal from 'components/domain/FollowModal'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 import { useRouter } from 'next/router'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/mypageStyle'
 import { useToggle } from '../../hooks'
 import AreaChartModule from '../../components/domain/AreaChartModule'
 

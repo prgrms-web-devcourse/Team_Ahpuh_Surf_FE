@@ -15,7 +15,7 @@ import { useToggle } from 'hooks'
 import AreaChartModule from 'components/domain/AreaChartModule'
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/mypageUserIdStyle'
 
 const Mypage = () => {
   const router = useRouter()

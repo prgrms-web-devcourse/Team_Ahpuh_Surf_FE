@@ -8,7 +8,7 @@ import { updateUser } from 'utils/apis/user'
 import useGetUser from 'utils/apis/user/useGetUser'
 import { useRouter } from 'next/router'
 import { RiArrowGoBackLine } from 'react-icons/ri'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/mypageEditStyle'
 
 const ProfileModification = () => {
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require

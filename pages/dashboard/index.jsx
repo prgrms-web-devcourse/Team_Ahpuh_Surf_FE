@@ -7,9 +7,9 @@ import { DashboardCard } from 'components/domain'
 import SkeletonBox from 'components/domain/SkeletonBox'
 import { useGetDashboard } from 'utils/apis/category'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
-import * as Style from './style'
 import { RiArrowGoBackLine } from 'react-icons/ri'
 import { useRouter } from 'next/router'
+import * as Style from 'styles/pageStyles/dashboardStyle'
 
 const Dashboard = () => {
   const averageBoxStyle = {
