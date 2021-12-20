@@ -19,9 +19,13 @@ const Detail = () => {
   const [pId, setPId] = useState(null)
   const [bgColor, setBgColor] = useState(null)
   const [uId, setUid] = useState(null)
+  const [selectedMonth, setMonth] = useState(null)
+  const [selectedYear, setYear] = useState(null)
   useEffect(() => {
     if (!router.isReady) return
-    const { postId } = router.query
+    const { year, month, postId } = router.query
+    setYear(year)
+    setMonth(month)
     setPId(postId)
   }, [router.isReady])
   useEffect(() => {
@@ -37,7 +41,6 @@ const Detail = () => {
     // if (followingList.length === 0) return false
     const res = followingList.filter((item) => item.userId === posting.userId)
     return res[0]?.userId === posting.userId
-    
   }
   const getCategoryName = () => {
     const res = categories.filter(
@@ -105,6 +108,9 @@ const Detail = () => {
         postId={posting?.postId}
         createdAt={posting?.createdAt}
         favorite={posting?.favorite}
+        year={selectedYear}
+        month={selectedMonth}
+        selectedDate={posting?.selectedDate}
       />
     </Container>
   )
