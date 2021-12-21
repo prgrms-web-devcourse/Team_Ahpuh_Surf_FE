@@ -13,8 +13,24 @@ import deleteFollow from 'utils/apis/follow/deleteFollow'
 import postFollow from 'utils/apis/follow/postFollow'
 import { deleteLike, postLike } from 'utils/apis/like'
 import Link from 'next/link'
+import styled from '@emotion/styled'
 import { Avatar } from '../../base'
 import * as Style from './style'
+
+const Button = styled.button`
+  display: block;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+  padding: 7px 0 7px 0;
+  //margin-right: 5px;
+  text-align: center;
+  width: 100%;
+  &:hover {
+    background-color: lightgray;
+  }
+`
 
 const PostDetail = ({
   backgroundColor,
@@ -203,34 +219,12 @@ const PostDetail = ({
                 </a>
               </Link>
             </div>
-            <button
-              type="button"
-              onClick={handleDeletePost}
-              style={{
-                display: 'block',
-                border: 'none',
-                backgroundColor: 'white',
-                fontSize: 16,
-                marginTop: 3,
-                marginBottom: 3,
-                marginLeft: 15,
-              }}>
+            <Button type="button" onClick={handleDeletePost}>
               기록 삭제
-            </button>
-            <button
-              type="button"
-              onClick={handleFavorite}
-              style={{
-                display: 'block',
-                border: 'none',
-                backgroundColor: 'white',
-                fontSize: 16,
-                marginTop: 3,
-                marginBottom: 3,
-                marginLeft: 15,
-              }}>
+            </Button>
+            <Button type="button" onClick={handleFavorite}>
               {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
-            </button>
+            </Button>
           </Style.Menu>
         </div>
       </Style.ControlBox>
