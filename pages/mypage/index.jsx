@@ -118,7 +118,7 @@ const Mypage = () => {
       <Profile
         profilePhotoUrl={
           profileData?.profilePhotoUrl === null
-            ? 'images/avatarDefault.png'
+            ? '/images/avatarDefault.png'
             : profileData?.profilePhotoUrl
         }
         userName={profileData?.userName}
