@@ -149,6 +149,11 @@ const Main = () => {
     setYear(item)
   }
 
+  const handleClickDate = () => {
+    // todayMonth
+    flicking.current.moveTo(todayMonth)
+  }
+
   if (!selectedYear) return <div />
 
   return (
@@ -161,7 +166,7 @@ const Main = () => {
           isObj
           border={false}
         />
-        <Style.TodayDate>{today.format('YYYY-MM-DD')}</Style.TodayDate>
+        <Style.TodayDate onClick={handleClickDate}>{today.format('YYYY-MM-DD')}</Style.TodayDate>
       </Style.FlickingHeader>
       <Flicking
         onSelect={handleSelect}
