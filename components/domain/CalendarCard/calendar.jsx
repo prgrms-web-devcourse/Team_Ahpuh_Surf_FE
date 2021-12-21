@@ -6,7 +6,7 @@ import * as Style from './calendarStyle'
 
 const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-const BackCalendar = ({ thisYear, thisMonth, isLight, dayFont, monthFont }) => {
+const BackCalendar = ({ checkList, thisYear, thisMonth, isLight, dayFont, monthFont }) => {
   const thisMonthInfo = dayjs(`${thisYear}-${thisMonth}-1`)
   const thisMonthDayCnt = thisMonthInfo.daysInMonth()
   const firstDay = thisMonthInfo.day() // 일요일 = 0, 월요일 = 1
@@ -21,7 +21,7 @@ const BackCalendar = ({ thisYear, thisMonth, isLight, dayFont, monthFont }) => {
           <Style.Cell
             fontSize={dayFont}
             className="week-cell"
-            key={`${day}-${idx}`}>
+            key={idx}>
             {day}
           </Style.Cell>
         ))}
@@ -34,11 +34,16 @@ const BackCalendar = ({ thisYear, thisMonth, isLight, dayFont, monthFont }) => {
             </Text>
           </Style.Cell>
         ))}
-        {range(thisMonthDayCnt).map((index) => (
-          <Style.Cell fontSize={dayFont} key={`${index}-dayCnt`}>
-            {index + 1}
-          </Style.Cell>
-        ))}
+        {range(thisMonthDayCnt).map((index) => {
+          const processedIdx = index+1 < 10 ? `0${index+1}` : `${index+1}`
+          return (
+            <Style.Cell
+              className={checkList?.includes(processedIdx) ? 'checked' : ''}
+              fontSize={dayFont}
+              key={`${index}-dayCnt`}>
+              {index + 1}
+            </Style.Cell>
+          )})}
       </Style.WeekWrapper>
     </Style.CalendarWrapper>
   )
@@ -48,8 +53,11 @@ BackCalendar.propTypes = {
   thisYear: PropTypes.number.isRequired,
   thisMonth: PropTypes.number.isRequired,
   isLight: PropTypes.bool.isRequired,
+  checkList: PropTypes.arrayOf(PropTypes.string),
 }
 
-BackCalendar.defaultProps = {}
+BackCalendar.defaultProps = {
+  checkList: []
+}
 
 export default BackCalendar
