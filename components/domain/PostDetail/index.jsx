@@ -12,6 +12,7 @@ import postFavorite from 'utils/apis/post/postFavorite'
 import deleteFollow from 'utils/apis/follow/deleteFollow'
 import postFollow from 'utils/apis/follow/postFollow'
 import { deleteLike, postLike } from 'utils/apis/like'
+import Link from 'next/link'
 import { Avatar } from '../../base'
 import * as Style from './style'
 
@@ -32,6 +33,9 @@ const PostDetail = ({
   favorite,
   isMine,
   isFollow,
+  year,
+  month,
+  selectedDate,
 }) => {
   // eslint-disable-next-line no-unused-vars
   const [_pid, setPid] = useState(postId)
@@ -40,6 +44,7 @@ const PostDetail = ({
   const [_follow, setFollow] = useState(isFollow)
   const [menu, setMenu] = useState(false)
   const [_favorite, setFavorite] = useState(favorite)
+
   const menuRef = useRef(null)
   const avatarArgs = {
     alt: 'avatar',
@@ -94,15 +99,12 @@ const PostDetail = ({
       if (res.status === 204) {
         toast.success('delete post complete', toastOptions)
 
-        const month = createdAt.slice(5, 7)
-        Router.push(`/posts/${month}`)
+        const monthTmp = createdAt.slice(5, 7)
+        Router.push(`/posts/${monthTmp}`)
       }
     } catch (e) {
       console.log(e)
     }
-  }
-  const handleUpdatePost = () => {
-    Router.push(`/posts/month/${postId}/edit`)
   }
 
   const handleFollow = async () => {
@@ -157,11 +159,6 @@ const PostDetail = ({
     }
   }
 
-  const handleBack = () => {
-    const { year, month } = router.query
-    Router.push(`/posts/${year}/${month}`)
-  }
-
   const handleMenu = () => {
     if (menu) {
       menuRef.current.style.display = 'none'
@@ -183,7 +180,25 @@ const PostDetail = ({
         <div>
           <BiDotsHorizontalRounded size={30} onClick={handleMenu} />
           <Style.Menu ref={menuRef} style={{ display: 'none' }}>
-            <div onClick={handleUpdatePost}>기록 수정</div>
+            <div>
+              <Link
+                href={{
+                  pathname: `/posts/${year}/${month}/${postId}/edit`,
+                  query: {
+                    post: JSON.stringify({
+                      imageUrl,
+                      selectedDate,
+                      categoryName,
+                      postScore: score,
+                      content,
+                      postId,
+                      fileUrl,
+                    }),
+                  },
+                }}>
+                기록 수정
+              </Link>
+            </div>
             <div onClick={handleDeletePost}>기록 삭제</div>
             <div onClick={handleFavorite}>
               {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}

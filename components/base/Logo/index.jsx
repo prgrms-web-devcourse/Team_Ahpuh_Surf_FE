@@ -2,7 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
-import { logoNormalFill, logoItalicFill } from 'public/images/logo'
+import {
+  logoNormalFill,
+  logoItalicFill,
+  logoItalicWhite,
+} from 'public/images/logo'
 
 const LogoWrapper = styled.div`
   width: ${({ width }) => `${width}px`};
@@ -11,16 +15,23 @@ const LogoWrapper = styled.div`
   cursor: pointer;
 `
 
-const Logo = ({ width, italic }) => {
+const Logo = ({ width, italic, white, ...props }) => {
   const { width: svgWidth, height: svgHeight } = italic
     ? logoItalicFill
     : logoNormalFill
 
   return (
     <Link href="/" passHref>
-      <LogoWrapper width={width} svgWidth={svgWidth} svgHeight={svgHeight}>
+      <LogoWrapper
+        width={width}
+        svgWidth={svgWidth}
+        svgHeight={svgHeight}
+        style={{ ...props.style }}>
         <Image
-          src={italic ? logoItalicFill : logoNormalFill}
+          src={
+            italic ? logoItalicFill : white ? logoItalicWhite : logoNormalFill
+          }
+          width={width}
           layout="fill"
           alt="Surf"
         />

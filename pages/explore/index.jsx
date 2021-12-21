@@ -1,25 +1,27 @@
 import styled from '@emotion/styled'
-import { Children, useEffect, useState } from 'react'
+import { Children, useEffect, useState, useRef } from 'react'
 import { Post } from 'components/domain'
 import { useGetRecentPosts } from 'utils/apis/post'
 import { useRouter } from 'next/router'
 import Cookies from 'js-cookie'
+import { Loading } from 'components/base'
 
 const Container = styled.div`
   padding: 0 20px;
 `
 
 const Explore = () => {
+  const postId = useRef(0)
   const router = useRouter()
   const [cursorId, setCursorId] = useState(0)
-  const { data: recentPosts, isLoading } = useGetRecentPosts(cursorId)
+  const { data: recentPosts } = useGetRecentPosts(cursorId)
   const [target, setTarget] = useState(null)
   const [addedPosts, setAddedPosts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleObserver = async ([entry]) => {
     if (entry.isIntersecting) {
-      const { postId } = recentPosts[recentPosts.length - 1]
-      setCursorId(postId)
+      setCursorId(postId.current)
     }
   }
 
@@ -32,9 +34,12 @@ const Explore = () => {
   useEffect(() => {
     if (recentPosts && addedPosts === []) {
       setAddedPosts(() => [...recentPosts])
+      postId.current = recentPosts[recentPosts.length - 1].postId
     } else if (recentPosts && addedPosts !== []) {
       setAddedPosts(() => [...addedPosts, ...recentPosts])
+      postId.current = recentPosts[recentPosts.length - 1].postId
     }
+    setIsLoading(true)
   }, [recentPosts])
 
   useEffect(() => {
@@ -50,12 +55,10 @@ const Explore = () => {
     return () => observer && observer.disconnect()
   }, [target])
 
-  if (isLoading) {
-    return <div>로딩중...</div>
-  }
-
   return (
     <Container>
+      {/* <Loading loading={isLoading} setLoading={setIsLoading} size={100} /> */}
+      <Loading loading={isLoading} setLoading={setIsLoading} size={100} />
       {Children.toArray(
         addedPosts?.map((post) => (
           <Post

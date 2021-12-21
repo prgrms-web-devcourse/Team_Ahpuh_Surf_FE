@@ -1,5 +1,5 @@
 import { MainDropdown } from 'components/base'
-import { Post } from 'components/domain'
+import { Post, SkeletonBox, Welcome } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify'
@@ -25,6 +25,7 @@ const Main = () => {
   const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
+  const [showWelcome, setShowWelcome] = useState(false)
 
   const { mutate } = useSWRConfig()
 
@@ -33,6 +34,16 @@ const Main = () => {
       setUser(JSON.parse(Cookies.get('user')))
     } else {
       router.push('/login')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (sessionStorage.getItem('welcome')) {
+      setShowWelcome(true)
+      setTimeout(() => {
+        setShowWelcome(false)
+      }, 2000)
+      sessionStorage.removeItem('welcome')
     }
   }, [])
 
@@ -94,8 +105,8 @@ const Main = () => {
       )
       setDataset([
         {
-          data: result[0].postScores,
-          name: result[0].categoryName,
+          data: result[0]?.postScores,
+          name: result[0]?.categoryName,
         },
       ])
     }
@@ -114,6 +125,7 @@ const Main = () => {
 
   return (
     <>
+      {showWelcome && <Welcome />}
       <ToastContainer />
       <Style.MainWrapper>
         <Style.ChartHeader>
@@ -125,8 +137,17 @@ const Main = () => {
             border={false}
           />
         </Style.ChartHeader>
-        <Style.ChartWrapper>
-          <ApexChart data={dataset || []} />
+        <Style.ChartWrapper style={{ position: 'relative' }}>
+          <ApexChart data={dataset} />
+          <SkeletonBox
+            position="absolute"
+            style={{ top: 0, left: 0, zIndex: -999 }}
+            width="100%"
+            height="100%"
+            borderRadius={10}
+            text="Loading"
+            color="darkGray"
+          />
         </Style.ChartWrapper>
         <Style.PostListWrapper>
           {categoryPosts?.values && categoryPosts?.values.length !== 0

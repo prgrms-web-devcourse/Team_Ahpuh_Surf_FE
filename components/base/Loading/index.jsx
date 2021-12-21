@@ -27,31 +27,43 @@ const LoadingWrapper = styled.div`
   z-index: 1000;
 `
 
-const Loading = ({ loading, size, blur }) => {
+const Loading = ({ loading, setLoading, size, blur }) => {
   useEffect(() => {
     document.body.style.overflow = loading ? 'hidden' : 'unset'
   }, [loading])
 
+  useEffect(() => {
+    if (loading && setLoading) {
+      setTimeout(() => {
+        setLoading(false)
+      }, 500)
+    }
+  }, [loading])
+
   return (
-    <LoadingWrapper blur={blur}>
-      <Lottie
-        options={defaultOptions}
-        width={size}
-        height={size}
-        isClickToPauseDisabled
-      />
-    </LoadingWrapper>
+    loading && (
+      <LoadingWrapper blur={blur}>
+        <Lottie
+          options={defaultOptions}
+          width={size}
+          height={size}
+          isClickToPauseDisabled
+        />
+      </LoadingWrapper>
+    )
   )
 }
 
 Loading.propTypes = {
   loading: PropTypes.bool,
+  setLoading: PropTypes.func,
   size: PropTypes.number,
   blur: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 Loading.defaultProps = {
   loading: false,
+  setLoading: () => {},
   size: 220,
   blur: 10,
 }

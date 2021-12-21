@@ -14,8 +14,9 @@ const DatePicker = ({
   fontSize,
   delimeter,
   onChange,
+  initialValue,
 }) => {
-  const dayObj = dayjs()
+  const dayObj = initialValue ? dayjs(initialValue) : dayjs()
 
   const [date, setDate] = useState(dayObj.format('DD'))
   const [month, setMonth] = useState(dayObj.format('MM'))
