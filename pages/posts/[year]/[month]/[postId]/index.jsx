@@ -1,4 +1,3 @@
-import theme from 'styles/theme'
 import { PostDetail } from 'components/domain'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
@@ -17,7 +16,6 @@ const Detail = () => {
   `
   const router = useRouter()
   const [pId, setPId] = useState(null)
-  const [bgColor, setBgColor] = useState(null)
   const [uId, setUid] = useState(null)
   const [selectedMonth, setMonth] = useState(null)
   const [selectedYear, setYear] = useState(null)
@@ -38,44 +36,23 @@ const Detail = () => {
   const { data: followingList } = useGetFollowingList(uId)
 
   const isUserFollow = () => {
-    // if (followingList.length === 0) return false
     const res = followingList.filter((item) => item.userId === posting.userId)
     return res[0]?.userId === posting.userId
   }
-  const getCategoryName = () => {
+  const getCategoryInfo = () => {
     const res = categories.filter(
       (item) => item.categoryId === posting.categoryId,
     )
-    return res[0]?.name
+    return res[0]
   }
   const isPostMine = () => uId === posting.userId
   // eslint-disable-next-line consistent-return
-  const getColorRandomly = () => {
-    const value = Math.floor(Math.random() * 5)
-    switch (value) {
-      case 1:
-        return theme.surfColor.$blue__1
-      case 2:
-        return theme.surfColor.$blue__2
-      case 3:
-        return theme.surfColor.$blue__3
-      case 4:
-        return theme.surfColor.$blue__4
-      case 5:
-        return theme.surfColor.$blue__5
-      default:
-    }
-  }
-  useEffect(() => {
-    setBgColor(getColorRandomly())
-  }, [])
 
   if (
     !posting ||
     !categories ||
     !user ||
     !pId ||
-    !bgColor ||
     !uId ||
     !followingList
   ) {
@@ -84,9 +61,9 @@ const Detail = () => {
   return (
     <Container>
       <PostDetail
-        backgroundColor={bgColor}
+        backgroundColor={getCategoryInfo()?.colorCode}
         score={!posting.score ? '' : posting.score}
-        categoryName={getCategoryName()}
+        categoryName={getCategoryInfo()?.name}
         username={!user.userName ? '' : user.userName}
         date={posting?.selectedDate}
         isLiked={posting?.isLiked}
