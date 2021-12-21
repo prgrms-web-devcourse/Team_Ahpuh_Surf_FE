@@ -37,7 +37,7 @@ const Main = () => {
     }
   }, [])
 
-  useEffect(() => {
+  if (typeof window !== 'undefined') {
     if (sessionStorage.getItem('welcome')) {
       setShowWelcome(true)
       setTimeout(() => {
@@ -45,7 +45,7 @@ const Main = () => {
       }, 2000)
       sessionStorage.removeItem('welcome')
     }
-  }, [])
+  }
 
   const { data: categories } = useGetCategories()
   const { data: surfData } = useGetYearScore(user.userId)
@@ -172,7 +172,14 @@ const Main = () => {
                 ),
               )
             : postList?.map(
-                ({ categoryName, colorCode, content, score, selectedDate, postId }) => (
+                ({
+                  categoryName,
+                  colorCode,
+                  content,
+                  score,
+                  selectedDate,
+                  postId,
+                }) => (
                   // eslint-disable-next-line react/jsx-key
                   <Post
                     colorCode={colorCode}
