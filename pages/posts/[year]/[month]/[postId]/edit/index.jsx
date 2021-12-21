@@ -12,7 +12,7 @@ import { checkEmpty } from 'utils/validation'
 import { useGetCategories } from 'utils/apis/category'
 import { updatePost } from 'utils/apis/post'
 import Cookies from 'js-cookie'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/postEditStyle'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,
@@ -125,6 +125,9 @@ const Edit = ({ router: { query } }) => {
 
   const handleClick = (item) => {
     setSelectedCategory(item)
+  }
+  if (!_categories) {
+    return <p />
   }
   return (
     <Style.PostNewWrapper onSubmit={handleSubmit}>
