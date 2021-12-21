@@ -13,6 +13,7 @@ import deleteFollow from 'utils/apis/follow/deleteFollow'
 import postFollow from 'utils/apis/follow/postFollow'
 import { deleteLike, postLike } from 'utils/apis/like'
 import Link from 'next/link'
+import { changeToBlob } from 'utils/common/changeToBlob'
 import { Avatar } from '../../base'
 import * as Style from './style'
 
@@ -53,6 +54,10 @@ const PostDetail = ({
     src: profileImage,
   }
   const router = useRouter()
+
+  useEffect(() => {
+    console.log(fileUrl, 'fileUrl')
+  }, [fileUrl])
 
   const [uid, setUid] = useState(null)
   useEffect(() => {
@@ -280,7 +285,9 @@ const PostDetail = ({
       <div style={{ marginTop: 20, marginBottom: 20 }}>
         <span style={{ fontSize: 20 }}>🔗&nbsp;&nbsp;</span>
         {fileUrl ? (
-          <a href="download">{fileUrl}</a>
+          <a href={changeToBlob(fileUrl)} download>
+            {fileUrl}
+          </a>
         ) : (
           <span>No Attachment</span>
         )}
