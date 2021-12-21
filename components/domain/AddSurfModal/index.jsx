@@ -46,7 +46,7 @@ const AddSurfModal = ({ toggleModal, setToggleModal }) => {
         await uploadCategory(request)
         onToggleModal()
         mutate(useGetCategoriesPath)
-      } else if (categories.length === maxCategories) {
+      } else if (categories.length - 1 === maxCategories) {
         toast.error(`Maximum categories are ${maxCategories}`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 3000,
