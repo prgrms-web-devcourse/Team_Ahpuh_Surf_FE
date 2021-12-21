@@ -1,18 +1,18 @@
 import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
-import { Upload, Text, Dropdown, Textarea } from 'components/base'
+import { Upload, Text, Textarea, MainDropdown } from 'components/base'
 import { DatePicker } from 'components/domain'
 import Image from 'next/image'
 import UploadImage from 'public/images/upload.svg'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
+import { withRouter, useRouter } from 'next/router'
 import theme from 'styles/theme'
 import { useState, useEffect, useRef } from 'react'
 import { checkEmpty } from 'utils/validation'
 import { useGetCategories } from 'utils/apis/category'
-import { uploadPost } from 'utils/apis/post'
+import { updatePost } from 'utils/apis/post'
 import Cookies from 'js-cookie'
-import * as Style from 'styles/pageStyles/newPostStyle'
+import * as Style from './style'
 
 const Slider = dynamic(() => import('components/domain/ScoreSlider'), {
   ssr: false,
@@ -25,7 +25,9 @@ const AddSurfModalSSR = dynamic(
   },
 )
 
-const PostNew = () => {
+const Edit = ({ router: { query } }) => {
+  const postData = JSON.parse(query.post)
+  console.log(postData)
   const router = useRouter()
   const isInitialMount = useRef(true)
   const { data: categories, isLoading: categoriesLoading } = useGetCategories({
@@ -33,12 +35,12 @@ const PostNew = () => {
   })
   const [fileObject, setFileObject] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [clickedDate, setClikedDate] = useState(dayjs().format('YYYY-MM-DD'))
+  const [clickedDate, setClickedDate] = useState(dayjs().format('YYYY-MM-DD'))
   const [score, setScore] = useState(0)
-  const [textareaValue, setTextareaValue] = useState([])
+  const [textareaValue, setTextareaValue] = useState([postData.content, false])
   const [toggleModal, setToggleModal] = useState(false)
   const [isLoading, setLoading] = useState(false)
-
+  const [catList, setCatList] = useState([])
   const handleChange = (value) => {
     setFileObject(value)
   }
@@ -67,7 +69,6 @@ const PostNew = () => {
         await setLoading(true)
         const formData = new FormData()
         const requestObject = {
-          // categoryId: 1,
           categoryId: selectedCategory.categoryId,
           selectedDate: clickedDate,
           content: textareaValue[0],
@@ -76,9 +77,11 @@ const PostNew = () => {
 
         formData.set('request', JSON.stringify(requestObject))
         formData.set('file', fileObject || new File([''], 'empty.txt'))
-        const postId = await uploadPost(formData)
+        const res = await updatePost(postData.postId, formData)
         setTextareaValue(['', false])
-        router.push('/posts/all')
+        if (res.status === 200) {
+          router.back()
+        }
         // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
       }
     } catch (error) {
@@ -86,7 +89,11 @@ const PostNew = () => {
     }
     setLoading(false)
   }
-
+  const { data: _categories } = useGetCategories()
+  useEffect(() => {
+    const arr = _categories.filter((i) => i.name === postData.categoryName)
+    setSelectedCategory(arr[0])
+  }, [])
   useEffect(() => {
     if (selectedCategory.name === '+ New') {
       setToggleModal(true)
@@ -112,7 +119,15 @@ const PostNew = () => {
       handleSubmit()
     }
   }, [])
+  useEffect(() => {
+    if (categories && categories.length !== 0) {
+      setCatList([...categories])
+    }
+  }, [categories])
 
+  const handleClick = (item) => {
+    setSelectedCategory(item)
+  }
   return (
     <Style.PostNewWrapper onSubmit={handleSubmit}>
       <Style.UpperSide>
@@ -135,7 +150,7 @@ const PostNew = () => {
                     height={30}
                   />
                   <Text strong color="inherit" style={{ marginTop: '10px' }}>
-                    click of drag file
+                    click or drag file
                   </Text>
                 </Style.IconWrapper>
               )}
@@ -143,19 +158,22 @@ const PostNew = () => {
           )}
         </Upload>
         <Style.OptionWrapper>
-          <Dropdown
-            data={categories}
-            height={45}
+          <MainDropdown
             isObj
-            onChange={setSelectedCategory}
-            isNew
+            data={catList}
+            selected={selectedCategory}
+            handleClick={handleClick}
+            height={45}
           />
-          <DatePicker onChange={setClikedDate} />
+          <DatePicker
+            onChange={setClickedDate}
+            initialValue={postData.selectedDate}
+          />
         </Style.OptionWrapper>
-        <Slider onChange={setScore} />
+        <Slider onChange={setScore} initialScore={postData.postScore} />
       </Style.UpperSide>
       <Style.BottomSide>
-        <Textarea onChange={setTextareaValue} />
+        <Textarea value={textareaValue} onChange={setTextareaValue} />
         <Style.Button disabled={isLoading}>
           {isLoading ? 'Loading' : 'submit'}
         </Style.Button>
@@ -170,4 +188,4 @@ const PostNew = () => {
   )
 }
 
-export default PostNew
+export default withRouter(Edit)

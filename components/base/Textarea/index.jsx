@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
+import { useEffect, useRef } from 'react'
 
 const TextareaInput = styled.textarea`
   flex: 1;
@@ -16,7 +17,19 @@ const TextareaInput = styled.textarea`
   resize: none;
 `
 
-const Textarea = ({ width, height, fontSize, placeholder, onChange }) => {
+const Textarea = ({
+  width,
+  height,
+  fontSize,
+  placeholder,
+  onChange,
+  value,
+}) => {
+  // console.log(value)
+  const inputRef = useRef(null)
+  useEffect(() => {
+    inputRef.current.value = value
+  }, [])
   const handleWrite = (e) => {
     if (e.target.value.trim() === '') return
     // TODO: onChange([바꿀 state, submit 여부])
@@ -34,6 +47,7 @@ const Textarea = ({ width, height, fontSize, placeholder, onChange }) => {
       width={width}
       height={height}
       fontSize={fontSize}
+      ref={inputRef}
     />
   )
 }
@@ -43,6 +57,7 @@ Textarea.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fontSize: PropTypes.number,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 
@@ -51,6 +66,7 @@ Textarea.defaultProps = {
   width: '100%',
   height: 'auto',
   fontSize: 14,
+  value: '',
 }
 
 export default Textarea

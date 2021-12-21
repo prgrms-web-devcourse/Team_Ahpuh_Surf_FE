@@ -1,7 +1,7 @@
 import { toast, ToastContainer } from 'react-toastify'
 import { Text, Modal, Input } from 'components/base'
 import { useCallback, useRef, useState } from 'react'
-import * as Form from 'pages/signup/style'
+import * as Form from 'styles/pageStyles/signUpStyle'
 import dynamic from 'next/dynamic'
 import { useToggle } from 'hooks'
 import { shuffle } from 'utils/common/shuffle'

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Lottie from 'react-lottie'
 import animationData from 'public/lottie/surfing-poodle.json'
-import * as Style from './style'
+import * as Style from 'styles/pageStyles/404style'
 
 const Custom404 = () => {
   const defaultOptions = {

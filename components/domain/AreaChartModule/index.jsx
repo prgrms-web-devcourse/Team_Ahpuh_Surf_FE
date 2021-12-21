@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import * as Style from 'styles/pageStyles/mypageStyle'
 import { useGetCategories } from '../../../utils/apis/category'
 import { useGetPostAll, useGetYearScore } from '../../../utils/apis/post'
 import { MainDropdown, Text } from '../../base'
-import * as Style from '../../../pages/mypage/style'
 
 const AreaChartModule = ({ userId, isMyPage }) => {
   const AreaChartComponent = dynamic(
