@@ -78,7 +78,7 @@ const AreaChartComponent = ({ height, data, isMyPage }) => {
     handleRightCarot,
   }
   const handleSettingButton = () => {
-    router.push('/categorymanange')
+    router.push('/categorymanage')
   }
 
   useEffect(() => {
