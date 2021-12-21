@@ -12,12 +12,35 @@
 
 # _**Surf.**_
 
-## 🏄‍♂️&nbsp;&nbsp;About _**Surf.**_
+## 🏄‍♂️&nbsp;&nbsp;내 인생 성장곡선 사이트&nbsp;&nbsp;_**Surf.**_
 
 <!-- 가운데에 멍멍이 로고 넣고 밑에 프로젝트 소개 -->
-<div style="width: fit-content; margin: 0 auto;">
-<img alt="surf_logo" src="https://user-images.githubusercontent.com/59479363/146962132-a50a64af-d7ce-4800-95e3-be507c19be31.png" width="300px" />
-</div>
+<p align="center">
+	<img width="250px" alt="surf_logo" src="https://user-images.githubusercontent.com/59479363/146974909-41e439c3-f8d6-465f-95fb-57d528258670.png">
+</p>
+<br>
+<p align="center">
+인생은 surfing 을 타는 것처럼 즐겁지만,
+	</p>
+<p align="center">
+suffering 또한 피할 수 없다.
+	</p>
+<p align="center">
+피할 수 없다면 기록하고 공유하자! Surf 를 통해 🌊🏄‍♀️🏄🏄🏻‍♂️
+	</p>
+
+### **✏️ 기획 배경 및 동기**
+
+열심히 달려온 나 자신! 열심히는 하고 있는데 내가 얼마나 발전했는지 기록하는 공간은 없을까? <br>
+그냥 일기는 메모장에라도 적을 수 있고, 블로그는 이미 무수히 존재하고, 색다른 방법으로 동기부여 받고 기록하고 공유하는 그런 공간이 필요해! 🙆‍♀️
+
+- 성장곡선으로 한눈에 내 인생을 돌아보기
+- 남들의 성장곡선을 보며 동기부여도 받기
+- 곡선의 특정 구간마다 기록도 남기기
+- 곡선이 아닌 기록들만 모아서 보기
+- 필요하다면 포트폴리오로도 사용 가능하기
+
+
 <br>
 <br>
 
@@ -173,5 +196,6 @@
 │   ├── apis
 │   ├── common            		- 자주 쓰는 함수 모음
 │   └── validation              - 유효성 검사 함수 모음
+├── .env		- 환경 변수 
 └── yarn.lock
 ```
