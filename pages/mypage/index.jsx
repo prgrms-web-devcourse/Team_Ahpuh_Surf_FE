@@ -14,9 +14,30 @@ import FollowModal from 'components/domain/FollowModal'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 import { useRouter } from 'next/router'
 import * as Style from 'styles/pageStyles/mypageStyle'
+import styled from '@emotion/styled'
+import { toast, ToastContainer } from 'react-toastify'
 import { useToggle } from '../../hooks'
 import AreaChartModule from '../../components/domain/AreaChartModule'
 
+const LogoutText = styled.div`
+  position: absolute;
+  font-size: 20px;
+  font-weight: bold;
+  left: 50%;
+  transform: translate(-50%);
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+const toastOptions = {
+  position: 'top-right',
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  progress: undefined,
+}
 const Mypage = () => {
   const HeatmapComponent = dynamic(
     import('components/domain/HeatmapChartComponent'),
@@ -54,11 +75,20 @@ const Mypage = () => {
     console.log('click notice')
   }
 
+  const handleLogout = () => {
+    Cookies.remove('user')
+    toast.success('Logout .. move to login page', toastOptions)
+    setTimeout(() => {
+      router.push('/login')
+    }, 3000)
+  }
+
   if (!profileData || !uId) {
     return <p />
   }
   return (
     <Style.Container>
+      <ToastContainer />
       <FollowModal
         userId={uId}
         toggleTabs={toggleTabs}
@@ -150,6 +180,7 @@ const Mypage = () => {
       <ContentBox title="files" fontSize={20}>
         <Text color="darkGray">No Data</Text>
       </ContentBox>
+      <LogoutText onClick={handleLogout}>Logout</LogoutText>
     </Style.Container>
   )
 }
