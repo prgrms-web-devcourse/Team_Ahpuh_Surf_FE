@@ -110,7 +110,6 @@ const Main = () => {
         },
       ])
     }
-    // setPostList(categoryPosts?.values)
   }
 
   // 회원가입 성공 후 toast
@@ -152,7 +151,14 @@ const Main = () => {
         <Style.PostListWrapper>
           {categoryPosts?.values && categoryPosts?.values.length !== 0
             ? categoryPosts?.values.map(
-                ({ categoryName, colorCode, content, score, selectedDate }) => (
+                ({
+                  categoryName,
+                  colorCode,
+                  content,
+                  score,
+                  selectedDate,
+                  postId,
+                }) => (
                   // eslint-disable-next-line react/jsx-key
                   <Post
                     colorCode={colorCode}
@@ -161,11 +167,12 @@ const Main = () => {
                     categoryName={categoryName}
                     score={score}
                     content={content}
+                    postId={postId}
                   />
                 ),
               )
             : postList?.map(
-                ({ categoryName, colorCode, content, score, selectedDate }) => (
+                ({ categoryName, colorCode, content, score, selectedDate, postId }) => (
                   // eslint-disable-next-line react/jsx-key
                   <Post
                     colorCode={colorCode}
@@ -174,6 +181,7 @@ const Main = () => {
                     categoryName={categoryName}
                     score={score}
                     content={content}
+                    postId={postId}
                   />
                 ),
               )}
