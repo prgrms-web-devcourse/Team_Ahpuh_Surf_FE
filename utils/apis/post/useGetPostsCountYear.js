@@ -5,7 +5,7 @@ const useGetPostsCountYear = (year, userId, options) => {
   const { data, error } = useSWR(
     year && userId
       ? `/posts/calendarGraph?year=${year}&userId=${userId}`
-      : null,
+      : '',
     fetcher,
     options,
   )

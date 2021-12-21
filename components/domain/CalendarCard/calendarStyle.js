@@ -63,11 +63,24 @@ export const Cell = styled.button`
   border: none;
   transition: background-color 200ms;
   color: inherit;
+  position: relative;
 
   &:not(.week-cell):hover {
     cursor: pointer;
     &:not(.today) {
       background-color: #eee;
+    }
+  }
+
+  &[class~='checked'] {
+    &:before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: orange;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0px;
     }
   }
 
