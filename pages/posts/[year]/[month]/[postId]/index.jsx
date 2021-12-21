@@ -94,6 +94,7 @@ const Detail = () => {
         content={posting?.content}
         isFollow={isUserFollow()}
         isMine={isPostMine()}
+        fileUrl={posting?.fileUrl}
         profileImage={
           user.profilePhotoUrl
             ? user.profilePhotoUrl
