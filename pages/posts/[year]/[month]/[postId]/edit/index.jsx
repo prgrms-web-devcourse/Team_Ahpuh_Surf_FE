@@ -26,7 +26,12 @@ const AddSurfModalSSR = dynamic(
 )
 
 const Edit = ({ router: { query } }) => {
-  const postData = JSON.parse(query.post)
+  const [postData, setPostData] = useState({})
+  useEffect(() => {
+    const _postData = JSON.parse(query?.post)
+    setPostData(_postData)
+  }, [query])
+  // const postData = JSON.parse(query?.post)
   const router = useRouter()
   const isInitialMount = useRef(true)
   const { data: categories, isLoading: categoriesLoading } = useGetCategories({
