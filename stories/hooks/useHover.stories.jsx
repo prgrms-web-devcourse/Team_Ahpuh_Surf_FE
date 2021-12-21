@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import useHover from '@hooks/useHover'
+import { useHover } from 'hooks'
 
 export default {
   title: 'Hook/useHover',

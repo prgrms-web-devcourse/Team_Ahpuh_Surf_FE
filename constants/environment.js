@@ -1,0 +1,6 @@
+const API_END_POINT = process.env.NEXT_PUBLIC_API_END_POINT
+
+const LOGIN_COOKIE = 'user'
+const SIGNUP_COOKIE = 'isSignup'
+
+export { API_END_POINT, LOGIN_COOKIE, SIGNUP_COOKIE }
