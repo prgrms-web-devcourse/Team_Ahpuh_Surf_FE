@@ -279,7 +279,7 @@ const PostDetail = ({
       <div style={{ marginTop: 20, marginBottom: 20 }}>
         <span style={{ fontSize: 20 }}>🔗&nbsp;&nbsp;</span>
         {fileUrl ? (
-          <a href={changeToBlob(fileUrl)} download>
+          <a href={fileUrl} download style={{ wordBreak: 'break-all' }}>
             {fileUrl}
           </a>
         ) : (
