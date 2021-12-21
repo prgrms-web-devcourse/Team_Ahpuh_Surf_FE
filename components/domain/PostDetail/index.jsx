@@ -36,6 +36,7 @@ const PostDetail = ({
   year,
   month,
   selectedDate,
+  fileUrl,
 }) => {
   // eslint-disable-next-line no-unused-vars
   const [_pid, setPid] = useState(postId)
@@ -183,7 +184,7 @@ const PostDetail = ({
             <div>
               <Link
                 href={{
-                  pathname: `/posts/${year}/${month}/${postId}/edit`,
+                  pathname: `/posts/[year]/[month]/[postId]/edit`,
                   query: {
                     post: JSON.stringify({
                       imageUrl,
@@ -195,14 +196,41 @@ const PostDetail = ({
                       fileUrl,
                     }),
                   },
-                }}>
-                기록 수정
+                }}
+                as={`/posts/${year}/${month}/${postId}/edit`}>
+                <a style={{ textDecoration: 'none', textAlign: 'center' }}>
+                  기록 수정
+                </a>
               </Link>
             </div>
-            <div onClick={handleDeletePost}>기록 삭제</div>
-            <div onClick={handleFavorite}>
+            <button
+              type="button"
+              onClick={handleDeletePost}
+              style={{
+                display: 'block',
+                border: 'none',
+                backgroundColor: 'white',
+                fontSize: 16,
+                marginTop: 3,
+                marginBottom: 3,
+                marginLeft: 15,
+              }}>
+              기록 삭제
+            </button>
+            <button
+              type="button"
+              onClick={handleFavorite}
+              style={{
+                display: 'block',
+                border: 'none',
+                backgroundColor: 'white',
+                fontSize: 16,
+                marginTop: 3,
+                marginBottom: 3,
+                marginLeft: 15,
+              }}>
               {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
-            </div>
+            </button>
           </Style.Menu>
         </div>
       </Style.ControlBox>
@@ -249,6 +277,14 @@ const PostDetail = ({
         <Style.Title>score: {score}</Style.Title>
         <p style={{ marginTop: 10, fontSize: 17 }}>{content}</p>
       </Style.Main>
+      <div style={{ marginTop: 20, marginBottom: 20 }}>
+        <span style={{ fontSize: 20 }}>🔗&nbsp;&nbsp;</span>
+        {fileUrl ? (
+          <a href="download">{fileUrl}</a>
+        ) : (
+          <span>No Attachment</span>
+        )}
+      </div>
     </Style.CardContainer>
   )
 }
