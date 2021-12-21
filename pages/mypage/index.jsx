@@ -32,7 +32,7 @@ const LogoutText = styled.div`
 `
 const toastOptions = {
   position: 'top-right',
-  autoClose: 3000,
+  autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
@@ -80,7 +80,7 @@ const Mypage = () => {
     toast.success('Logout .. move to login page', toastOptions)
     setTimeout(() => {
       router.push('/login')
-    }, 3000)
+    }, 2000)
   }
 
   if (!profileData || !uId) {
