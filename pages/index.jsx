@@ -1,5 +1,5 @@
 import { MainDropdown } from 'components/base'
-import { Post, SkeletonBox } from 'components/domain'
+import { Post, SkeletonBox, Welcome } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
 import { ToastContainer, toast } from 'react-toastify'
@@ -25,6 +25,7 @@ const Main = () => {
   const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
+  const [showWelcome, setShowWelcome] = useState(false)
 
   const { mutate } = useSWRConfig()
 
@@ -33,6 +34,16 @@ const Main = () => {
       setUser(JSON.parse(Cookies.get('user')))
     } else {
       router.push('/login')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (sessionStorage.getItem('welcome')) {
+      setShowWelcome(true)
+      setTimeout(() => {
+        setShowWelcome(false)
+      }, 2000)
+      sessionStorage.removeItem('welcome')
     }
   }, [])
 
@@ -114,6 +125,7 @@ const Main = () => {
 
   return (
     <>
+      {showWelcome && <Welcome />}
       <ToastContainer />
       <Style.MainWrapper>
         <Style.ChartHeader>
