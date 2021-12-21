@@ -94,16 +94,16 @@ const Detail = () => {
         content={posting?.content}
         isFollow={isUserFollow()}
         isMine={isPostMine()}
-        fileUrl={posting?.fileUrl}
         profileImage={
           user.profilePhotoUrl
             ? user.profilePhotoUrl
             : '/images/avatarDefault.png'
         }
         authorId={posting?.userId}
+        fileUrl={posting?.fileUrl}
         imageUrl={
-          posting.fileUrl
-            ? posting.fileUrl
+          posting?.imageUrl
+            ? posting.imageUrl
             : 'https://via.placeholder.com/250x150/d0d0d3/a9a9a9/?text=No+Image'
         }
         postId={posting?.postId}

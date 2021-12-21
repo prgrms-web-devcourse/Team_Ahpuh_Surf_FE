@@ -24,7 +24,6 @@ const Button = styled.button`
   background-color: white;
   font-size: 16px;
   padding: 7px 0 7px 0;
-  //margin-right: 5px;
   text-align: center;
   width: 100%;
   &:hover {
@@ -36,7 +35,6 @@ const PostDetail = ({
   backgroundColor,
   categoryName,
   score,
-  imageUrl,
   authorId,
   isLiked,
   likeId,
@@ -52,6 +50,7 @@ const PostDetail = ({
   year,
   month,
   selectedDate,
+  imageUrl,
   fileUrl,
 }) => {
   // eslint-disable-next-line no-unused-vars
@@ -261,7 +260,7 @@ const PostDetail = ({
         </Style.ProfileRight>
       </Style.Profile>
       <Image
-        src={imageUrl || 'https://picsum.photos/200'}
+        src={imageUrl}
         alt="post image"
         width="100%"
         height="50%"
