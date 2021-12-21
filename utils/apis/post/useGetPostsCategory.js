@@ -3,7 +3,7 @@ import fetcher from 'utils/apis/fetcher'
 
 const useGetPostsCategory = (userId, categoryId, cursorId) => {
   const { data, error } = useSWR(
-    userId && categoryId && cursorId
+    categoryId
       ? `/posts?userId=${userId}&categoryId=${categoryId}&cursorId=${cursorId}`
       : null,
     fetcher,
