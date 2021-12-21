@@ -21,7 +21,6 @@ const Logo = ({ width, italic }) => {
       <LogoWrapper width={width} svgWidth={svgWidth} svgHeight={svgHeight}>
         <Image
           src={italic ? logoItalicFill : logoNormalFill}
-          width={width}
           layout="fill"
           alt="Surf"
         />
