@@ -1,4 +1,3 @@
-import { Posts } from 'utils/SampleData/Posts'
 import { Post } from 'components/domain'
 import styled from '@emotion/styled'
 import { BsSearch } from 'react-icons/bs'
@@ -34,9 +33,7 @@ const SearchBox = styled.div`
 const Month = () => {
   const [selectedMonth, setMonth] = useState(null)
   const [selectedYear, setYear] = useState(null)
-  // const [postList, setPostList] = useState(null)
 
-  // TODO: query로부터 받은 [month] 바탕으로 api에 쿼리 날린뒤 해당 데이터 바탕으로 랜더링 해야 한다
   const router = useRouter()
 
   useEffect(() => {
@@ -52,9 +49,6 @@ const Month = () => {
   const handleSearch = () => {
     if (inputRef.current.value) {
       inputRef.current.value = ''
-
-      // TODO: api 요청으로 변경하기
-      console.log(value)
     } else {
       console.log('empty')
     }

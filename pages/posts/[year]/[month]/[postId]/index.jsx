@@ -31,7 +31,7 @@ const Detail = () => {
     setUid(userId)
   }, [])
   const { data: posting } = useGetPost(pId)
-  const { data: categories } = useGetCategories() // categoryName 찾기 위해 사용
+  const { data: categories } = useGetCategories()
   const { data: user } = useGetUser(posting.userId)
   const { data: followingList } = useGetFollowingList(uId)
 
@@ -48,14 +48,7 @@ const Detail = () => {
   const isPostMine = () => uId === posting.userId
   // eslint-disable-next-line consistent-return
 
-  if (
-    !posting ||
-    !categories ||
-    !user ||
-    !pId ||
-    !uId ||
-    !followingList
-  ) {
+  if (!posting || !categories || !user || !pId || !uId || !followingList) {
     return <p />
   }
   return (

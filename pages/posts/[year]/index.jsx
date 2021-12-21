@@ -10,8 +10,6 @@ import '@egjs/react-flicking/dist/flicking.css'
 import * as Style from 'styles/pageStyles/YearStyle'
 import useGetPostsCountYear from 'utils/apis/post/useGetPostsCountYear'
 
-// TODO: api 호출해서 월별로 파싱,,,한 다음에 다시 일자로 파싱해서 달력에 동그라미 넣기,,,,,
-
 const today = dayjs()
 const todayMonth = today.month()
 const todayYear = today.year()
@@ -28,21 +26,6 @@ const YEAR_LIST = [
   },
 ]
 
-const DUMMY = [
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-  ['02', '09', '10', '12', '16', '21', '27'],
-]
-
 const flickingOptions = {
   align: 'center',
   defaultIndex: todayMonth,
@@ -55,23 +38,6 @@ const flickingOptions = {
   inputType: ['touch', 'mouse'],
 }
 
-const CardArray = Children.toArray(
-  range(12).map((month) => (
-    <CalendarCard
-      index={month}
-      key={month}
-      width={300}
-      fontSize={60}
-      monthFont={12}
-      dayFont={12}
-      isLight={false}
-      dayCnt={28}
-      thisYear={2021}
-      thisMonth={month + 1}
-    />
-  )),
-)
-
 const flickingStyle = {
   margin: '20px 0 30px',
 }
@@ -80,7 +46,7 @@ const Main = () => {
   const router = useRouter()
   const flicking = useRef()
   const [selectedYear, setYear] = useState({
-    name: todayYear 
+    name: todayYear,
   })
   const [uid, setUid] = useState()
   const [postCnt, setPostCnt] = useState([])
@@ -92,16 +58,12 @@ const Main = () => {
     }
   }, [data])
 
-  const monthlyCnt = (month) => postCnt?.filter(({date}) => date.slice(5, 7) == month)
-    .map(({date}) => date.slice(8, 10))
+  const monthlyCnt = (month) =>
+    postCnt
+      ?.filter(({ date }) => date.slice(5, 7) == month)
+      .map(({ date }) => date.slice(8, 10))
 
-  const monthlyCntList = range(12).map(month => monthlyCnt(month + 1))
-
-  // TODO : useEffect 연쇄 현상(?) 해결
-  // router.query로부터 맨 처음에 year를 가져오면 undefined가 떠서
-  // useEffect에 넣어놨고, 이 때문에 제대로 된 값이 들어올 때까지 한 4번 정도 호출됨,,,
-  // 근데 그러면 setYear도 그만큼 호출이 돼서 selectedYear의 값도 같은 횟수만큼 변경되는데
-  // 또 그에 따라 mutate가 실행돼서 api 호출이 여러번 되는 현상 발생
+  const monthlyCntList = range(12).map((month) => monthlyCnt(month + 1))
 
   useEffect(() => {
     router.push(`/posts/${selectedYear.name}`)
@@ -111,16 +73,15 @@ const Main = () => {
     if (!router.isReady) return
     const { year } = router.query
     setYear({
-      name: year
+      name: year,
     })
   }, [router.isReady])
 
   useEffect(() => {
     if (!Cookies.get('user')) {
       router.push('/login')
-    }
-    else {
-      const {userId} = JSON.parse(Cookies.get('user'))
+    } else {
+      const { userId } = JSON.parse(Cookies.get('user'))
       setUid(userId)
     }
   }, [])
@@ -166,7 +127,9 @@ const Main = () => {
           isObj
           border={false}
         />
-        <Style.TodayDate onClick={handleClickDate}>{today.format('YYYY-MM-DD')}</Style.TodayDate>
+        <Style.TodayDate onClick={handleClickDate}>
+          {today.format('YYYY-MM-DD')}
+        </Style.TodayDate>
       </Style.FlickingHeader>
       <Flicking
         onSelect={handleSelect}
@@ -179,7 +142,6 @@ const Main = () => {
           range(12).map((month) => (
             <CalendarCard
               checkList={monthlyCntList[month]}
-              // checkList={DUMMY[month]}
               index={month}
               key={month}
               width={300}
@@ -188,7 +150,6 @@ const Main = () => {
               dayFont={12}
               isLight={false}
               dayCnt={monthlyCntList[month]?.length || 0}
-              // dayCnt={DUMMY[month].length}
               thisYear={2021}
               thisMonth={month + 1}
             />

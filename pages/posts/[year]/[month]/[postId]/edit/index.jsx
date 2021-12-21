@@ -27,7 +27,6 @@ const AddSurfModalSSR = dynamic(
 
 const Edit = ({ router: { query } }) => {
   const postData = JSON.parse(query.post)
-  console.log(postData)
   const router = useRouter()
   const isInitialMount = useRef(true)
   const { data: categories, isLoading: categoriesLoading } = useGetCategories({
@@ -82,7 +81,6 @@ const Edit = ({ router: { query } }) => {
         if (res.status === 200) {
           router.back()
         }
-        // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
       }
     } catch (error) {
       console.error(error.message)
