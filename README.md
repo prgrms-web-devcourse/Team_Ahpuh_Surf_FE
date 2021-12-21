@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:5b8db2,100:81b4cf&height=300&section=header&text=Surf.&fontColor=fff&fontSize=70&fontAlignY=40&desc=my%20own%20growth%20curve%20service&descAlignY=60" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:5b8dd2,50:81b4ef,100:81b4cf&height=300&section=header&text=Surf.&fontColor=fff&fontSize=70&fontAlignY=40&desc=my%20own%20growth%20curve%20service&descAlignY=60" width="100%"/>
 
 <div style="display: flex; align-items: center"> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
@@ -7,10 +7,23 @@
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 
-<tr>
+<br>
+<br>
 
-## TEAM 착한 김, 나쁜 김, 이상한 김
-<table style="">
+# _**Surf.**_
+
+## 🏄‍♂️&nbsp;&nbsp;About _**Surf.**_
+
+<!-- 가운데에 멍멍이 로고 넣고 밑에 프로젝트 소개 -->
+<div style="width: fit-content; margin: 0 auto;">
+<img alt="surf_logo" src="https://user-images.githubusercontent.com/59479363/146962132-a50a64af-d7ce-4800-95e3-be507c19be31.png" width="300px" />
+</div>
+<br>
+<br>
+
+## 👥&nbsp;&nbsp;TEAM 착한 **김**, 나쁜 **김**, 이상한 **김**
+
+<table style="max-width: 900px; width: 100%; margin: 0 auto;">
 	<tr>
 	  <td><img src="https://user-images.githubusercontent.com/59479363/146962132-a50a64af-d7ce-4800-95e3-be507c19be31.png" width="300px" /></td>
 	  <td><img src="https://user-images.githubusercontent.com/59479363/146964394-f96d1991-ecfe-4689-b273-99c6342c19cb.png" width="300px" /></td>
@@ -22,38 +35,143 @@
     <th><a href="https://github.com/Jeong-jeong">김지영 😜</a></th>
 	</tr>
 </table>
-  
-## STRUCTURE
+
+<br>
+<br>
+
+## 🎉&nbsp;&nbsp;실행 스크립트
+
+```shell
+> yarn install
+
+> yarn build
+> yarn dev
 ```
-├── README.md                 - 리드미 파일
-│
-├── app/                      - 어플리케이션 폴더
-│   ├── __init__.py           - 서버 파이썬 모듈 초기화
-│   ├── models.py             - 서버 모델 정의
-│   │── views.py              - 서버 뷰 함수(API 엔드포인트) 정의
-│   │ 
-│   ├── src/                  - 클라이언트 사이드 폴더
-│   │   ├── actions.js        - 액션 정의
-│   │   ├── components/       - 리액트 컴포넌트
-│   │   ├── containers/       - 리액트 컨테이너
-│   │   ├── main.js           - 메인 자바스크립트 (webpack 엔트리 포인트)
-│   │   ├── main.scss         - 메인 스타일시트
-│   │   └── reducers.js       - 리듀서 정의
-│   │   └── test/             - 클라이언트 테스트 파일 폴더
-│   │ 
-│   ├── static/               - 스태틱 폴더 (빌드 결과물)
-│   │   ├── _bundle.js        - webpack을 통해 빌드된 서빙용 자바스크립트
-│   │   └── fonts/            - 부트스트랩이 사용하는 폰트들
-│   │ 
-│   └── templates/            - 템플릿 폴더
-│       └── main.html         - React container를 포함하는 메인 템플릿
-│ 
-├── config.py                 - flask 앱 설정 파일
-├── dramatic.db               - SQLite3 데이터베이스
-├── package.json              - npm 설정
-├── requirements.txt          - pip 디펜던시 리스트
-├── run.py                    - 서버 시작 스크립트
-├── run_with_dummy.py         - 더미 데이터가 있는 서버 시작 스크립트
-├── storeSpec.js              - store 스펙 정의 (사용하지 않는 파일)
-└── webpack.config.js         - webpack 설정
+
+<br>
+<br>
+
+## 💻&nbsp;&nbsp;기술 스택
+
+### 📚&nbsp;&nbsp;Frameworkes & Libraries
+
+- 리액트 프레임워크: Next.js@12.0.4
+- 상태(데이터) 관리 : swr@1.1.0
+
+<br>
+
+### 🔧&nbsp;&nbsp;Tools
+
+- 모듈 번들링 : Webpack@5.64.4
+- 트랜스파일러 : Babel@7.16.0
+- 의존성 관리 및 스크립팅 : yarn@1.22.17
+
+<br>
+<br>
+
+## 📂&nbsp;&nbsp;디렉토리 구조
+
+```
+.
+├── README.md
+├── __mocks__
+│   └── next
+├── components
+│   ├── base					- base 컴포넌트
+│   │   ├── Avatar
+│   │   ├── Badge
+│   │   ├── Dropdown
+│   │   ├── Input
+│   │   ├── Loading
+│   │   ├── Logo
+│   │   ├── MainDropdown
+│   │   ├── Modal
+│   │   ├── Text
+│   │   ├── Textarea
+│   │   ├── Toggle
+│   │   ├── Upload
+│   │   └── index.js
+│   ├── common            		- common 컴포넌트
+│   │   ├── Header
+│   │   ├── Navbar
+│   │   └── index.js
+│   └── domain					- domain 컴포넌트
+│       ├── AddSurfModal
+│       ├── AreaChartComponent
+│       ├── AreaChartModule
+│       ├── Calendar
+│       ├── CalendarCard
+│       ├── Carot
+│       ├── CategoryCard
+│       ├── ContentBox
+│       ├── DashboardCard
+│       ├── DatePicker
+│       ├── EditAboutMe
+│       ├── FollowCard
+│       ├── FollowModal
+│       ├── HeatmapChartComponent
+│       ├── InputItem
+│       ├── NoticeCard
+│       ├── Post
+│       ├── PostDetail
+│       ├── Profile
+│       ├── RadialBarChartComponent
+│       ├── ScoreSlider
+│       ├── SkeletonBox
+│       ├── Tabs
+│       ├── UpdateCategoryModal
+│       ├── Welcome
+│       └── index.js
+├── constants             		- 상수 데이터
+│   ├── apiPath.js
+│   ├── environment.js
+│   └── inputLength.js
+├── hooks						- 커스텀 훅
+│   ├── index.js
+│   ├── useForm.js
+│   ├── useHover.js
+│   └── useToggle.js
+├── jsconfig.json
+├── netlify.toml
+├── next.config.js
+├── package.json
+├── pages
+│   ├── 404
+│   │   └── index.jsx
+│   ├── _app.jsx
+│   ├── _document.jsx
+│   ├── categorymanage
+│   │   └── index.jsx
+│   ├── dashboard
+│   │   └── index.jsx
+│   ├── explore
+│   │   └── index.jsx
+│   ├── index.jsx
+│   ├── login
+│   │   └── index.jsx
+│   ├── mypage
+│   │   ├── [userId]
+│   │   ├── alarm
+│   │   ├── edit
+│   │   └── index.jsx
+│   ├── posts
+│   │   ├── [year]
+│   │   └── new
+│   └── signup
+│       └── index.jsx
+├── public
+├── stories               		- 컴포넌트 유닛 테스트
+│   ├── base
+│   ├── common
+│   ├── domain
+│   └── hooks
+├── styles
+│   ├── globals.css
+│   ├── pageStyles				- 페이지 별 스타일
+│   └── theme.js
+├── utils
+│   ├── apis
+│   ├── common            		- 자주 쓰는 함수 모음
+│   └── validation              - 유효성 검사 함수 모음
+└── yarn.lock
 ```
