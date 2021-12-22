@@ -31,13 +31,14 @@ const Avatar = ({ src, size, alt, ...props }) => {
   return (
     <AvatarWrapper size={size} style={props.style}>
       <Image
+        priority
         width={size}
         height={size}
         src={src}
         alt={alt}
         className={imageStyle}
         onClick={handleClick}
-        {...props}
+        // {...props}
       />
     </AvatarWrapper>
   )
