@@ -57,14 +57,13 @@ const Explore = () => {
 
   return (
     <Container>
-      {/* <Loading loading={isLoading} setLoading={setIsLoading} size={100} /> */}
       <Loading loading={isLoading} setLoading={setIsLoading} size={100} />
       {Children.toArray(
         addedPosts?.map((post) => (
           <Post
             isMine={false}
             profileImage={
-              post.photoProfileUrl ? post.photoProfileUrl : undefined
+              post.profilePhotoUrl ? post.profilePhotoUrl : undefined
             }
             userId={post.userId}
             postId={post.postId}
@@ -77,7 +76,7 @@ const Explore = () => {
             categoryName={post.categoryName}
             content={post.content}
             score={post.score}
-            backgroundColor={post.colorCode}
+            colorCode={post.colorCode}
             key={post.postId}
             style={{ marginBottom: '10px' }}
           />
