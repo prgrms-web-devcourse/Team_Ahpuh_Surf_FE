@@ -78,7 +78,7 @@ const PostNew = () => {
         formData.set('file', fileObject || new File([''], 'empty.txt'))
         await uploadPost(formData)
         setTextareaValue(['', false])
-        router.push('/posts/all')
+        router.push('/posts/2021')
         // TODO: posts/all로 라우팅 후 등록되었다고 toast 띄우기
       }
     } catch (error) {
