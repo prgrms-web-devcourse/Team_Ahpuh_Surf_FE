@@ -159,7 +159,6 @@ const Main = () => {
                   selectedDate,
                   postId,
                 }) => (
-                  // eslint-disable-next-line react/jsx-key
                   <Post
                     colorCode={colorCode}
                     height={100}
@@ -168,6 +167,7 @@ const Main = () => {
                     score={score}
                     content={content}
                     postId={postId}
+                    key={postId}
                   />
                 ),
               )
@@ -180,7 +180,6 @@ const Main = () => {
                   selectedDate,
                   postId,
                 }) => (
-                  // eslint-disable-next-line react/jsx-key
                   <Post
                     colorCode={colorCode}
                     height={100}
@@ -189,6 +188,7 @@ const Main = () => {
                     score={score}
                     content={content}
                     postId={postId}
+                    key={postId}
                   />
                 ),
               )}
