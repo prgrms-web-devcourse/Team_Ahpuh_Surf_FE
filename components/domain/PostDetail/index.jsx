@@ -276,6 +276,7 @@ const PostDetail = ({
         width="100%"
         height="50%"
         layout="responsive"
+        priority
       />
       <Style.Main>
         <Style.Title>score: {score}</Style.Title>
