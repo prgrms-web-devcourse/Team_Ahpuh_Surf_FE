@@ -1,8 +1,8 @@
-import { MainDropdown } from 'components/base'
+import { MainDropdown, BounceFinger } from 'components/base'
 import { Post, SkeletonBox, Welcome } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast, Zoom } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import * as Style from 'styles/pageStyles/indexStyle'
 import {
@@ -22,20 +22,12 @@ const ApexChart = dynamic(
 )
 
 const Main = () => {
+  const TOAST_CATEGORY_ID = 'toast-category-id'
   const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
   const [showWelcome, setShowWelcome] = useState(false)
-
   const { mutate } = useSWRConfig()
-
-  useEffect(() => {
-    if (Cookies.get('user')) {
-      setUser(JSON.parse(Cookies.get('user')))
-    } else {
-      router.push('/login')
-    }
-  }, [])
 
   if (typeof window !== 'undefined') {
     if (sessionStorage.getItem('welcome')) {
@@ -88,8 +80,26 @@ const Main = () => {
         },
         ...categories,
       ])
+    } else {
+      toast.info('No surf! 😲 Shall we go make one?', {
+        position: toast.POSITION.TOP_RIGHT,
+        hideProgressBar: true,
+        closeOnClick: true,
+        toastId: TOAST_CATEGORY_ID,
+        transition: Zoom,
+        theme: 'colored',
+      })
     }
   }, [categories])
+
+  useEffect(() => {
+    if (Cookies.get('user')) {
+      setUser(JSON.parse(Cookies.get('user')))
+    }
+    if (!Cookies.get('user')) {
+      router.push('/login')
+    }
+  }, [])
 
   const handleClick = (item) => {
     setSurf(item)
@@ -112,7 +122,6 @@ const Main = () => {
     }
   }
 
-  // 회원가입 성공 후 toast
   useEffect(() => {
     if (Cookies.get('isSignup')) {
       setTimeout(() => {
@@ -195,6 +204,16 @@ const Main = () => {
                 ),
               )}
         </Style.PostListWrapper>
+        {categories && categories.length === 0 && (
+          <BounceFinger
+            style={{
+              position: 'fixed',
+              bottom: '60px',
+              left: '45%',
+              transform: 'translateX(-50%)',
+            }}
+          />
+        )}
       </Style.MainWrapper>
     </>
   )
