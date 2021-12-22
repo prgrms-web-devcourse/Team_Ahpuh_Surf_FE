@@ -28,7 +28,7 @@ const Login = () => {
           expires: 28,
           secure: true,
         })
-        await sessionStorage.setItem('welcome', true)
+        sessionStorage.setItem('welcome', true)
         router.push('/')
       } catch (error) {
         console.error(error.message)
