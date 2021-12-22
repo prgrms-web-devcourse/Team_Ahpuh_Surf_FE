@@ -13,7 +13,6 @@ import deleteFollow from 'utils/apis/follow/deleteFollow'
 import postFollow from 'utils/apis/follow/postFollow'
 import { deleteLike, postLike } from 'utils/apis/like'
 import Link from 'next/link'
-import { changeToBlob } from 'utils/common/changeToBlob'
 import styled from '@emotion/styled'
 import { Avatar } from '../../base'
 import * as Style from './style'
@@ -27,6 +26,7 @@ const Button = styled.button`
   padding: 7px 0 7px 0;
   text-align: center;
   width: 100%;
+
   &:hover {
     background-color: lightgray;
   }
@@ -198,39 +198,42 @@ const PostDetail = ({
       <Style.ControlBox>
         <RiArrowGoBackLine size={30} onClick={() => router.back()} />
 
-        <div>
-          <BiDotsHorizontalRounded size={30} onClick={handleMenu} />
-          <Style.Menu ref={menuRef} style={{ display: 'none' }}>
-            <div>
-              <Link
-                href={{
-                  pathname: `/posts/[year]/[month]/[postId]/edit`,
-                  query: {
-                    post: JSON.stringify({
-                      imageUrl,
-                      selectedDate,
-                      categoryName,
-                      postScore: score,
-                      content,
-                      postId,
-                      fileUrl,
-                    }),
-                  },
-                }}
-                as={`/posts/${year}/${month}/${postId}/edit`}>
-                <a style={{ textDecoration: 'none', textAlign: 'center' }}>
-                  기록 수정
-                </a>
-              </Link>
-            </div>
-            <Button type="button" onClick={handleDeletePost}>
-              기록 삭제
-            </Button>
-            <Button type="button" onClick={handleFavorite}>
-              {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
-            </Button>
-          </Style.Menu>
-        </div>
+        {isMine && (
+          <div>
+            <BiDotsHorizontalRounded size={30} onClick={handleMenu} />
+            <Style.Menu ref={menuRef} style={{ display: 'none' }}>
+              <div>
+                <Link
+                  href={{
+                    pathname: `/posts/[year]/[month]/[postId]/edit`,
+                    query: {
+                      post: JSON.stringify({
+                        imageUrl,
+                        selectedDate,
+                        categoryName,
+                        postScore: score,
+                        content,
+                        postId,
+                        fileUrl,
+                      }),
+                    },
+                  }}
+                  as={`/posts/${year}/${month}/${postId}/edit`}>
+                  <a style={{ textDecoration: 'none', textAlign: 'center' }}>
+                    기록 수정
+                  </a>
+                </Link>
+                <Button type="button" onClick={handleDeletePost}>
+                  기록 삭제
+                </Button>
+              </div>
+
+              <Button type="button" onClick={handleFavorite}>
+                {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
+              </Button>
+            </Style.Menu>
+          </div>
+        )}
       </Style.ControlBox>
       <Style.Profile>
         <Avatar {...avatarArgs} style={{ marginRight: 10 }} />
