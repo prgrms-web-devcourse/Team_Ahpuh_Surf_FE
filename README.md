@@ -80,6 +80,9 @@ suffering 또한 피할 수 없다.
 
 - 리액트 프레임워크: Next.js@12.0.4
 - 상태(데이터) 관리 : swr@1.1.0
+- CSS-IN-JS : emotion/styled@11.6.0
+- HTTP 클라이언트 라이브러리 : axios@0.24.0
+
 
 <br>
 
@@ -88,11 +91,25 @@ suffering 또한 피할 수 없다.
 - 모듈 번들링 : Webpack@5.64.4
 - 트랜스파일러 : Babel@7.16.0
 - 의존성 관리 및 스크립팅 : yarn@1.22.17
+- 컴포넌트 테스트 툴 : storybook@6.4.0
+- 런타임 : node@14(LTS)
 
 <br>
 <br>
 
-## 📂&nbsp;&nbsp;디렉토리 구조
+## 🖼 프로토타입
+<a href="https://www.figma.com/file/4ilVQ7Ve54ueYUudSzJBo4/Surf?node-id=49%3A47_">피그마 바로가기 👈🏻</a>
+
+
+## 🗣 배포
+<a href="team-ahpuh-surf-fe.vercel.app">프로젝트 보러가기 👈🏻</a>
+
+## 🗂 협업 문서
+<a href="https://www.notion.so/backend-devcourse/8-Ah-puh-Surf-ccc0a5922b8e4f638d6e897b4eb575a6">노션 구경가기 👈🏻</a>
+<br>
+<br>
+
+## 📂 디렉토리 구조
 
 ```
 .
@@ -199,3 +216,5 @@ suffering 또한 피할 수 없다.
 ├── .env		- 환경 변수 
 └── yarn.lock
 ```
+
+
