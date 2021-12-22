@@ -201,36 +201,39 @@ const PostDetail = ({
         {isMine && (
           <div>
             <BiDotsHorizontalRounded size={30} onClick={handleMenu} />
-            <Style.Menu ref={menuRef} style={{ display: 'none' }}>
-              <div>
-                <Link
-                  href={{
-                    pathname: `/posts/[year]/[month]/[postId]/edit`,
-                    query: {
-                      post: JSON.stringify({
-                        imageUrl,
-                        selectedDate,
-                        categoryName,
-                        postScore: score,
-                        content,
-                        postId,
-                        fileUrl,
-                      }),
-                    },
-                  }}
-                  as={`/posts/${year}/${month}/${postId}/edit`}>
-                  <a style={{ textDecoration: 'none', textAlign: 'center' }}>
-                    기록 수정
-                  </a>
-                </Link>
-                <Button type="button" onClick={handleDeletePost}>
-                  기록 삭제
+            <Style.Menu
+              ref={menuRef}
+              style={{ display: 'none', padding: '10px' }}>
+              {/* <div> */}
+              <Link
+                passHref
+                href={{
+                  pathname: `/posts/[year]/[month]/[postId]/edit`,
+                  query: {
+                    post: JSON.stringify({
+                      imageUrl,
+                      selectedDate,
+                      categoryName,
+                      postScore: score,
+                      content,
+                      postId,
+                      fileUrl,
+                    }),
+                  },
+                }}
+                as={`/posts/${year}/${month}/${postId}/edit`}>
+                <Button style={{ textDecoration: 'none', textAlign: 'center' }}>
+                  기록 수정
                 </Button>
-              </div>
+              </Link>
+              <Button type="button" onClick={handleDeletePost}>
+                기록 삭제
+              </Button>
 
               <Button type="button" onClick={handleFavorite}>
                 {_favorite ? '즐겨찾기 삭제' : '즐겨찾기 추가'}
               </Button>
+              {/* </div> */}
             </Style.Menu>
           </div>
         )}
