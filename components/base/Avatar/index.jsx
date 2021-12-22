@@ -35,7 +35,7 @@ const Avatar = ({ src, size, alt, ...props }) => {
         height={size}
         src={src}
         alt={alt}
-        style={imageStyle}
+        className={imageStyle}
         onClick={handleClick}
         {...props}
       />

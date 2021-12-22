@@ -28,10 +28,10 @@ const Logo = ({ width, italic, white, ...props }) => {
         svgHeight={svgHeight}
         style={{ ...props.style }}>
         <Image
+          priority
           src={
             italic ? logoItalicFill : white ? logoItalicWhite : logoNormalFill
           }
-          width={width}
           layout="fill"
           alt="Surf"
         />
