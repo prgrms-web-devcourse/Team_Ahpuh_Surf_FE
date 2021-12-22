@@ -115,10 +115,12 @@ const Main = () => {
   // 회원가입 성공 후 toast
   useEffect(() => {
     if (Cookies.get('isSignup')) {
-      toast.success('Signup was sucessful 🎉', {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 3000,
-      })
+      setTimeout(() => {
+        toast.success('Signup was sucessful 🎉', {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
+        })
+      }, 2000)
     }
   }, [])
 

@@ -37,8 +37,9 @@ const Signup = () => {
           expires: 28,
           secure: true,
         })
-        const date = setCookieTimes(1 * 3000)
+        const date = setCookieTimes(1 * 1000 * 10)
         Cookies.set(SIGNUP_COOKIE, true, { expires: date })
+        sessionStorage.setItem('welcome', true)
         router.push('/')
       } catch (e) {
         toast.error(`${e.message} 🥲`, {
