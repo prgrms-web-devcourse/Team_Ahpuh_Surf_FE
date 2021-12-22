@@ -22,7 +22,6 @@ const ApexChart = dynamic(
 )
 
 const Main = () => {
-  const TOAST_CATEGORY_ID = 'toast-category-id'
   const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
