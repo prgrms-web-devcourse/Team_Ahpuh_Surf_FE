@@ -13,11 +13,18 @@ const bounce = keyframes`
 `
 
 const FingerWrapper = styled.div`
+  display: ${({ txt }) => txt && 'flex'};
+  flex-direction: column;
   animation: ${bounce} 0.5s infinite alternate;
+
+  & > p {
+    padding-bottom: 10px;
+  }
 `
 
-const BounceFinger = ({ style }) => (
-  <FingerWrapper style={{ ...style }}>
+const BounceFinger = ({ children, style }) => (
+  <FingerWrapper txt={children} style={{ ...style }}>
+    <p>{children}</p>
     <Image src={IconFinger} alt="bounce finger" />
   </FingerWrapper>
 )

@@ -2,7 +2,7 @@ import { MainDropdown, BounceFinger } from 'components/base'
 import { Post, SkeletonBox, Welcome } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
-import { ToastContainer, toast, Zoom } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import * as Style from 'styles/pageStyles/indexStyle'
 import {
@@ -80,15 +80,6 @@ const Main = () => {
         },
         ...categories,
       ])
-    } else {
-      toast.info('No surf! 😲 Shall we go make one?', {
-        position: toast.POSITION.TOP_RIGHT,
-        hideProgressBar: true,
-        closeOnClick: true,
-        toastId: TOAST_CATEGORY_ID,
-        transition: Zoom,
-        theme: 'colored',
-      })
     }
   }, [categories])
 
@@ -203,17 +194,18 @@ const Main = () => {
                   />
                 ),
               )}
+          {allPosts?.values?.length === 0 && (
+            <BounceFinger
+              style={{
+                position: 'absolute',
+                bottom: '60px',
+                fontSize: '20px',
+                fontWeight: 700,
+              }}>
+              No Post! 😲 Shall we go make one?
+            </BounceFinger>
+          )}
         </Style.PostListWrapper>
-        {categories && categories.length === 0 && (
-          <BounceFinger
-            style={{
-              position: 'fixed',
-              bottom: '60px',
-              left: '45%',
-              transform: 'translateX(-50%)',
-            }}
-          />
-        )}
       </Style.MainWrapper>
     </>
   )
