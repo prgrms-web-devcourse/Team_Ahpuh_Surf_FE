@@ -1,4 +1,4 @@
-import { MainDropdown } from 'components/base'
+import { MainDropdown, BounceFinger } from 'components/base'
 import { Post, SkeletonBox, Welcome } from 'components/domain'
 import dynamic from 'next/dynamic'
 import Cookies from 'js-cookie'
@@ -22,20 +22,12 @@ const ApexChart = dynamic(
 )
 
 const Main = () => {
+  const TOAST_CATEGORY_ID = 'toast-category-id'
   const router = useRouter()
   const [user, setUser] = useState({})
   const [selectedSurf, setSurf] = useState({ categoryId: null, name: 'All' })
   const [showWelcome, setShowWelcome] = useState(false)
-
   const { mutate } = useSWRConfig()
-
-  useEffect(() => {
-    if (Cookies.get('user')) {
-      setUser(JSON.parse(Cookies.get('user')))
-    } else {
-      router.push('/login')
-    }
-  }, [])
 
   if (typeof window !== 'undefined') {
     if (sessionStorage.getItem('welcome')) {
@@ -91,6 +83,15 @@ const Main = () => {
     }
   }, [categories])
 
+  useEffect(() => {
+    if (Cookies.get('user')) {
+      setUser(JSON.parse(Cookies.get('user')))
+    }
+    if (!Cookies.get('user')) {
+      router.push('/login')
+    }
+  }, [])
+
   const handleClick = (item) => {
     setSurf(item)
     if (!item.categoryId) {
@@ -112,7 +113,6 @@ const Main = () => {
     }
   }
 
-  // 회원가입 성공 후 toast
   useEffect(() => {
     if (Cookies.get('isSignup')) {
       setTimeout(() => {
@@ -194,6 +194,17 @@ const Main = () => {
                   />
                 ),
               )}
+          {allPosts?.values?.length === 0 && (
+            <BounceFinger
+              style={{
+                position: 'absolute',
+                bottom: '60px',
+                fontSize: '20px',
+                fontWeight: 700,
+              }}>
+              No Post! 😲 Shall we go make one?
+            </BounceFinger>
+          )}
         </Style.PostListWrapper>
       </Style.MainWrapper>
     </>
