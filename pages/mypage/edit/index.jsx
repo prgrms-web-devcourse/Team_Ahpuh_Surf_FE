@@ -32,8 +32,10 @@ const ProfileModification = () => {
   }
   const [uId, setUid] = useState(null)
   useEffect(() => {
-    const { userId } = JSON.parse(Cookies.get('user'))
-    setUid(userId)
+    if (Cookies.get('user')) {
+      const { userId } = JSON.parse(Cookies.get('user'))
+      setUid(userId)
+    }
   }, [])
   const { data: profileData } = useGetUser(uId, { revalidateOnFocus: false })
 
@@ -48,7 +50,7 @@ const ProfileModification = () => {
     const data = new FormData(e.target)
 
     if (!(data.get('password') === data.get('passwordConfirm'))) {
-      toast('비밀번호, 비밀번호 확인이 일치 하지 않습니다', toastOptions)
+      toast('password, Password is not correct', toastOptions)
       return
     }
     const requestObject = {

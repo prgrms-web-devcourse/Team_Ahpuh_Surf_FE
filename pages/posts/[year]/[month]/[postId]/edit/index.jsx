@@ -94,11 +94,11 @@ const Edit = ({ router: { query } }) => {
   }
   const { data: _categories } = useGetCategories()
   useEffect(() => {
-    const arr = _categories.filter((i) => i.name === postData.categoryName)
+    const arr = _categories?.filter((i) => i?.name === postData.categoryName)
     setSelectedCategory(arr[0])
   }, [])
   useEffect(() => {
-    if (selectedCategory.name === '+ New') {
+    if (selectedCategory?.name === '+ New') {
       setToggleModal(true)
     }
   }, [selectedCategory])
@@ -146,7 +146,7 @@ const Edit = ({ router: { query } }) => {
                   : '3px solid #eee',
               }}>
               {file ? (
-                <Style.TextCenter>{file.name}</Style.TextCenter>
+                <Style.TextCenter>{file?.name}</Style.TextCenter>
               ) : (
                 <Style.IconWrapper>
                   <Image
