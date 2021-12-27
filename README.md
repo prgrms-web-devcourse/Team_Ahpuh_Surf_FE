@@ -102,7 +102,7 @@ suffering 또한 피할 수 없다.
 
 
 ## 🗣 배포
-<a href="team-ahpuh-surf-fe.vercel.app">프로젝트 보러가기 👈🏻</a>
+<a href="https://surf-livid.vercel.app">프로젝트 보러가기 👈🏻</a>
 
 ## 🗂 협업 문서
 <a href="https://www.notion.so/backend-devcourse/8-Ah-puh-Surf-ccc0a5922b8e4f638d6e897b4eb575a6">노션 구경가기 👈🏻</a>
