@@ -109,8 +109,7 @@ suffering 또한 피할 수 없다.
 <br>
 <br>
 
-## 데모
-## 🤳데모 화면
+## 🪞 데모
 | **로그인** | **메인 화면** - Surf 첫 페이지 | **메인 화면** - 특정 category 선택 |
 | :---: | :---: | :---: |
 | ![로그인](https://user-images.githubusercontent.com/55528172/147193938-07d0547f-740b-428c-8ea6-25c8a6e85f3f.gif) | ![메인 페이지 - 첫 화면](https://user-images.githubusercontent.com/55528172/147193958-a062bdb3-a82a-41a2-8d2c-dd4ecd9882ba.gif) | ![메인 페이지 - 카테고리 선택](https://user-images.githubusercontent.com/55528172/147193999-6313d4d4-fe2b-4842-9b07-f3fa86835d56.gif) |
@@ -132,7 +131,7 @@ suffering 또한 피할 수 없다.
 ├── __mocks__
 │   └── next
 ├── components
-│   ├── base					- base 컴포넌트
+│   ├── base					
 │   │   ├── Avatar
 │   │   ├── Badge
 │   │   ├── Dropdown
@@ -146,11 +145,11 @@ suffering 또한 피할 수 없다.
 │   │   ├── Toggle
 │   │   ├── Upload
 │   │   └── index.js
-│   ├── common            		- common 컴포넌트
+│   ├── common            		
 │   │   ├── Header
 │   │   ├── Navbar
 │   │   └── index.js
-│   └── domain					- domain 컴포넌트
+│   └── domain				
 │       ├── AddSurfModal
 │       ├── AreaChartComponent
 │       ├── AreaChartModule
@@ -177,11 +176,11 @@ suffering 또한 피할 수 없다.
 │       ├── UpdateCategoryModal
 │       ├── Welcome
 │       └── index.js
-├── constants             		- 상수 데이터
+├── constants             		
 │   ├── apiPath.js
 │   ├── environment.js
 │   └── inputLength.js
-├── hooks						- 커스텀 훅
+├── hooks					
 │   ├── index.js
 │   ├── useForm.js
 │   ├── useHover.js
@@ -215,20 +214,20 @@ suffering 또한 피할 수 없다.
 │   └── signup
 │       └── index.jsx
 ├── public
-├── stories               		- 컴포넌트 유닛 테스트
+├── stories               		
 │   ├── base
 │   ├── common
 │   ├── domain
 │   └── hooks
 ├── styles
 │   ├── globals.css
-│   ├── pageStyles				- 페이지 별 스타일
+│   ├── pageStyles				
 │   └── theme.js
 ├── utils
 │   ├── apis
-│   ├── common            		- 자주 쓰는 함수 모음
-│   └── validation              - 유효성 검사 함수 모음
-├── .env		- 환경 변수 
+│   ├── common            	
+│   └── validation             
+├── .env		
 └── yarn.lock
 ```
 
