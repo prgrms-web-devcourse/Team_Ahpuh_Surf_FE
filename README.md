@@ -1,11 +1,11 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:5b8dd2,50:81b4ef,100:81b4cf&height=300&section=header&text=Surf.&fontColor=fff&fontSize=70&fontAlignY=40&desc=my%20own%20growth%20curve%20service&descAlignY=60" width="100%"/>
 
-<div style="display: flex; align-items: center"> 
+<p align="center"> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=Next.js&logoColor=white">
 <img src="https://img.shields.io/badge/Storybook-FF4785?style=for-the-badge&logo=Storybook&logoColor=white">
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-</div>
+</p>
 
 <br>
 <br>
